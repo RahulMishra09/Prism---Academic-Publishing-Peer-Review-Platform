@@ -1,0 +1,185 @@
+// ============================================================
+// Prisma Schema — Research Portal
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum Role {
+  READER
+  AUTHOR
+  REVIEWER
+  EDITOR
+  ADMIN
+}
+
+enum PaperStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum AssignmentStatus {
+  PENDING
+  COMPLETED
+}
+
+// ============================================================
+// USER MODEL
+// ============================================================
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(READER)
+  isBanned  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  papers              Paper[]              @relation("AuthorPapers")
+  reviewerAssignments ReviewerAssignment[]
+  reviews             Review[]
+  comments            Comment[]
+
+  @@map("users")
+}
+
+// ============================================================
+// PAPER MODEL
+// ============================================================
+
+model Paper {
+  id             String      @id @default(cuid())
+  title          String
+  abstract       String
+  domain         String
+  keywords       String[]
+  status         PaperStatus @default(DRAFT)
+  rejectionReason String?
+
+  // AI fields (nullable — prepared for future, no logic yet)
+  aiSummary          String?
+  embedding          Float[]
+  reviewAISuggestion String?
+
+  // Timestamps
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  approvedAt DateTime?
+
+  // Relations
+  submittedBy   String
+  author        User                 @relation("AuthorPapers", fields: [submittedBy], references: [id])
+  assignments   ReviewerAssignment[]
+  reviews       Review[]
+  comments      Comment[]
+
+  // Indexes
+  @@index([status])
+  @@index([domain])
+  @@index([createdAt])
+  @@index([submittedBy])
+
+  @@map("papers")
+}
+
+// ============================================================
+// REVIEWER ASSIGNMENT MODEL
+// ============================================================
+
+model ReviewerAssignment {
+  id         String           @id @default(cuid())
+  status     AssignmentStatus @default(PENDING)
+  assignedAt DateTime         @default(now())
+
+  // Relations
+  paperId    String
+  paper      Paper  @relation(fields: [paperId], references: [id])
+
+  reviewerId String
+  reviewer   User   @relation(fields: [reviewerId], references: [id])
+
+  review     Review?
+
+  // Prevent assigning same reviewer to same paper twice
+  @@unique([paperId, reviewerId])
+
+  @@index([paperId])
+  @@index([reviewerId])
+
+  @@map("reviewer_assignments")
+}
+
+// ============================================================
+// REVIEW MODEL
+// ============================================================
+
+model Review {
+  id             String   @id @default(cuid())
+  strengths      String
+  weaknesses     String
+  score          Int      // 1 to 10
+  recommendation String   // ACCEPT | MINOR_REVISION | MAJOR_REVISION | REJECT
+  createdAt      DateTime @default(now())
+
+  // Relations
+  paperId      String
+  paper        Paper  @relation(fields: [paperId], references: [id])
+
+  reviewerId   String
+  reviewer     User   @relation(fields: [reviewerId], references: [id])
+
+  assignmentId String             @unique
+  assignment   ReviewerAssignment @relation(fields: [assignmentId], references: [id])
+
+  // Prevent duplicate reviews
+  @@unique([paperId, reviewerId])
+
+  @@index([paperId])
+
+  @@map("reviews")
+}
+
+// ============================================================
+// COMMENT MODEL
+// ============================================================
+
+model Comment {
+  id        String   @id @default(cuid())
+  body      String   @db.VarChar(2000)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  paperId  String
+  paper    Paper   @relation(fields: [paperId], references: [id])
+
+  authorId String
+  author   User    @relation(fields: [authorId], references: [id])
+
+  // Optional parent for threaded replies (one level deep)
+  parentId String?
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  Comment[] @relation("CommentReplies")
+
+  // Indexes
+  @@index([paperId])
+  @@index([authorId])
+  @@index([parentId])
+
+  @@map("comments")
+}
