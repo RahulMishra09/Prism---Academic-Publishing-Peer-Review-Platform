@@ -3,12 +3,34 @@
 import "dotenv/config";
 import { defineConfig } from "prisma/config";
 
+function getDatasourceUrl(): string {
+  const connectionString = process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"];
+
+  if (!connectionString) {
+    throw new Error("Missing DIRECT_URL or DATABASE_URL for Prisma.");
+  }
+
+  try {
+    const parsed = new URL(connectionString);
+
+    if (parsed.protocol !== "postgresql:" && parsed.protocol !== "postgres:") {
+      throw new Error();
+    }
+
+    return connectionString;
+  } catch {
+    throw new Error(
+      "Invalid Prisma datasource URL. Use postgres:// or postgresql:// in DIRECT_URL or DATABASE_URL.",
+    );
+  }
+}
+
 export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"],
+    url: getDatasourceUrl(),
   },
 });

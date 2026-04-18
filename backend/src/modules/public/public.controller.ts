@@ -19,6 +19,7 @@ function mapPaperToArticle(paper: {
   };
 }) {
   const nameParts = paper.author.name.trim().split(/\s+/);
+  const fallbackLastName = nameParts.slice(1).join(" ").trim() || nameParts[0] || "";
   return {
     id: paper.id,
     doi: `10.prism/${paper.id}`,
@@ -29,7 +30,7 @@ function mapPaperToArticle(paper: {
         id: paper.author.id,
         name: paper.author.name,
         firstName: nameParts[0] ?? "",
-        lastName: nameParts.slice(1).join(" ") || nameParts[0] ?? "",
+        lastName: fallbackLastName,
         isCorresponding: true,
         affiliations: [],
         creditRoles: [],
@@ -102,7 +103,11 @@ export const getArticles = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export const getArticle = async (req: Request, res: Response, next: NextFunction) => {
+export const getArticle = async (
+  req: Request<{ id: string }>,
+  res: Response,
+  next: NextFunction,
+) => {
   try {
     const { id } = req.params;
 
