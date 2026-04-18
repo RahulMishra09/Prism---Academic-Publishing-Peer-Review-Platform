@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Button, Spinner } from '@shared/ui';
 import { useNavigate } from 'react-router-dom';
 import { EditorAnalytics } from '../../../features/editor/ui/EditorAnalytics';
-import { getEditorPapers, assignReviewer, approvePaper, rejectPaper } from '../../../features/editor/api/editorApi';
+import { getEditorPapers, approvePaper, rejectPaper } from '../../../features/editor/api/editorApi';
 import type { EditorPaper } from '../../../features/editor/api/editorApi';
 
 type FilterStatus = 'all' | 'SUBMITTED' | 'APPROVED' | 'REJECTED';

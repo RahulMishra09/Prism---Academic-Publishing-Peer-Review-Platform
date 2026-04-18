@@ -158,7 +158,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ className }) => {
                             </Link>
                         </div>
                         <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                            {(homepageData.trendingResearch as TrendingArticle[]).slice(0, 3).map((item) => {
+                            {((homepageData?.trendingResearch ?? []) as TrendingArticle[]).slice(0, 3).map((item) => {
                                 const articleLink = item.link?.startsWith('/article/')
                                     ? `/article/${encodeURIComponent(item.link.replace('/article/', ''))}`
                                     : (item.link || '#');

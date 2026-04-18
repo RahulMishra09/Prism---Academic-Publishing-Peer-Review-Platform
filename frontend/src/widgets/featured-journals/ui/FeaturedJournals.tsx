@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Skeleton } from '../../../shared/ui';
+import { Container, Skeleton, AnimateIn } from '../../../shared/ui';
 import { useJournalsList } from '../../../entities/journal/api/journalQueries';
 import { useHomepageData } from '../../../features/homepage/api/homepageQueries';
 
@@ -116,7 +116,7 @@ export const FeaturedJournals: React.FC<FeaturedJournalsProps> = ({ className })
             {/* Featured Journals Grid */}
             <section className={`py-16 ${className || ''}`}>
                 <Container>
-                    <div className="mb-7 flex items-end justify-between">
+                    <AnimateIn className="mb-7 flex items-end justify-between">
                         <div>
                             <p className="mb-1.5 text-[0.69rem] font-semibold uppercase tracking-[0.1em] text-lumex-blue">
                                 Publications
@@ -134,7 +134,7 @@ export const FeaturedJournals: React.FC<FeaturedJournalsProps> = ({ className })
                         >
                             All journals →
                         </Link>
-                    </div>
+                    </AnimateIn>
 
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                         {isLoading &&
@@ -172,10 +172,10 @@ export const FeaturedJournals: React.FC<FeaturedJournalsProps> = ({ className })
                                     .slice(0, 3);
 
                                 return (
-                                    <Link
-                                        key={String(journal.id || idx)}
+                                    <AnimateIn key={String(journal.id || idx)} delay={idx * 80}>
+                                        <Link
                                         to={`/journal/${journal.slug || journal.id}`}
-                                        className="group overflow-hidden rounded-card border border-lumex-border bg-lumex-card transition-all hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
+                                        className="group block overflow-hidden rounded-card border border-lumex-border bg-lumex-card transition-all hover:-translate-y-0.5 hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
                                     >
                                         <div className="h-[3px]" style={{ background: color }} />
                                         <div className="p-5">
@@ -268,7 +268,8 @@ export const FeaturedJournals: React.FC<FeaturedJournalsProps> = ({ className })
                                                 </span>
                                             </div>
                                         </div>
-                                    </Link>
+                                        </Link>
+                                    </AnimateIn>
                                 );
                             })}
                     </div>

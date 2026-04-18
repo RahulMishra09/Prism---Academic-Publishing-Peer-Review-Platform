@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Skeleton } from '../../../shared/ui';
+import { Container, Skeleton, AnimateIn } from '../../../shared/ui';
 import { useTrendingArticles } from '../../../entities/article/api/articleQueries';
 import { useThemeStore } from '../../../entities/theme/model/useThemeStore';
 import type { Article } from '../../../entities/article/model/types';
@@ -28,7 +28,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
         <section className={`py-16 ${className || ''}`}>
             <Container>
                 {/* Section header */}
-                <div className="mb-7 flex items-end justify-between">
+                <AnimateIn className="mb-7 flex items-end justify-between">
                     <div>
                         <p className="mb-1.5 text-[0.69rem] font-semibold uppercase tracking-[0.1em] text-lumex-blue">
                             Trending
@@ -46,7 +46,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                     >
                         All articles →
                     </Link>
-                </div>
+                </AnimateIn>
 
                 {/* Article cards — 2-column grid */}
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -80,10 +80,10 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                                 fallbackAccentColors[index % fallbackAccentColors.length];
 
                             return (
+                                <AnimateIn key={item.id} delay={index * 80}>
                                 <Link
-                                    key={item.id}
                                     to={`/article/${encodeURIComponent(item.doi)}`}
-                                    className="group flex gap-4 rounded-card border border-lumex-border bg-lumex-card p-5 transition-all hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
+                                    className="group flex gap-4 rounded-card border border-lumex-border bg-lumex-card p-5 transition-all hover:-translate-y-0.5 hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
                                 >
                                     {/* Accent bar */}
                                     <div
@@ -160,6 +160,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                                         </div>
                                     </div>
                                 </Link>
+                                </AnimateIn>
                             );
                         })}
                 </div>
