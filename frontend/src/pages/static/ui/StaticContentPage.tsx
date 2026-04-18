@@ -77,7 +77,7 @@ const CONTENT: Record<string, PageContent> = {
                         <ul className="list-disc list-inside mb-4">
                             <li><strong>Author Guidelines</strong>: Switched main container to `bg-lumex-bg` and sidebar to `bg-lumex-card`. Replaced all hardcoded gray text with `text-lumex-muted`.</li>
                             <li><strong>Contact Us</strong>: Migrated form container to `bg-lumex-card` and updated inputs/selects to use theme-aware colors (`bg-lumex-bg-white`).</li>
-                            <li><strong>News & Careers</strong>: Standardized page backgrounds and article/job card surfaces to ensure they adapt to dark mode. Removed legacy `bg-white` and `bg-gray-50` classes.</li>
+                            <li><strong>News & Careers</strong>: Standardized page backgrounds and article/job card surfaces to ensure they adapt to dark mode. Removed legacy `bg-white` and `bg-lumex-bg-deep/40` classes.</li>
                             <li><strong>Home Page</strong>: Updated the `MetricsStrip` cards to use `bg-lumex-card`, completing the home page dark mode experience.</li>
                         </ul>
 

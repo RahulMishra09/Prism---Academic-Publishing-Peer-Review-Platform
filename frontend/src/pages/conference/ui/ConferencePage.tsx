@@ -96,7 +96,7 @@ export const ConferencePage: React.FC = () => {
                                     <h3 className="text-xl font-bold text-lumex-blue mb-2 hover:underline cursor-pointer leading-snug">
                                         {paper.title}
                                     </h3>
-                                    <p className="text-gray-600 mb-4 font-medium">{paper.authors}</p>
+                                    <p className="text-lumex-muted mb-4 font-medium">{paper.authors}</p>
                                     <div className="flex justify-between items-center">
                                         <span className="text-sm font-semibold text-lumex-blue bg-lumex-blue-soft px-3 py-1.5 rounded-full border border-lumex-blue/10">
                                             {paper.citations} Citations

@@ -38,7 +38,7 @@ export const ErrorPage: React.FC = () => {
                     {is404 ? 'Page Not Found' : 'Something went wrong'}
                 </h1>
 
-                <p className="text-gray-500 mb-2 text-sm">
+                <p className="text-lumex-muted mb-2 text-sm">
                     {error?.status && (
                         <span className="font-mono font-bold text-red-500 mr-2">
                             {error.status}
@@ -47,7 +47,7 @@ export const ErrorPage: React.FC = () => {
                     {error?.statusText || error?.message || 'An unexpected error occurred.'}
                 </p>
 
-                <p className="text-gray-400 text-sm mb-8">
+                <p className="text-lumex-sub text-sm mb-8">
                     {is404
                         ? "The page you're looking for doesn't exist or has been moved."
                         : 'Please try again. If the problem persists, contact support.'}

@@ -18,13 +18,13 @@ export const EditorialBoardPage: React.FC = () => {
                     <h3 className="text-lg font-bold text-lumex-text">{editor.name}</h3>
                     <p className="text-lumex-text-secondary text-sm mt-1">{editor.role}</p>
                     {editor.affiliation && (
-                        <p className="text-gray-500 text-sm mt-1">{editor.affiliation}</p>
+                        <p className="text-lumex-muted text-sm mt-1">{editor.affiliation}</p>
                     )}
                 </div>
             ))}
 
             {(!journal.editors || journal.editors.length === 0) && (
-                <p className="text-gray-500 italic">
+                <p className="text-lumex-muted italic">
                     Editorial board information is currently being updated.
                 </p>
             )}

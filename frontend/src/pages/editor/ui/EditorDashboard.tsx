@@ -20,7 +20,7 @@ export const EditorDashboard: React.FC = () => {
     const filteredSubmissions = submissions.filter(s => filter === 'all' || s.status === filter);
 
     const getStatusClass = (status: string) => {
-        if (status === 'unassigned') return 'bg-gray-100 text-gray-600';
+        if (status === 'unassigned') return 'bg-lumex-bg-deep text-lumex-muted';
         if (status === 'under-review') return 'bg-blue-50 text-lumex-blue border border-blue-100';
         return 'bg-orange-50 text-orange-600 border border-orange-100';
     };
@@ -33,14 +33,14 @@ export const EditorDashboard: React.FC = () => {
                     <div className="flex gap-6 mt-4 border-b border-gray-100">
                         <button
                             onClick={() => setActiveTab('submissions')}
-                            className={`pb-2 text-sm font-bold transition-colors relative ${activeTab === 'submissions' ? 'text-lumex-blue' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`pb-2 text-sm font-bold transition-colors relative ${activeTab === 'submissions' ? 'text-lumex-blue' : 'text-lumex-sub hover:text-lumex-muted'}`}
                         >
                             Manuscript Management
                             {activeTab === 'submissions' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-lumex-blue" />}
                         </button>
                         <button
                             onClick={() => setActiveTab('analytics')}
-                            className={`pb-2 text-sm font-bold transition-colors relative ${activeTab === 'analytics' ? 'text-lumex-blue' : 'text-gray-400 hover:text-gray-600'}`}
+                            className={`pb-2 text-sm font-bold transition-colors relative ${activeTab === 'analytics' ? 'text-lumex-blue' : 'text-lumex-sub hover:text-lumex-muted'}`}
                         >
                             Journal Analytics
                             {activeTab === 'analytics' && <div className="absolute bottom-0 left-0 w-full h-0.5 bg-lumex-blue" />}
@@ -75,23 +75,23 @@ export const EditorDashboard: React.FC = () => {
                     </div>
 
                     <div className="bg-white border border-lumex-border rounded-lg overflow-hidden shadow-sm">
-                        <div className="p-4 border-b border-lumex-border bg-gray-50 flex items-center justify-between">
+                        <div className="p-4 border-b border-lumex-border bg-lumex-bg-deep/40 flex items-center justify-between">
                             <div className="flex gap-4">
                                 <button
                                     onClick={() => setFilter('all')}
-                                    className={`text-sm font-bold ${filter === 'all' ? 'text-lumex-blue' : 'text-gray-500'}`}
+                                    className={`text-sm font-bold ${filter === 'all' ? 'text-lumex-blue' : 'text-lumex-muted'}`}
                                 >
                                     All Submissions
                                 </button>
                                 <button
                                     onClick={() => setFilter('unassigned')}
-                                    className={`text-sm font-bold ${filter === 'unassigned' ? 'text-lumex-blue' : 'text-gray-500'}`}
+                                    className={`text-sm font-bold ${filter === 'unassigned' ? 'text-lumex-blue' : 'text-lumex-muted'}`}
                                 >
                                     Unassigned
                                 </button>
                                 <button
                                     onClick={() => setFilter('under-review')}
-                                    className={`text-sm font-bold ${filter === 'under-review' ? 'text-lumex-blue' : 'text-gray-500'}`}
+                                    className={`text-sm font-bold ${filter === 'under-review' ? 'text-lumex-blue' : 'text-lumex-muted'}`}
                                 >
                                     Under Review
                                 </button>
@@ -111,11 +111,11 @@ export const EditorDashboard: React.FC = () => {
                                 </thead>
                                 <tbody className="divide-y divide-lumex-border">
                                     {filteredSubmissions.map((sub) => (
-                                        <tr key={sub.id} className="hover:bg-gray-50/50">
+                                        <tr key={sub.id} className="hover:bg-lumex-bg-deep/40/50">
                                             <td className="px-6 py-4 text-sm font-medium text-lumex-text">{sub.id}</td>
                                             <td className="px-6 py-4">
                                                 <div className="text-sm font-bold text-lumex-text mb-0.5">{sub.title}</div>
-                                                <div className="text-[10px] text-gray-400">Submitted: {new Date(sub.submittedOn).toLocaleDateString()}</div>
+                                                <div className="text-[10px] text-lumex-sub">Submitted: {new Date(sub.submittedOn).toLocaleDateString()}</div>
                                             </td>
                                             <td className="px-6 py-4 text-sm text-lumex-text-secondary">{sub.author}</td>
                                             <td className="px-6 py-4">

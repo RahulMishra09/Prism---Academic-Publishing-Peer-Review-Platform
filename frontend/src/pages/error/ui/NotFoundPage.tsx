@@ -36,7 +36,7 @@ export const NotFoundPage: React.FC = () => {
                 <h1 className="text-3xl font-serif font-bold text-lumex-text mb-3">
                     Page not found
                 </h1>
-                <p className="text-gray-500 mb-8 leading-relaxed">
+                <p className="text-lumex-muted mb-8 leading-relaxed">
                     The page you're looking for may have moved or no longer exists. Try searching
                     for what you need using the search bar below.
                 </p>

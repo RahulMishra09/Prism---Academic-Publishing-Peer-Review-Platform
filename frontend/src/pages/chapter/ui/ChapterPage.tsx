@@ -81,7 +81,7 @@ export const ChapterPage: React.FC = () => {
         return (
             <Container className="py-16 text-center">
                 <h1 className="text-3xl font-serif text-lumex-blue mb-4">Chapter Not Found</h1>
-                <p className="text-gray-600 mb-8">
+                <p className="text-lumex-muted mb-8">
                     DOI: <code>{doi}</code>
                 </p>
                 <Link to="/" className="text-lumex-blue hover:underline font-bold">
@@ -118,12 +118,12 @@ export const ChapterPage: React.FC = () => {
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`px-5 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === tab.id
                                         ? 'border-lumex-blue text-lumex-blue'
-                                        : 'border-transparent text-gray-600 hover:text-lumex-text hover:border-gray-300'
+                                        : 'border-transparent text-lumex-muted hover:text-lumex-text hover:border-lumex-border'
                                     }`}
                             >
                                 {tab.label}
                                 {tab.count !== undefined && tab.count > 0 && (
-                                    <span className="ml-2 px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded text-xs font-normal">
+                                    <span className="ml-2 px-1.5 py-0.5 bg-lumex-bg-deep text-lumex-muted rounded text-xs font-normal">
                                         {tab.count}
                                     </span>
                                 )}
@@ -139,7 +139,7 @@ export const ChapterPage: React.FC = () => {
                         {activeTab === 'chapter' && (
                             <>
                                 <AccessGate article={article} />
-                                <div className="mb-10 pb-10 border-b border-gray-200">
+                                <div className="mb-10 pb-10 border-b border-lumex-border">
                                     <AbstractSection article={article} />
                                 </div>
                                 <ArticleBody article={article} />
@@ -148,7 +148,7 @@ export const ChapterPage: React.FC = () => {
                         {activeTab === 'figures' && (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {allFigures.length === 0 ? (
-                                    <p className="col-span-3 text-gray-400 italic text-center py-12">
+                                    <p className="col-span-3 text-lumex-sub italic text-center py-12">
                                         No figures available.
                                     </p>
                                 ) : (
@@ -158,7 +158,7 @@ export const ChapterPage: React.FC = () => {
                                             onClick={() => setViewerFigure(fig)}
                                             className="text-left border border-lumex-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                                         >
-                                            <div className="aspect-video bg-gray-100">
+                                            <div className="aspect-video bg-lumex-bg-deep">
                                                 <img
                                                     src={fig.url}
                                                     alt={fig.alt}
@@ -169,7 +169,7 @@ export const ChapterPage: React.FC = () => {
                                                 <p className="text-xs font-bold text-lumex-blue mb-1">
                                                     Fig. {fig.number}
                                                 </p>
-                                                <p className="text-xs text-gray-600 line-clamp-2">
+                                                <p className="text-xs text-lumex-muted line-clamp-2">
                                                     {fig.caption}
                                                 </p>
                                             </div>

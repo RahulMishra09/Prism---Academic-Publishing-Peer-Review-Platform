@@ -62,7 +62,7 @@ export const BookPage: React.FC = () => {
         return (
             <Container className="py-16 text-center">
                 <h1 className="text-3xl font-serif text-lumex-blue mb-4">Book Not Found</h1>
-                <p className="text-gray-600 mb-8">
+                <p className="text-lumex-muted mb-8">
                     The book with ISBN <code>{isbn}</code> could not be found.
                 </p>
                 <Link to="/search" className="text-lumex-blue hover:underline font-bold">
@@ -100,12 +100,12 @@ export const BookPage: React.FC = () => {
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`px-5 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === tab.id
                                         ? 'border-lumex-blue text-lumex-blue'
-                                        : 'border-transparent text-gray-600 hover:text-lumex-text hover:border-gray-300'
+                                        : 'border-transparent text-lumex-muted hover:text-lumex-text hover:border-lumex-border'
                                     }`}
                             >
                                 {tab.label}
                                 {tab.count !== undefined && tab.count > 0 && (
-                                    <span className="ml-2 px-1.5 py-0.5 bg-gray-100 text-gray-500 rounded text-xs font-normal">
+                                    <span className="ml-2 px-1.5 py-0.5 bg-lumex-bg-deep text-lumex-muted rounded text-xs font-normal">
                                         {tab.count}
                                     </span>
                                 )}
@@ -124,7 +124,7 @@ export const BookPage: React.FC = () => {
                                 <h2 className="text-2xl font-serif font-bold text-lumex-blue mb-4">
                                     About this book
                                 </h2>
-                                <p className="text-gray-500 italic">
+                                <p className="text-lumex-muted italic">
                                     Book description and abstract content will appear here once
                                     available from the backend.
                                 </p>
@@ -153,24 +153,24 @@ export const BookPage: React.FC = () => {
                                         </h3>
                                         <dl className="space-y-2 text-sm">
                                             <div className="flex justify-between">
-                                                <dt className="text-gray-500">DOI</dt>
+                                                <dt className="text-lumex-muted">DOI</dt>
                                                 <dd className="font-mono text-xs">{book.doi}</dd>
                                             </div>
                                             <div className="flex justify-between">
-                                                <dt className="text-gray-500">ISBN (eBook)</dt>
+                                                <dt className="text-lumex-muted">ISBN (eBook)</dt>
                                                 <dd className="font-mono text-xs">{book.isbn}</dd>
                                             </div>
                                             <div className="flex justify-between">
-                                                <dt className="text-gray-500">Publisher</dt>
+                                                <dt className="text-lumex-muted">Publisher</dt>
                                                 <dd>{book.publisher}</dd>
                                             </div>
                                             <div className="flex justify-between">
-                                                <dt className="text-gray-500">Copyright</dt>
+                                                <dt className="text-lumex-muted">Copyright</dt>
                                                 <dd>{book.publishYear}</dd>
                                             </div>
                                             {book.edition && (
                                                 <div className="flex justify-between">
-                                                    <dt className="text-gray-500">Edition</dt>
+                                                    <dt className="text-lumex-muted">Edition</dt>
                                                     <dd>{book.edition}</dd>
                                                 </div>
                                             )}

@@ -48,7 +48,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = () => {
                             <h2 className="text-xl font-bold text-lumex-text mb-2">
                                 Check your email
                             </h2>
-                            <p className="text-gray-500 text-sm mb-6">
+                            <p className="text-lumex-muted text-sm mb-6">
                                 If an account exists for <strong>{email}</strong>, we've sent a
                                 password reset link.
                             </p>

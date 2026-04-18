@@ -17,11 +17,11 @@ export const AuthorPage: React.FC = () => {
                             <h1 className="text-2xl font-serif font-bold text-lumex-text">
                                 Author Profile
                             </h1>
-                            <p className="text-gray-500 text-sm font-mono mt-1">ID: {authorId}</p>
+                            <p className="text-lumex-muted text-sm font-mono mt-1">ID: {authorId}</p>
                         </div>
                     </div>
                     <div className="bg-white border border-lumex-border rounded-lg p-6">
-                        <p className="text-gray-500 italic text-sm">
+                        <p className="text-lumex-muted italic text-sm">
                             Author profile pages will display publications, affiliations, and
                             co-author networks once the backend API is integrated.
                         </p>

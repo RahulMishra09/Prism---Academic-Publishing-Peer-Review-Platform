@@ -27,7 +27,7 @@ export const ProofingPage: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Left: Proof Viewer */}
                 <div className="lg:col-span-2 space-y-6">
-                    <div className="bg-gray-100 border border-lumex-border rounded-lg aspect-[1/1.414] flex flex-col items-center justify-center p-12 text-center shadow-inner overflow-hidden relative group">
+                    <div className="bg-lumex-bg-deep border border-lumex-border rounded-lg aspect-[1/1.414] flex flex-col items-center justify-center p-12 text-center shadow-inner overflow-hidden relative group">
                         <div className="absolute inset-0 bg-lumex-bg-white m-8 shadow-lg flex flex-col p-12 text-left font-serif transform group-hover:scale-[1.02] transition-transform duration-500">
                             <div className="border-b-2 border-lumex-text pb-4 mb-6">
                                 <p className="text-[10px] uppercase tracking-widest font-sans font-bold text-lumex-blue">Lumex Scientific Publishing</p>
@@ -40,12 +40,12 @@ export const ProofingPage: React.FC = () => {
                                 <p className="font-bold mt-4">1. Introduction</p>
                                 <p>Progress in quantum hardware has reached a critical threshold where practical applications in drug discovery and genomic analysis are becoming feasible...</p>
                                 <div className="w-full h-32 bg-lumex-bg-deep border border-dashed border-lumex-border flex items-center justify-center my-4">
-                                    <p className="text-[10px] text-gray-400 font-sans italic">[Figure 1: Comparison of Classical vs Quantum Search Algorithms]</p>
+                                    <p className="text-[10px] text-lumex-sub font-sans italic">[Figure 1: Comparison of Classical vs Quantum Search Algorithms]</p>
                                 </div>
                                 <p>Furthermore, the ethical implications of quantum-enhanced encryption must be addressed as healthcare data becomes increasingly centralized...</p>
                             </div>
 
-                            <div className="absolute bottom-8 right-12 text-[8px] font-sans text-gray-400">
+                            <div className="absolute bottom-8 right-12 text-[8px] font-sans text-lumex-sub">
                                 Page 1 of 14 · Lumex-ID: {id}
                             </div>
                         </div>

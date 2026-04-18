@@ -68,7 +68,7 @@ export const DecisionForm: React.FC = () => {
                         <textarea
                             value={letter}
                             onChange={(e) => setLetter(e.target.value)}
-                            className="w-full h-[500px] p-4 text-sm font-mono border border-lumex-border rounded-lg outline-none focus:border-lumex-blue bg-gray-50/20"
+                            className="w-full h-[500px] p-4 text-sm font-mono border border-lumex-border rounded-lg outline-none focus:border-lumex-blue bg-lumex-bg-deep/40/20"
                             placeholder="Final letter to the authors..."
                         />
                     </section>

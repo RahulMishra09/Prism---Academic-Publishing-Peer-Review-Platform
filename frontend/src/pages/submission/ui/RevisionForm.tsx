@@ -40,7 +40,7 @@ export const RevisionForm: React.FC = () => {
                 {/* Rebuttal Section */}
                 <section>
                     <h2 className="text-lg font-bold text-lumex-text mb-4 border-b pb-2">1. Response to Reviewers (Rebuttal)</h2>
-                    <p className="text-sm text-gray-500 mb-3">
+                    <p className="text-sm text-lumex-muted mb-3">
                         Please provide a point-by-point response to the reviewers' comments. This is essential for the re-evaluation of your manuscript.
                     </p>
                     <textarea
@@ -55,7 +55,7 @@ export const RevisionForm: React.FC = () => {
                 {/* Revised File Upload */}
                 <section>
                     <h2 className="text-lg font-bold text-lumex-text mb-4 border-b pb-2">2. Upload Revised Manuscript</h2>
-                    <p className="text-sm text-gray-500 mb-4">
+                    <p className="text-sm text-lumex-muted mb-4">
                         Ensure all changes are highlighted or tracked if requested by the editor.
                     </p>
                     <div className="border-2 border-dashed border-lumex-border rounded-lg p-10 text-center hover:border-lumex-blue transition-colors bg-lumex-bg-deep/50">
@@ -65,7 +65,7 @@ export const RevisionForm: React.FC = () => {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-lumex-blue"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                             </div>
                             <span className="text-sm font-bold text-lumex-text block mb-1">Click to upload revised file</span>
-                            <span className="text-xs text-gray-400">Word or PDF (max 20MB)</span>
+                            <span className="text-xs text-lumex-sub">Word or PDF (max 20MB)</span>
                         </label>
                     </div>
                 </section>

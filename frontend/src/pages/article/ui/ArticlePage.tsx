@@ -68,7 +68,7 @@ export const ArticlePage: React.FC = () => {
         return (
             <Container className="py-16 text-center">
                 <h1 className="text-3xl font-serif text-lumex-blue mb-4">Article Not Found</h1>
-                <p className="text-gray-600 mb-8">
+                <p className="text-lumex-muted mb-8">
                     The article with DOI <code>{doi}</code> could not be found.
                 </p>
                 <Link to="/search" className="text-lumex-blue hover:underline font-bold">

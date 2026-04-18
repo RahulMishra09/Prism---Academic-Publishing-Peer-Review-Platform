@@ -194,7 +194,7 @@ export const ArticleReadingPage: React.FC = () => {
                     >
                         {/* Simulated Document Content */}
                         <div className="text-left text-black">
-                            <p className="mb-8 border-b pb-2 text-[10px] font-bold uppercase text-gray-400">
+                            <p className="mb-8 border-b pb-2 text-[10px] font-bold uppercase text-lumex-sub">
                                 Prism Publishing | DOI: {article.doi}
                             </p>
 
@@ -211,21 +211,21 @@ export const ArticleReadingPage: React.FC = () => {
                             </div>
 
                             <div className="text-[13px] font-serif leading-relaxed space-y-4">
-                                <h3 className="mt-8 border-b border-gray-200 pb-1 text-sm font-bold uppercase">Abstract</h3>
-                                <div className="space-y-2 border-l-2 border-black bg-gray-50 p-4 italic">
+                                <h3 className="mt-8 border-b border-lumex-border pb-1 text-sm font-bold uppercase">Abstract</h3>
+                                <div className="space-y-2 border-l-2 border-black bg-lumex-bg-deep/40 p-4 italic">
                                     {article.abstract.map((section) => (
                                         <p key={section.text.substring(0, 20)}>{section.text}</p>
                                     ))}
                                 </div>
 
-                                <h3 className="mt-8 border-b border-gray-200 pb-1 text-sm font-bold uppercase">1. Introduction</h3>
+                                <h3 className="mt-8 border-b border-lumex-border pb-1 text-sm font-bold uppercase">1. Introduction</h3>
                                 <p>
                                     Scientific communication is evolving at an unprecedented pace. The digital transition has not only changed how researchers access information but also how they interact with it. In this paper, we explore the integration of interactive reading environments...
                                 </p>
                                 <p>
                                     Lorum ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                                 </p>
-                                <div className="my-4 flex flex-col items-center justify-center border border-dashed border-gray-300 bg-gray-50 py-8 text-xs italic text-gray-400">
+                                <div className="my-4 flex flex-col items-center justify-center border border-dashed border-lumex-border bg-lumex-bg-deep/40 py-8 text-xs italic text-lumex-sub">
                                     <IconImages />
                                     <span className="mt-2">[Placeholder for Figure 1]</span>
                                 </div>
@@ -233,13 +233,13 @@ export const ArticleReadingPage: React.FC = () => {
                                     Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                                 </p>
 
-                                <h3 className="mt-8 border-b border-gray-200 pb-1 text-sm font-bold uppercase">2. Methods</h3>
+                                <h3 className="mt-8 border-b border-lumex-border pb-1 text-sm font-bold uppercase">2. Methods</h3>
                                 <p>
                                     Our experimental framework relies on a multi-stage data processing pipeline. First, we collected metadata from over 1 million open-access articles. Second, we applied...
                                 </p>
                             </div>
 
-                            <div className="mt-16 flex items-center justify-between border-t border-gray-100 pt-8 text-[10px] text-gray-400">
+                            <div className="mt-16 flex items-center justify-between border-t border-gray-100 pt-8 text-[10px] text-lumex-sub">
                                 <span>© 2025 Prism Academic Publishing</span>
                                 <span>Page 1 of 12</span>
                             </div>
