@@ -1,0 +1,107 @@
+@import './shared/ui/styles/variables.css';
+@import './shared/ui/styles/typography.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-lumex-bg text-lumex-text transition-colors duration-200;
+        min-height: 100vh;
+    }
+
+    /* Respect prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
+    }
+}
+
+@layer components {
+    /* --- Glassmorphism utilities --- */
+    .glass {
+        background: var(--prism-glass-bg);
+        backdrop-filter: blur(var(--prism-glass-blur));
+        -webkit-backdrop-filter: blur(var(--prism-glass-blur));
+        border: 1px solid var(--prism-glass-border);
+        box-shadow: var(--shadow-glass);
+    }
+
+    .glass-deep {
+        background: var(--prism-glass-bg-deep);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--prism-glass-border);
+        box-shadow: var(--shadow-glass);
+    }
+
+    /* --- Card lift on hover --- */
+    .card-hover {
+        transition: transform var(--transition-base), box-shadow var(--transition-base);
+    }
+
+    .card-hover:hover {
+        transform: translateY(-3px);
+        box-shadow: var(--shadow-card-hover);
+    }
+
+    /* --- Focus ring (accessible) --- */
+    .focus-ring {
+        @apply outline-none ring-2 ring-lumex-blue ring-offset-2;
+    }
+
+    /* --- Article reading surface --- */
+    .reading-surface {
+        font-family: 'Crimson Pro', Georgia, serif;
+        font-size: 1.125rem;
+        line-height: 1.85;
+        color: var(--prism-reading-text);
+        background: var(--prism-reading-bg);
+        max-width: 680px;
+        margin: 0 auto;
+    }
+
+    /* --- Section divider --- */
+    .section-divider {
+        @apply border-t border-lumex-border my-8;
+    }
+
+    /* --- Shimmer skeleton --- */
+    .skeleton {
+        background: linear-gradient(
+            90deg,
+            var(--lumex-bg-deep) 25%,
+            var(--lumex-border) 50%,
+            var(--lumex-bg-deep) 75%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.8s linear infinite;
+        border-radius: var(--radius-md);
+    }
+
+    /* --- Badge base --- */
+    .badge-oa {
+        background: var(--lumex-open-bg);
+        color: var(--lumex-open-text);
+        @apply text-xs font-semibold px-2 py-0.5 rounded-full;
+    }
+
+    .badge-peer-reviewed {
+        background: var(--prism-violet-soft);
+        color: var(--prism-violet);
+        @apply text-xs font-semibold px-2 py-0.5 rounded-full;
+    }
+
+    .badge-subscription {
+        background: var(--lumex-sub-bg);
+        color: var(--lumex-sub-text);
+        @apply text-xs font-semibold px-2 py-0.5 rounded-full;
+    }
+}
