@@ -143,7 +143,7 @@ npm install
 cp .env.example .env   # fill in DATABASE_URL and JWT_SECRET
 npx prisma migrate dev
 npx prisma generate
-npm run dev            # starts on http://localhost:5000
+npm run dev            # starts on http://localhost:8080
 ```
 
 ### 3. Frontend setup
@@ -167,7 +167,7 @@ The Vite dev server proxies `/api/*` → `http://localhost:5000` automatically. 
 |---|---|---|
 | `DATABASE_URL` | PostgreSQL connection string | — |
 | `JWT_SECRET` | Secret key for signing JWTs | — |
-| `PORT` | Server port | `5000` |
+| `PORT` | Server port | `8080` |
 | `NODE_ENV` | `development` or `production` | `development` |
 | `JWT_EXPIRES_IN` | Token lifetime | `7d` |
 
