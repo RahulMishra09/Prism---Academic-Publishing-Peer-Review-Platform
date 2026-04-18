@@ -35,7 +35,7 @@ export const SubmissionWizard: React.FC = () => {
         <div className="w-full">
             <WizardStepper currentStep={currentStep} />
 
-            <div className="mt-8 bg-lumex-card p-6 sm:p-10 shadow-sm border border-lumex-border rounded-lg min-h-[500px]">
+            <div className="mt-8 min-h-[500px] rounded-xl border border-lumex-border bg-lumex-bg-white p-6 shadow-sm sm:p-10">
                 {renderStep()}
             </div>
         </div>
