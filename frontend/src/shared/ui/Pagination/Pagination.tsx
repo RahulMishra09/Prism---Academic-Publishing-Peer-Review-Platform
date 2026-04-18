@@ -1,6 +1,5 @@
 import React from 'react';
 import { clsx } from 'clsx';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 export type PaginationProps = React.HTMLAttributes<HTMLElement>;
 
@@ -8,7 +7,7 @@ export const Pagination = ({ className, ...props }: PaginationProps) => (
     <nav
         role="navigation"
         aria-label="pagination"
-        className={clsx('mx-auto flex w-full justify-center', className)}
+        className={clsx('flex w-full items-center justify-center', className)}
         {...props}
     />
 );
@@ -18,13 +17,16 @@ export const PaginationContent = React.forwardRef<
     HTMLUListElement,
     React.HTMLAttributes<HTMLUListElement>
 >(({ className, ...props }, ref) => (
-    <ul ref={ref} className={clsx('flex flex-row items-center gap-1', className)} {...props} />
+    <ul ref={ref} className={clsx('flex items-center gap-1', className)} {...props} />
 ));
 PaginationContent.displayName = 'PaginationContent';
 
-export const PaginationItem = React.forwardRef<HTMLLIElement, React.HTMLAttributes<HTMLLIElement>>(
-    ({ className, ...props }, ref) => <li ref={ref} className={clsx('', className)} {...props} />
-);
+export const PaginationItem = React.forwardRef<
+    HTMLLIElement,
+    React.HTMLAttributes<HTMLLIElement>
+>(({ className, ...props }, ref) => (
+    <li ref={ref} className={clsx('', className)} {...props} />
+));
 PaginationItem.displayName = 'PaginationItem';
 
 type PaginationLinkProps = {
@@ -35,10 +37,12 @@ export const PaginationLink = ({ className, isActive, ...props }: PaginationLink
     <a
         aria-current={isActive ? 'page' : undefined}
         className={clsx(
-            'inline-flex h-9 w-9 items-center justify-center rounded-md text-sm font-medium transition-colors hover:bg-lumex-bg-light focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumex-blue disabled:pointer-events-none disabled:opacity-50',
+            'inline-flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg text-sm font-medium',
+            'transition-all duration-150',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumex-blue focus-visible:ring-offset-1',
             isActive
-                ? 'bg-lumex-blue text-white hover:bg-lumex-blue-dark'
-                : 'text-lumex-text cursor-pointer',
+                ? 'bg-lumex-blue text-white shadow-sm'
+                : 'text-lumex-muted hover:bg-lumex-bg-deep hover:text-lumex-text',
             className
         )}
         {...props}
@@ -52,11 +56,13 @@ export const PaginationPrevious = ({
 }: React.ComponentProps<typeof PaginationLink>) => (
     <PaginationLink
         aria-label="Go to previous page"
-        className={clsx('gap-1 pr-2.5 w-auto px-3', className)}
+        className={clsx('w-auto gap-1.5 px-3', className)}
         {...props}
     >
-        <FaChevronLeft className="h-3 w-3" />
-        <span className="hidden sm:block">Previous</span>
+        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+        <span className="hidden sm:block text-sm">Prev</span>
     </PaginationLink>
 );
 PaginationPrevious.displayName = 'PaginationPrevious';
@@ -67,11 +73,13 @@ export const PaginationNext = ({
 }: React.ComponentProps<typeof PaginationLink>) => (
     <PaginationLink
         aria-label="Go to next page"
-        className={clsx('gap-1 pl-2.5 w-auto px-3', className)}
+        className={clsx('w-auto gap-1.5 px-3', className)}
         {...props}
     >
-        <span className="hidden sm:block">Next</span>
-        <FaChevronRight className="h-3 w-3" />
+        <span className="hidden sm:block text-sm">Next</span>
+        <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
     </PaginationLink>
 );
 PaginationNext.displayName = 'PaginationNext';
@@ -82,10 +90,13 @@ export const PaginationEllipsis = ({
 }: React.HTMLAttributes<HTMLSpanElement>) => (
     <span
         aria-hidden
-        className={clsx('flex h-9 w-9 items-center justify-center', className)}
+        className={clsx(
+            'flex h-8 w-8 items-center justify-center text-lumex-sub text-sm',
+            className
+        )}
         {...props}
     >
-        ...
+        &hellip;
     </span>
 );
 PaginationEllipsis.displayName = 'PaginationEllipsis';

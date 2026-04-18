@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import * as TabsPrimitive from '@radix-ui/react-tabs';
 import { clsx } from 'clsx';
 
@@ -11,7 +11,7 @@ export const TabsList = React.forwardRef<
     <TabsPrimitive.List
         ref={ref}
         className={clsx(
-            'inline-flex h-10 items-center justify-center rounded-md bg-lumex-bg-light p-1 text-lumex-muted',
+            'flex items-center gap-0 border-b border-lumex-border',
             className
         )}
         {...props}
@@ -26,7 +26,14 @@ export const TabsTrigger = React.forwardRef<
     <TabsPrimitive.Trigger
         ref={ref}
         className={clsx(
-            'inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumex-blue focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-lumex-bg-white data-[state=active]:text-lumex-blue data-[state=active]:shadow-sm',
+            'relative px-4 py-2.5 text-sm font-medium text-lumex-muted',
+            'transition-colors duration-150',
+            'hover:text-lumex-text',
+            'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumex-blue focus-visible:ring-inset',
+            'disabled:pointer-events-none disabled:opacity-40',
+            // active underline indicator
+            'after:absolute after:bottom-[-1px] after:left-0 after:right-0 after:h-[2px] after:rounded-t-full after:bg-lumex-blue after:scale-x-0 after:transition-transform after:duration-150',
+            'data-[state=active]:text-lumex-blue data-[state=active]:after:scale-x-100',
             className
         )}
         {...props}
@@ -41,7 +48,7 @@ export const TabsContent = React.forwardRef<
     <TabsPrimitive.Content
         ref={ref}
         className={clsx(
-            'mt-2 ring-offset-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumex-blue focus-visible:ring-offset-2',
+            'mt-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-lumex-blue focus-visible:ring-offset-2',
             className
         )}
         {...props}
