@@ -28,7 +28,7 @@ export const JournalHero: React.FC<JournalHeroProps> = ({ journal, className, ba
     ].filter(m => m.value !== 'N/A');
 
     return (
-        <div className={`bg-lumex-bg border-b border-lumex-border ${className || ''}`}>
+        <div className={`border-b border-lumex-border bg-lumex-bg-white ${className || ''}`}>
             <Container className="pt-6 pb-0">
                 <Breadcrumb className="mb-6">
                     <BreadcrumbList>
@@ -144,19 +144,20 @@ const TabLink = ({
     <NavLink
         end={end}
         to={to}
-        className={({ isActive }) => `
-      relative py-4 px-2 text-sm md:text-base font-bold whitespace-nowrap transition-colors
-      ${isActive
-                ? 'text-lumex-text'
-                : 'text-lumex-blue hover:text-lumex-blue-dark hover:underline'
-            }
-    `}
+        className={({ isActive }) =>
+            [
+                'relative whitespace-nowrap px-2 py-3.5 text-[0.82rem] font-semibold transition-colors',
+                isActive
+                    ? 'text-lumex-blue'
+                    : 'text-lumex-muted hover:text-lumex-text',
+            ].join(' ')
+        }
     >
         {({ isActive }) => (
             <>
                 {children}
                 {isActive && (
-                    <div className="absolute bottom-0 left-0 w-full h-1 bg-lumex-blue" />
+                    <span className="absolute bottom-0 left-0 h-[2px] w-full rounded-t-full bg-lumex-blue" />
                 )}
             </>
         )}

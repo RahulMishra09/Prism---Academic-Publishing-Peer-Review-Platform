@@ -18,7 +18,7 @@ export const JournalHomePage: React.FC = () => {
         <div className="space-y-12">
             <Helmet>
                 <title>{journal.title}</title>
-                <meta name="description" content={`Explore the latest research, articles, and editorial insights from ${journal.title}. Published by Lumex.`} />
+                <meta name="description" content={`Explore the latest research, articles, and editorial insights from ${journal.title}. Published by Prism.`} />
             </Helmet>
             {/* Latest Articles Section */}
             <section>
