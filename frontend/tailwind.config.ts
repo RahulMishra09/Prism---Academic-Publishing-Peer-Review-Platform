@@ -100,6 +100,10 @@ const config: Config = {
                     from: { opacity: '0', transform: 'scale(0.96)' },
                     to: { opacity: '1', transform: 'scale(1)' },
                 },
+                marquee: {
+                    from: { transform: 'translateX(0)' },
+                    to: { transform: 'translateX(-50%)' },
+                },
             },
 
             animation: {
@@ -109,6 +113,7 @@ const config: Config = {
                 shimmer: 'shimmer 2s linear infinite',
                 'slide-down': 'slideDown 0.2s ease both',
                 'scale-in': 'scaleIn 0.2s ease both',
+                marquee: 'marquee 28s linear infinite',
             },
 
             borderRadius: {
