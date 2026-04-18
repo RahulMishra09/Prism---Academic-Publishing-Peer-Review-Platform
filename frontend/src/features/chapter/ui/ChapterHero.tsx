@@ -14,7 +14,7 @@ export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf
         <div className="bg-lumex-bg-light border-b border-lumex-border pb-8">
             <div className="max-w-4xl mx-auto pt-8 px-4 sm:px-6 lg:px-8">
                 {/* Breadcrumb */}
-                <nav className="text-sm text-gray-500 mb-5 flex items-center flex-wrap gap-1">
+                <nav className="text-sm text-lumex-muted mb-5 flex items-center flex-wrap gap-1">
                     <a href="/" className="hover:text-lumex-blue">
                         Home
                     </a>
@@ -31,7 +31,7 @@ export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf
 
                 {/* Book source link */}
                 <div className="mb-4 text-sm">
-                    <span className="text-gray-500">Chapter in: </span>
+                    <span className="text-lumex-muted">Chapter in: </span>
                     <a
                         href={`/book/${encodeURIComponent(chapter.bookDoi)}`}
                         className="text-lumex-blue hover:underline font-bold font-serif italic"
@@ -39,9 +39,9 @@ export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf
                         {chapter.bookTitle}
                     </a>
                     {chapter.pages && (
-                        <span className="text-gray-500 ml-2">· pp. {chapter.pages}</span>
+                        <span className="text-lumex-muted ml-2">· pp. {chapter.pages}</span>
                     )}
-                    <span className="text-gray-500 ml-2">· {chapter.publishYear}</span>
+                    <span className="text-lumex-muted ml-2">· {chapter.publishYear}</span>
                 </div>
 
                 {/* Chapter title */}
@@ -67,7 +67,7 @@ export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf
                 </div>
 
                 {/* Action Bar */}
-                <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-gray-200">
+                <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-lumex-border">
                     <Button
                         variant="primary"
                         className="font-bold shadow-sm"
@@ -98,7 +98,7 @@ export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf
                         href={`https://doi.org/${chapter.doi}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-gray-500 hover:text-lumex-blue font-mono"
+                        className="text-xs text-lumex-muted hover:text-lumex-blue font-mono"
                     >
                         DOI: {chapter.doi}
                     </a>

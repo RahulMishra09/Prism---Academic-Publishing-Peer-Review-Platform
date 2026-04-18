@@ -89,7 +89,7 @@ export const AccessGate: React.FC<AccessGateProps> = ({ article, onPurchase, onS
                     </Button>
                 </div>
 
-                <p className="mt-4 text-xs text-gray-500">
+                <p className="mt-4 text-xs text-lumex-muted">
                     Institutional users may also access full-text articles through their library
                     subscriptions.
                     <a href="/info/access" className="text-lumex-blue hover:underline ml-1">

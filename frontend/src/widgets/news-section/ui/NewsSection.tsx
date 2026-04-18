@@ -110,14 +110,22 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                                                 ))}
 
                                             <span
-                                                className={`ml-auto rounded px-2 py-0.5 text-[0.69rem] font-semibold ${item.accessLevel === 'open_access'
+                                                className={`ml-auto inline-flex items-center gap-1 rounded px-2 py-0.5 text-[0.69rem] font-semibold ${item.accessLevel === 'open_access'
                                                     ? 'bg-lumex-open-bg text-lumex-open-text'
                                                     : 'bg-lumex-sub-bg text-lumex-sub-text'
                                                     }`}
                                             >
-                                                {item.accessLevel === 'open_access'
-                                                    ? '🔓 Open'
-                                                    : '🔒 Sub'}
+                                                {item.accessLevel === 'open_access' ? (
+                                                    <>
+                                                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="3" y="11" width="18" height="11" rx="2" /><path strokeLinecap="round" strokeLinejoin="round" d="M7 11V7a5 5 0 019.9-1" /></svg>
+                                                        Open
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="3" y="11" width="18" height="11" rx="2" /><path strokeLinecap="round" strokeLinejoin="round" d="M7 11V7a5 5 0 0110 0v4" /></svg>
+                                                        Sub
+                                                    </>
+                                                )}
                                             </span>
                                         </div>
 
@@ -144,8 +152,9 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                                             <span>{item.journalTitle || ''}</span>
                                             <span>{item.publishedDate || ''}</span>
                                             {item.citationCount != null && (
-                                                <span className="ml-auto">
-                                                    🔗 {item.citationCount}
+                                                <span className="ml-auto inline-flex items-center gap-1">
+                                                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
+                                                    {item.citationCount}
                                                 </span>
                                             )}
                                         </div>

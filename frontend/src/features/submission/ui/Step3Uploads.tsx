@@ -120,7 +120,7 @@ export const Step3Uploads: React.FC = () => {
                                         <td className="px-4 py-3 text-right">
                                             <button
                                                 onClick={() => removeFile(file.id)}
-                                                className="text-red-500 hover:text-red-700 p-1"
+                                                className="text-lumex-red hover:text-lumex-red p-1"
                                                 title="Remove file"
                                             >
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -137,7 +137,7 @@ export const Step3Uploads: React.FC = () => {
             )}
 
             {localError && (
-                <div className="p-4 mb-6 bg-red-50 text-red-700 border border-red-200 rounded-md">
+                <div className="p-4 mb-6 bg-lumex-red/5 text-lumex-red border border-lumex-red/20 rounded-md">
                     {localError}
                 </div>
             )}

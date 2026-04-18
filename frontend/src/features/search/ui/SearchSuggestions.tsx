@@ -27,7 +27,7 @@ export const SearchSuggestions: React.FC<SearchSuggestionsProps> = ({
                 </div>
             )}
 
-            {isError && <div className="p-4 text-sm text-red-500">Failed to load suggestions.</div>}
+            {isError && <div className="p-4 text-sm text-lumex-red">Failed to load suggestions.</div>}
 
             {!isLoading && !isError && (!suggestions || suggestions.length === 0) && (
                 <div className="p-4 text-sm text-lumex-text-secondary">

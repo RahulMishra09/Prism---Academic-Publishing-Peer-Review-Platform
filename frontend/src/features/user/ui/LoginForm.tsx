@@ -44,10 +44,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
         <form onSubmit={(e) => void handleSubmit(e)} className="space-y-5" noValidate>
             {/* Dev-mode credential hint */}
             {import.meta.env.DEV && (
-                <div className="rounded-md bg-lumex-accent-soft border border-lumex-accent/20 px-4 py-3 text-sm text-lumex-accent">
+                <div className="rounded-md bg-lumex-blue-soft border border-lumex-blue/20 px-4 py-3 text-sm text-lumex-blue">
                     <strong>Dev credentials:</strong>{' '}
-                    <code className="bg-lumex-accent/10 px-1 rounded">test@lumex.com</code> /{' '}
-                    <code className="bg-lumex-accent/10 px-1 rounded">password</code>
+                    <code className="bg-lumex-blue/10 px-1 rounded">test@lumex.com</code> /{' '}
+                    <code className="bg-lumex-blue/10 px-1 rounded">password</code>
                 </div>
             )}
             <div>
@@ -67,7 +67,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
                         }`}
                     placeholder="you@example.com"
                 />
-                {fieldErrors.email && <p className="mt-1 text-xs text-red-500">{fieldErrors.email}</p>}
+                {fieldErrors.email && <p className="mt-1 text-xs text-lumex-red">{fieldErrors.email}</p>}
             </div>
 
             <div>
@@ -95,7 +95,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
                         }`}
                     placeholder="••••••••"
                 />
-                {fieldErrors.password && <p className="mt-1 text-xs text-red-500">{fieldErrors.password}</p>}
+                {fieldErrors.password && <p className="mt-1 text-xs text-lumex-red">{fieldErrors.password}</p>}
             </div>
 
             <div className="flex items-center gap-2">
@@ -104,7 +104,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={e => setRememberMe(e.target.checked)}
-                    className="w-4 h-4 rounded border-gray-300 text-lumex-blue focus:ring-lumex-blue"
+                    className="w-4 h-4 rounded border-lumex-border text-lumex-blue focus:ring-lumex-blue"
                 />
                 <label htmlFor="remember-me" className="text-sm text-lumex-muted cursor-pointer">
                     Keep me signed in
@@ -154,7 +154,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSuccess }) => {
             <div className="relative text-center text-sm text-lumex-muted">
                 <span className="px-2 bg-lumex-bg-white relative z-10">or sign in with</span>
                 <div className="absolute inset-0 flex items-center">
-                    <div className="w-full border-t border-gray-200" />
+                    <div className="w-full border-t border-lumex-border" />
                 </div>
             </div>
 

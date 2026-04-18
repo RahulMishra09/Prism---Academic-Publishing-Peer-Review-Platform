@@ -55,7 +55,7 @@ export const Step1ArticleType: React.FC = () => {
                                     type="radio"
                                     value={type.id}
                                     {...register('manuscriptType')}
-                                    className="h-4 w-4 text-lumex-blue border-gray-300 focus:ring-lumex-blue"
+                                    className="h-4 w-4 text-lumex-blue border-lumex-border focus:ring-lumex-blue"
                                 />
                             </div>
                             <div>
@@ -71,7 +71,7 @@ export const Step1ArticleType: React.FC = () => {
                 </Stack>
 
                 {errors.manuscriptType && (
-                    <p className="text-red-600 text-sm mb-4 font-medium">
+                    <p className="text-lumex-red text-sm mb-4 font-medium">
                         {errors.manuscriptType.message}
                     </p>
                 )}

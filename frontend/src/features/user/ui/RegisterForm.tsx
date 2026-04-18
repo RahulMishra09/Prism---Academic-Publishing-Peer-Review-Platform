@@ -109,7 +109,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
                         type="checkbox"
                         checked={form.agreeTerms}
                         onChange={set('agreeTerms')}
-                        className="w-4 h-4 mt-0.5 rounded border-gray-300 text-lumex-blue focus:ring-lumex-blue"
+                        className="w-4 h-4 mt-0.5 rounded border-lumex-border text-lumex-blue focus:ring-lumex-blue"
                     />
                     <span className="text-sm text-lumex-text-secondary">
                         I agree to the{' '}

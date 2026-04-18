@@ -39,8 +39,8 @@ export const Step5Review: React.FC = () => {
     if (submissionSuccess) {
         return (
             <div className="max-w-2xl mx-auto text-center py-12">
-                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
+                <div className="w-20 h-20 bg-lumex-open-bg rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-lumex-open-text">
                         <polyline points="20 6 9 17 4 12" />
                     </svg>
                 </div>
@@ -171,7 +171,7 @@ export const Step5Review: React.FC = () => {
 
                 {/* Files */}
                 <div className="mb-4">
-                    <h3 className="text-sm font-bold text-lumex-text uppercase tracking-wider mb-3 pb-2 border-b border-gray-200">
+                    <h3 className="text-sm font-bold text-lumex-text uppercase tracking-wider mb-3 pb-2 border-b border-lumex-border">
                         Uploaded Files
                     </h3>
                     <ul className="space-y-2 text-sm text-lumex-text">
@@ -208,7 +208,7 @@ export const Step5Review: React.FC = () => {
                         </div>
                     </label>
                     {errors.agreedToTerms && (
-                        <p className="text-red-600 text-sm mt-2 ml-8 font-bold">{errors.agreedToTerms.message}</p>
+                        <p className="text-lumex-red text-sm mt-2 ml-8 font-bold">{errors.agreedToTerms.message}</p>
                     )}
                 </div>
 

@@ -56,9 +56,9 @@ const config: Config = {
             },
 
             fontFamily: {
-                sans: ['Inter', 'system-ui', 'sans-serif'],
-                serif: ['Playfair Display', 'Georgia', 'serif'],
-                reading: ['Crimson Pro', 'Georgia', 'serif'],
+                sans: ['Atkinson Hyperlegible', 'Inter', 'system-ui', 'sans-serif'],
+                serif: ['EB Garamond', 'Georgia', 'serif'],
+                reading: ['Crimson Text', 'Georgia', 'serif'],
                 mono: ['Source Code Pro', 'ui-monospace', 'monospace'],
             },
 

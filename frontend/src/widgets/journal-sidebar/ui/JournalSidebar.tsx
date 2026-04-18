@@ -69,7 +69,7 @@ export const JournalSidebar: React.FC<JournalSidebarProps> = ({ journal, classNa
                     <a href="#" className="hover:underline flex items-center justify-between">
                         Print ISSN <span>0948-2838</span>
                     </a>
-                    <hr className="border-gray-300 my-2" />
+                    <hr className="border-lumex-border my-2" />
                     <a href="#" className="hover:underline">
                         Contact the journal
                     </a>

@@ -51,17 +51,17 @@ export const ArticleSidebar: React.FC<ArticleSidebarProps> = ({
             <div className="bg-lumex-card border border-lumex-border rounded-lg p-4 text-sm shadow-sm transition-colors duration-200">
                 <div className="flex items-center gap-2 mb-3">
                     {article.accessLevel === 'open_access' && (
-                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-green-100 text-green-800 rounded font-bold text-xs">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-lumex-open-bg text-lumex-open-text rounded font-bold text-xs">
                             Open Access
                         </span>
                     )}
                     {article.accessLevel === 'subscribed' && (
-                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-blue-100 text-blue-800 rounded font-bold text-xs">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-lumex-sub-bg text-lumex-sub-text rounded font-bold text-xs">
                             Subscribed
                         </span>
                     )}
                     {(article.accessLevel !== 'open_access' && article.accessLevel !== 'subscribed') && (
-                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-gray-700 rounded font-bold text-xs">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 bg-lumex-bg text-lumex-text rounded font-bold text-xs">
                             Access Required
                         </span>
                     )}

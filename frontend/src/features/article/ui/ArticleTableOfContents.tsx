@@ -72,7 +72,7 @@ export const ArticleTableOfContents: React.FC<ArticleTableOfContentsProps> = ({
                         key={section.id}
                         className={clsx(
                             'pl-2',
-                            section.level > 1 && 'ml-4 border-l border-gray-200'
+                            section.level > 1 && 'ml-4 border-l border-lumex-border'
                         )}
                     >
                         <a
@@ -82,7 +82,7 @@ export const ArticleTableOfContents: React.FC<ArticleTableOfContentsProps> = ({
                                 'block text-sm py-1 transition-colors duration-200',
                                 activeSectionId === section.id
                                     ? 'text-lumex-blue font-bold border-l-2 border-lumex-blue -ml-[3px] pl-[9px]'
-                                    : 'text-gray-600 hover:text-lumex-blue'
+                                    : 'text-lumex-muted hover:text-lumex-blue'
                             )}
                         >
                             {section.title}

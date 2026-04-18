@@ -18,7 +18,7 @@ export const BookHero: React.FC<BookHeroProps> = ({ book, chapterCount, onBuy, o
         <div className="bg-lumex-bg-light border-b border-lumex-border pb-10">
             <div className="max-w-5xl mx-auto pt-8 px-4 sm:px-6 lg:px-8">
                 {/* Breadcrumb */}
-                <nav className="text-sm text-gray-500 mb-6">
+                <nav className="text-sm text-lumex-muted mb-6">
                     <a href="/" className="hover:text-lumex-blue">
                         Home
                     </a>
@@ -39,7 +39,7 @@ export const BookHero: React.FC<BookHeroProps> = ({ book, chapterCount, onBuy, o
                             <img
                                 src={book.coverImageUrl}
                                 alt={`Cover of ${book.title}`}
-                                className="w-40 md:w-52 shadow-lg border border-gray-200 rounded"
+                                className="w-40 md:w-52 shadow-lg border border-lumex-border rounded"
                             />
                         ) : (
                             <div className="w-40 md:w-52 aspect-[3/4] bg-gradient-to-br from-lumex-blue to-lumex-blue-dark rounded shadow-lg flex items-center justify-center">
@@ -73,7 +73,7 @@ export const BookHero: React.FC<BookHeroProps> = ({ book, chapterCount, onBuy, o
                                 {book.type.replace('-', ' ')}
                             </Badge>
                             {book.edition && (
-                                <span className="text-xs text-gray-500 font-medium">
+                                <span className="text-xs text-lumex-muted font-medium">
                                     {book.edition} Edition
                                 </span>
                             )}
@@ -90,7 +90,7 @@ export const BookHero: React.FC<BookHeroProps> = ({ book, chapterCount, onBuy, o
                         )}
 
                         {/* Authors/Editors */}
-                        <div className="mb-5 text-sm text-gray-700 leading-relaxed">
+                        <div className="mb-5 text-sm text-lumex-text leading-relaxed">
                             <span className="font-semibold text-lumex-text">
                                 {isEdited ? 'Editors: ' : 'Authors: '}
                             </span>
@@ -110,31 +110,31 @@ export const BookHero: React.FC<BookHeroProps> = ({ book, chapterCount, onBuy, o
                         {/* Publisher Row */}
                         <div className="grid grid-cols-2 gap-x-8 gap-y-2 mb-6 text-sm">
                             <div>
-                                <span className="text-gray-500">Publisher</span>
+                                <span className="text-lumex-muted">Publisher</span>
                                 <p className="font-semibold text-lumex-text">{book.publisher}</p>
                             </div>
                             <div>
-                                <span className="text-gray-500">Year</span>
+                                <span className="text-lumex-muted">Year</span>
                                 <p className="font-semibold text-lumex-text">
                                     {book.publishYear}
                                 </p>
                             </div>
                             <div>
-                                <span className="text-gray-500">ISBN</span>
+                                <span className="text-lumex-muted">ISBN</span>
                                 <p className="font-mono text-lumex-text text-xs mt-0.5">
                                     {book.isbn}
                                 </p>
                             </div>
                             {chapterCount !== undefined && (
                                 <div>
-                                    <span className="text-gray-500">Chapters</span>
+                                    <span className="text-lumex-muted">Chapters</span>
                                     <p className="font-semibold text-lumex-text">
                                         {chapterCount}
                                     </p>
                                 </div>
                             )}
                             <div>
-                                <span className="text-gray-500">DOI</span>
+                                <span className="text-lumex-muted">DOI</span>
                                 <a
                                     href={`https://doi.org/${book.doi}`}
                                     target="_blank"

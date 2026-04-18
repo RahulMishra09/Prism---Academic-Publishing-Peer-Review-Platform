@@ -16,7 +16,7 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({ initialAlerts = [] }) 
 
     if (alerts.length === 0) {
         return (
-            <div className="text-center py-16 text-gray-400">
+            <div className="text-center py-16 text-lumex-muted">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="48"
@@ -55,14 +55,14 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({ initialAlerts = [] }) 
                             <p className="font-semibold text-lumex-text truncate">
                                 {alert.label}
                             </p>
-                            <p className="text-xs text-gray-400 capitalize mt-0.5">
+                            <p className="text-xs text-lumex-muted capitalize mt-0.5">
                                 {alert.type} · {alert.frequency}
                             </p>
                         </div>
                         {/* Toggle */}
                         <button
                             onClick={() => toggleActive(alert.id)}
-                            className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${alert.active ? 'bg-lumex-blue' : 'bg-gray-200'
+                            className={`relative w-10 h-5 rounded-full transition-colors shrink-0 ${alert.active ? 'bg-lumex-blue' : 'bg-lumex-bg-deep'
                                 }`}
                             aria-label={`${alert.active ? 'Disable' : 'Enable'} alert`}
                         >
@@ -73,7 +73,7 @@ export const AlertsPanel: React.FC<AlertsPanelProps> = ({ initialAlerts = [] }) 
                         </button>
                         <button
                             onClick={() => removeAlert(alert.id)}
-                            className="shrink-0 p-1.5 text-gray-300 hover:text-red-500 rounded transition-colors opacity-0 group-hover:opacity-100"
+                            className="shrink-0 p-1.5 text-lumex-muted hover:text-lumex-red rounded transition-colors opacity-0 group-hover:opacity-100"
                             aria-label="Remove alert"
                         >
                             <svg

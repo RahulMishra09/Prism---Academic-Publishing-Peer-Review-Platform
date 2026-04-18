@@ -19,10 +19,10 @@ export const EditorAnalytics: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {stats.map((stat) => (
                     <div key={stat.label} className="bg-white p-5 border border-lumex-border rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                        <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">{stat.label}</p>
+                        <p className="text-[10px] font-bold text-lumex-muted uppercase tracking-widest mb-1">{stat.label}</p>
                         <div className="flex items-end justify-between">
                             <h3 className="text-2xl font-bold text-lumex-text">{stat.value}</h3>
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${stat.positive ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'
+                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${stat.positive ? 'bg-lumex-open-bg text-lumex-open-text' : 'bg-lumex-red/5 text-lumex-red'
                                 }`}>
                                 {stat.change}
                             </span>
@@ -38,11 +38,11 @@ export const EditorAnalytics: React.FC = () => {
                     <div className="flex justify-between items-center mb-8">
                         <h3 className="font-bold text-lumex-text">Submission Trends</h3>
                         <div className="flex gap-2">
-                            <span className="flex items-center gap-1 text-[10px] font-bold text-gray-400">
+                            <span className="flex items-center gap-1 text-[10px] font-bold text-lumex-muted">
                                 <span className="w-2 h-2 rounded-full bg-lumex-blue" /> Actual
                             </span>
-                            <span className="flex items-center gap-1 text-[10px] font-bold text-gray-400">
-                                <span className="w-2 h-2 rounded-full bg-gray-200" /> Projected
+                            <span className="flex items-center gap-1 text-[10px] font-bold text-lumex-muted">
+                                <span className="w-2 h-2 rounded-full bg-lumex-bg-deep" /> Projected
                             </span>
                         </div>
                     </div>
@@ -65,7 +65,7 @@ export const EditorAnalytics: React.FC = () => {
                                             {val} submissions
                                         </div>
                                     </div>
-                                    <span className="absolute -bottom-8 text-[10px] font-bold text-gray-400">{months[idx]}</span>
+                                    <span className="absolute -bottom-8 text-[10px] font-bold text-lumex-muted">{months[idx]}</span>
                                 </div>
                             );
                         })}
@@ -78,35 +78,35 @@ export const EditorAnalytics: React.FC = () => {
                     <div className="space-y-6">
                         <div>
                             <div className="flex justify-between items-center mb-2">
-                                <span className="text-xs font-bold text-gray-500">Peer Review (Avg 18d)</span>
+                                <span className="text-xs font-bold text-lumex-muted">Peer Review (Avg 18d)</span>
                                 <span className="text-xs font-bold text-lumex-blue">Within Goal</span>
                             </div>
-                            <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                                <div className="h-full bg-green-500 w-[85%]" />
+                            <div className="h-2 w-full bg-lumex-bg rounded-full overflow-hidden">
+                                <div className="h-full bg-prism-teal w-[85%]" />
                             </div>
                         </div>
                         <div>
                             <div className="flex justify-between items-center mb-2">
-                                <span className="text-xs font-bold text-gray-500">Editor Assign (Avg 2d)</span>
+                                <span className="text-xs font-bold text-lumex-muted">Editor Assign (Avg 2d)</span>
                                 <span className="text-xs font-bold text-lumex-blue">Exceeding</span>
                             </div>
-                            <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
-                                <div className="h-full bg-blue-500 w-[95%]" />
+                            <div className="h-2 w-full bg-lumex-bg rounded-full overflow-hidden">
+                                <div className="h-full bg-lumex-bg-deep0 w-[95%]" />
                             </div>
                         </div>
                         <div>
                             <div className="flex justify-between items-center mb-2">
-                                <span className="text-xs font-bold text-gray-500">Final Decision (Avg 5d)</span>
+                                <span className="text-xs font-bold text-lumex-muted">Final Decision (Avg 5d)</span>
                                 <span className="text-xs font-bold text-orange-500">Delayed</span>
                             </div>
-                            <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
+                            <div className="h-2 w-full bg-lumex-bg rounded-full overflow-hidden">
                                 <div className="h-full bg-orange-500 w-[60%]" />
                             </div>
                         </div>
                     </div>
 
-                    <div className="mt-8 pt-6 border-t border-gray-100">
-                        <div className="bg-blue-50 p-4 rounded-lg">
+                    <div className="mt-8 pt-6 border-t border-lumex-border">
+                        <div className="bg-lumex-bg-deep p-4 rounded-lg">
                             <h4 className="text-[10px] font-bold text-lumex-blue uppercase mb-1">Editor Tip</h4>
                             <p className="text-[10px] text-lumex-text-secondary leading-normal">
                                 Consider assigning more reviewers for "Quantum Computing" papers to reduce the backlog in that category.
@@ -121,15 +121,15 @@ export const EditorAnalytics: React.FC = () => {
                 <h3 className="font-bold text-lumex-text mb-6">Top Contributing Regions</h3>
                 <div className="flex flex-wrap gap-4">
                     {[
-                        { name: 'North America', pct: 42, color: 'bg-blue-500' },
-                        { name: 'Europe', pct: 31, color: 'bg-green-500' },
+                        { name: 'North America', pct: 42, color: 'bg-lumex-bg-deep0' },
+                        { name: 'Europe', pct: 31, color: 'bg-prism-teal' },
                         { name: 'Asia-Pacific', pct: 18, color: 'bg-amber-500' },
                         { name: 'Other', pct: 9, color: 'bg-gray-400' }
                     ].map(region => (
-                        <div key={region.name} className="flex-1 min-w-[150px] p-4 border border-gray-100 rounded-lg flex items-center gap-4">
+                        <div key={region.name} className="flex-1 min-w-[150px] p-4 border border-lumex-border rounded-lg flex items-center gap-4">
                             <div className={`w-3 h-3 rounded-full ${region.color}`} />
                             <div>
-                                <p className="text-[10px] font-bold text-gray-400 uppercase">{region.name}</p>
+                                <p className="text-[10px] font-bold text-lumex-muted uppercase">{region.name}</p>
                                 <p className="text-lg font-bold text-lumex-text">{region.pct}%</p>
                             </div>
                         </div>

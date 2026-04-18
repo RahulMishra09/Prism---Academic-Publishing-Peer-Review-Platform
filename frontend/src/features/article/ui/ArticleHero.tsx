@@ -45,7 +45,7 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
 
     return (
         <div
-            className={`bg-lumex-bg-light border-b border-lumex-border pb-8 ${className || ''}`}
+            className={`bg-lumex-bg border-b border-lumex-border pb-8 ${className || ''}`}
         >
             <div className="max-w-4xl pt-8 px-4 sm:px-6 lg:px-8 mx-auto xl:mx-0 xl:ml-[max(0px,calc((100vw-1280px)/2))]">
                 {/* Top Metadata Row */}
@@ -107,7 +107,7 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
                                 {author.name}
                             </a>
                             {author.affiliations.length > 0 && (
-                                <sup className="ml-0.5 text-gray-500">
+                                <sup className="ml-0.5 text-lumex-muted">
                                     {author.affiliations
                                         .map(
                                             (a: Affiliation) =>
@@ -130,7 +130,7 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
                                                     viewBox="0 0 24 24"
                                                     fill="currentColor"
                                                     stroke="none"
-                                                    className="ml-1 text-gray-400 inline cursor-help"
+                                                    className="ml-1 text-lumex-muted inline cursor-help"
                                                 >
                                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                                                     <polyline
@@ -157,7 +157,7 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
 
                 {/* Affiliations List */}
                 {allAffiliations.length > 0 && (
-                    <div className="mb-8 text-sm text-gray-600 space-y-1">
+                    <div className="mb-8 text-sm text-lumex-muted space-y-1">
                         {visibleAffiliations.map((aff: Affiliation) => (
                             <div key={aff.id} className="flex">
                                 <sup className="mr-2 mt-1">

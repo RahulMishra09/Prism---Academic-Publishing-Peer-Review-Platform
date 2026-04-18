@@ -47,13 +47,13 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ currentStatus, s
         <div className="mt-6 py-4">
             <div className="relative flex justify-between">
                 {/* Connector Line */}
-                <div className="absolute top-4 left-0 w-full h-0.5 bg-gray-100 -z-0" />
+                <div className="absolute top-4 left-0 w-full h-0.5 bg-lumex-bg -z-0" />
                 <div
                     className="absolute top-4 left-0 h-0.5 bg-lumex-blue transition-all duration-500 -z-0"
                     style={{ width: `${(steps.filter(s => s.status === 'completed' || s.status === 'current').length - 1) / (steps.length - 1) * 100}%` }}
                 />
                 {steps.map((step, idx) => {
-                    let circleClass = 'bg-white border-gray-200 text-gray-300';
+                    let circleClass = 'bg-white border-lumex-border text-lumex-muted';
                     if (step.status === 'completed') {
                         circleClass = 'bg-lumex-blue border-lumex-blue text-white';
                     } else if (step.status === 'current') {
@@ -70,11 +70,11 @@ export const StatusTimeline: React.FC<StatusTimelineProps> = ({ currentStatus, s
                             )}
                         </div>
                         <div className="mt-2 text-center">
-                            <p className={`text-[10px] font-bold uppercase tracking-tight ${step.status === 'upcoming' ? 'text-gray-400' : 'text-lumex-text'
+                            <p className={`text-[10px] font-bold uppercase tracking-tight ${step.status === 'upcoming' ? 'text-lumex-muted' : 'text-lumex-text'
                                 }`}>
                                 {step.label}
                             </p>
-                            {step.date && <p className="text-[9px] text-gray-400 mt-0.5">{step.date}</p>}
+                            {step.date && <p className="text-[9px] text-lumex-muted mt-0.5">{step.date}</p>}
                         </div>
                     </div>
                     );

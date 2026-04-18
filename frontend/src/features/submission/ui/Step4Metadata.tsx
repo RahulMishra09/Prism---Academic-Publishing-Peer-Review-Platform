@@ -70,7 +70,7 @@ export const Step4Metadata: React.FC = () => {
                             placeholder="Paste your abstract here..."
                         />
                         {errors.abstract ? (
-                            <p className="text-red-600 text-sm mt-1">{errors.abstract.message}</p>
+                            <p className="text-lumex-red text-sm mt-1">{errors.abstract.message}</p>
                         ) : (
                             <div className="flex justify-between mt-1">
                                 <p className="text-xs text-lumex-sub">Do not include citations in the abstract.</p>
@@ -122,7 +122,7 @@ export const Step4Metadata: React.FC = () => {
                                     placeholder="Declare any potential competing interests, or state 'The authors declare no competing interests'."
                                 />
                                 {errors.competingInterests && (
-                                    <p className="text-red-600 text-sm mt-1">{errors.competingInterests.message}</p>
+                                    <p className="text-lumex-red text-sm mt-1">{errors.competingInterests.message}</p>
                                 )}
                             </div>
 
@@ -136,7 +136,7 @@ export const Step4Metadata: React.FC = () => {
                                     placeholder="Specify financial support received for the research."
                                 />
                                 {errors.fundingStatement && (
-                                    <p className="text-red-600 text-sm mt-1">{errors.fundingStatement.message}</p>
+                                    <p className="text-lumex-red text-sm mt-1">{errors.fundingStatement.message}</p>
                                 )}
                             </div>
 
@@ -150,7 +150,7 @@ export const Step4Metadata: React.FC = () => {
                                     placeholder="Describe how the underlying data can be accessed."
                                 />
                                 {errors.dataAvailability && (
-                                    <p className="text-red-600 text-sm mt-1">{errors.dataAvailability.message}</p>
+                                    <p className="text-lumex-red text-sm mt-1">{errors.dataAvailability.message}</p>
                                 )}
                             </div>
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from '../../../shared/ui';
-import { DISCIPLINES } from '../../../shared/constants/disciplines';
+import { DISCIPLINES, DISCIPLINE_ICONS } from '../../../shared/constants/disciplines';
 import { useHomepageData } from '../../../features/homepage/api/homepageQueries';
 import { useThemeStore } from '../../../entities/theme/model/useThemeStore';
 
@@ -67,7 +67,11 @@ export const DisciplineGrid: React.FC<DisciplineGridProps> = ({ className }) => 
                                 to={`/subject/${discipline.slug}`}
                                 className="group cursor-pointer rounded-[9px] border border-lumex-border bg-lumex-card p-3.5 text-center transition-all hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
                             >
-                                <div className="mb-2 text-2xl">{discipline.icon}</div>
+                                <div className="mb-2 flex justify-center">
+                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: theme === 'dark' ? '#60a5fa' : color }}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d={DISCIPLINE_ICONS[discipline.slug] ?? ''} />
+                                    </svg>
+                                </div>
                                 <div className="text-xs font-semibold text-lumex-text">
                                     {discipline.label}
                                 </div>

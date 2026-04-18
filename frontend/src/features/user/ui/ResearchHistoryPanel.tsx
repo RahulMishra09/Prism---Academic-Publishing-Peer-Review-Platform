@@ -9,14 +9,14 @@ export const ResearchHistoryPanel: React.FC = () => {
     if (recentArticles.length === 0) {
         return (
             <div className="py-12 text-center">
-                <div className="mb-4 flex justify-center text-gray-300">
+                <div className="mb-4 flex justify-center text-lumex-muted">
                     <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="12" cy="12" r="10" />
                         <polyline points="12 6 12 12 16 14" />
                     </svg>
                 </div>
                 <h3 className="text-lg font-bold text-lumex-text mb-2">No research history yet</h3>
-                <p className="text-gray-500 max-w-sm mx-auto">
+                <p className="text-lumex-muted max-w-sm mx-auto">
                     Articles you view while signed in will appear here for easy access.
                 </p>
             </div>
@@ -26,14 +26,14 @@ export const ResearchHistoryPanel: React.FC = () => {
     return (
         <div className="space-y-6">
             <div className="flex items-center justify-between border-b border-lumex-border pb-4">
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-lumex-muted">
                     Showing your last {recentArticles.length} viewed articles.
                 </p>
                 <Button
                     variant="outline"
                     size="sm"
                     onClick={clearHistory}
-                    className="text-red-600 hover:text-red-700 border-red-100 hover:bg-red-50 font-bold"
+                    className="text-lumex-red hover:text-lumex-red border-red-100 hover:bg-lumex-red/5 font-bold"
                 >
                     Clear History
                 </Button>

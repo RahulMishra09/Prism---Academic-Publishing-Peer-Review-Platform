@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from '../../../shared/ui';
-import { DISCIPLINES } from '../../../shared/constants/disciplines';
+import { DISCIPLINES, DISCIPLINE_ICONS } from '../../../shared/constants/disciplines';
 const ArrowRight = () => <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>;
 
 export const DisciplinesPage: React.FC = () => {
@@ -27,8 +27,10 @@ export const DisciplinesPage: React.FC = () => {
                             className="group relative flex flex-col justify-between bg-lumex-card p-6 rounded-xl border border-lumex-border shadow-sm transition-all hover:-translate-y-1 hover:shadow-md hover:border-lumex-blue ring-1 ring-transparent hover:ring-lumex-blue-soft focus:outline-none focus-visible:ring-lumex-blue"
                         >
                             <div className="flex items-start justify-between mb-4">
-                                <span className="text-4xl filter grayscale group-hover:grayscale-0 transition-all duration-300">
-                                    {discipline.icon}
+                                <span className="text-lumex-muted group-hover:text-lumex-blue transition-colors duration-300">
+                                    <svg className="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                                        <path strokeLinecap="round" strokeLinejoin="round" d={DISCIPLINE_ICONS[discipline.slug] ?? ''} />
+                                    </svg>
                                 </span>
                                 <div className="h-8 w-8 rounded-full bg-lumex-bg flex items-center justify-center text-lumex-muted group-hover:bg-lumex-blue group-hover:text-white transition-colors">
                                     <ArrowRight />

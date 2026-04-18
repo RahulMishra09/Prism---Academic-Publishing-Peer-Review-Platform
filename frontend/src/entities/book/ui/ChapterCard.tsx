@@ -34,7 +34,7 @@ export const ChapterCard: React.FC<ChapterCardProps> = ({ chapter, className }) 
                 </div>
 
                 <div className="mt-2 text-sm text-lumex-text-secondary border-l-4 border-lumex-border-light pl-3 py-1">
-                    <span className="block mb-1 text-xs uppercase tracking-wider font-semibold text-gray-500">
+                    <span className="block mb-1 text-xs uppercase tracking-wider font-semibold text-lumex-muted">
                         From the book:
                     </span>
                     <Link

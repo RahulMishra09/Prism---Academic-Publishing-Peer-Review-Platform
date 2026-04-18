@@ -17,7 +17,7 @@ export const ReferencesSection: React.FC<ReferencesSectionProps> = ({ references
             >
                 <h2 className="text-2xl font-serif font-bold text-lumex-blue">
                     References
-                    <span className="ml-3 text-lg font-normal text-gray-500">
+                    <span className="ml-3 text-lg font-normal text-lumex-muted">
                         ({references.length})
                     </span>
                 </h2>
@@ -31,7 +31,7 @@ export const ReferencesSection: React.FC<ReferencesSectionProps> = ({ references
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className={`text-gray-400 group-hover:text-lumex-blue transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+                    className={`text-lumex-muted group-hover:text-lumex-blue transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
                 >
                     <polyline points="6 9 12 15 18 9" />
                 </svg>
@@ -45,7 +45,7 @@ export const ReferencesSection: React.FC<ReferencesSectionProps> = ({ references
                             id={`ref-${ref.id}`}
                             className="flex gap-4 text-sm text-lumex-text leading-relaxed group hover:bg-lumex-bg-light p-2 -mx-2 rounded transition-colors"
                         >
-                            <span className="text-gray-400 font-bold shrink-0 w-6 text-right">
+                            <span className="text-lumex-muted font-bold shrink-0 w-6 text-right">
                                 {ref.index}.
                             </span>
                             <div>

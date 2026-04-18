@@ -12,7 +12,7 @@ export const SavedArticlesPanel: React.FC<SavedArticlesPanelProps> = ({
 }) => {
     if (articles.length === 0) {
         return (
-            <div className="text-center py-16 text-gray-400">
+            <div className="text-center py-16 text-lumex-muted">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="48"
@@ -44,8 +44,8 @@ export const SavedArticlesPanel: React.FC<SavedArticlesPanelProps> = ({
                         >
                             {article.title}
                         </a>
-                        <p className="text-sm text-gray-500 mt-1">{article.authors}</p>
-                        <div className="flex items-center gap-3 mt-1.5 text-xs text-gray-400">
+                        <p className="text-sm text-lumex-muted mt-1">{article.authors}</p>
+                        <div className="flex items-center gap-3 mt-1.5 text-xs text-lumex-muted">
                             <em>{article.journalTitle}</em>
                             <span>·</span>
                             <span>
@@ -60,7 +60,7 @@ export const SavedArticlesPanel: React.FC<SavedArticlesPanelProps> = ({
                     </div>
                     <button
                         onClick={() => onRemove?.(article.doi)}
-                        className="shrink-0 p-1.5 text-gray-300 hover:text-red-500 rounded transition-colors opacity-0 group-hover:opacity-100"
+                        className="shrink-0 p-1.5 text-lumex-muted hover:text-lumex-red rounded transition-colors opacity-0 group-hover:opacity-100"
                         aria-label="Remove saved article"
                     >
                         <svg

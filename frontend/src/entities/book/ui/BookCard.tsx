@@ -23,7 +23,7 @@ export const BookCard: React.FC<BookCardProps> = ({ book, className }) => {
             className={`p-4 sm:p-5 bg-white border border-lumex-border hover:shadow-md transition-shadow flex flex-col sm:flex-row gap-5 ${className || ''}`}
         >
             {book.coverImageUrl ? (
-                <div className="flex-shrink-0 w-24 h-36 border border-lumex-border-light bg-gray-50 flex items-center justify-center">
+                <div className="flex-shrink-0 w-24 h-36 border border-lumex-border-light bg-lumex-bg flex items-center justify-center">
                     <Image
                         src={book.coverImageUrl}
                         alt={book.title}
@@ -31,7 +31,7 @@ export const BookCard: React.FC<BookCardProps> = ({ book, className }) => {
                     />
                 </div>
             ) : (
-                <div className="flex-shrink-0 w-24 h-36 border border-lumex-border-light bg-gray-100 flex items-center justify-center text-xs text-center text-gray-400 p-2">
+                <div className="flex-shrink-0 w-24 h-36 border border-lumex-border-light bg-lumex-bg flex items-center justify-center text-xs text-center text-lumex-muted p-2">
                     No Cover Available
                 </div>
             )}
@@ -61,7 +61,7 @@ export const BookCard: React.FC<BookCardProps> = ({ book, className }) => {
                     {contributorNames && (
                         <div className="text-sm text-lumex-text-main mt-1">
                             {contributorNames}{' '}
-                            <span className="italic text-gray-500 text-xs ml-1">
+                            <span className="italic text-lumex-muted text-xs ml-1">
                                 ({primaryContributors.role}s)
                             </span>
                         </div>

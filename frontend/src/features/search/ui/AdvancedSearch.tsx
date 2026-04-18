@@ -57,7 +57,7 @@ export const AdvancedSearch: React.FC<AdvancedSearchProps> = ({ onClose, classNa
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="text-gray-500 hover:text-lumex-blue"
+                                className="text-lumex-muted hover:text-lumex-blue"
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

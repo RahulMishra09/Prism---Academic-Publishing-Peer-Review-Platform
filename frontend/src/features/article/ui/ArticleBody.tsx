@@ -12,7 +12,7 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({ article, className }) 
     const renderSection = (section: ArticleSection) => {
         const HeaderTag = `h${Math.min(section.level + 2, 6)}` as keyof JSX.IntrinsicElements;
         let headerClass = 'text-lg font-bold text-lumex-text mt-6 mb-3';
-        if (section.level === 1) headerClass = 'text-2xl font-serif font-bold text-lumex-blue mt-10 mb-6 pb-2 border-b border-gray-200';
+        if (section.level === 1) headerClass = 'text-2xl font-serif font-bold text-lumex-blue mt-10 mb-6 pb-2 border-b border-lumex-border';
         else if (section.level === 2) headerClass = 'text-xl font-bold text-lumex-text mt-8 mb-4';
 
         return (
@@ -48,7 +48,7 @@ export const ArticleBody: React.FC<ArticleBodyProps> = ({ article, className }) 
                     {article.sections.map((section: ArticleSection) => renderSection(section))}
                 </div>
             ) : (
-                <div className="py-12 text-center text-gray-500 italic">
+                <div className="py-12 text-center text-lumex-muted italic">
                     <p>Full article text is not available or requires a subscription.</p>
                 </div>
             )}

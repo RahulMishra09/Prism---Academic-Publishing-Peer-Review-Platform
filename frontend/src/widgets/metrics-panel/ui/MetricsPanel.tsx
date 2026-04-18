@@ -24,7 +24,7 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
 
     return (
         <div
-            className={`bg-lumex-bg-light p-4 md:p-6 border-t-4 border-lumex-blue shadow-sm ${className || ''}`}
+            className={`bg-lumex-bg p-4 md:p-6 border-t-4 border-lumex-blue shadow-sm ${className || ''}`}
         >
             {title && (
                 <h3 className="text-lg font-serif font-bold text-lumex-text mb-4">{title}</h3>
@@ -52,7 +52,7 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
                                     ].map((t, i) => (
                                         <div
                                             key={t.id}
-                                            className={`w-1 rounded-t-sm transition-all duration-500 ease-out ${metric.trend === 'up' ? 'bg-green-500' : 'bg-lumex-blue'
+                                            className={`w-1 rounded-t-sm transition-all duration-500 ease-out ${metric.trend === 'up' ? 'bg-prism-teal' : 'bg-lumex-blue'
                                                 }`}
                                             style={{ height: `${t.h * 100}%`, transitionDelay: `${i * 50}ms` }}
                                         />
@@ -64,13 +64,13 @@ export const MetricsPanel: React.FC<MetricsPanelProps> = ({
                             {metric.label}
                         </span>
                         {metric.subValue && (
-                            <span className="text-[10px] text-gray-400 mt-0.5">{metric.subValue}</span>
+                            <span className="text-[10px] text-lumex-muted mt-0.5">{metric.subValue}</span>
                         )}
                     </div>
                 ))}
             </div>
 
-            <div className="mt-4 pt-4 border-t border-lumex-border text-xs text-right text-gray-500">
+            <div className="mt-4 pt-4 border-t border-lumex-border text-xs text-right text-lumex-muted">
                 <a href="#" className="text-lumex-blue hover:underline">
                     Learn more about our metrics
                 </a>

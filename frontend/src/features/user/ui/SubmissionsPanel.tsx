@@ -18,7 +18,7 @@ export const SubmissionsPanel: React.FC<SubmissionsPanelProps> = ({ pastSubmissi
                     Current Draft
                 </h3>
                 {!draft || !draft.manuscriptType ? (
-                    <div className="bg-gray-50 border border-lumex-border rounded p-6 text-center text-gray-500">
+                    <div className="bg-lumex-bg border border-lumex-border rounded p-6 text-center text-lumex-muted">
                         <p>You have no active submission drafts.</p>
                         <a href="/journals" className="text-lumex-blue hover:underline mt-2 inline-block font-medium">
                             Find a journal to submit to
@@ -31,15 +31,15 @@ export const SubmissionsPanel: React.FC<SubmissionsPanelProps> = ({ pastSubmissi
                                 <h4 className="font-bold text-lumex-text text-lg">
                                     {draft.title || 'Untitled Manuscript'}
                                 </h4>
-                                <p className="text-sm text-gray-500 mt-1">
+                                <p className="text-sm text-lumex-muted mt-1">
                                     {draft.manuscriptType || 'Unspecified Type'} · Step {currentStep} of {currentStep > 5 ? 6 : 5}
                                 </p>
                             </div>
-                            <span className="bg-yellow-100 text-yellow-800 text-xs font-bold px-2 py-1 rounded">
+                            <span className="bg-lumex-oa-gold/10 text-lumex-oa-gold text-xs font-bold px-2 py-1 rounded">
                                 Draft
                             </span>
                         </div>
-                        <p className="text-sm text-gray-600 line-clamp-2 mt-2">
+                        <p className="text-sm text-lumex-muted line-clamp-2 mt-2">
                             {draft.abstract || 'No abstract provided.'}
                         </p>
                         <div className="mt-4 pt-4 border-t border-lumex-border flex justify-end">
@@ -59,9 +59,9 @@ export const SubmissionsPanel: React.FC<SubmissionsPanelProps> = ({ pastSubmissi
                 </h3>
                 <div className="space-y-6">
                     {pastSubmissions.map((sub) => {
-                        let statusColor = 'bg-gray-100 text-gray-800';
-                        if (sub.status === 'Accepted' || sub.status === 'Published') statusColor = 'bg-green-100 text-green-800';
-                        else if (sub.status === 'Under Review') statusColor = 'bg-blue-100 text-lumex-blue';
+                        let statusColor = 'bg-lumex-bg text-lumex-text';
+                        if (sub.status === 'Accepted' || sub.status === 'Published') statusColor = 'bg-lumex-open-bg text-lumex-open-text';
+                        else if (sub.status === 'Under Review') statusColor = 'bg-lumex-sub-bg text-lumex-sub-text';
                         else if (sub.status === 'Revision Required') statusColor = 'bg-orange-100 text-orange-800';
                         else if (sub.status === 'Proofing') statusColor = 'bg-purple-100 text-purple-800';
 
@@ -70,7 +70,7 @@ export const SubmissionsPanel: React.FC<SubmissionsPanelProps> = ({ pastSubmissi
                             <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center mb-4">
                                 <div className="flex-1">
                                     <h4 className="font-bold text-lumex-text">{sub.title}</h4>
-                                    <div className="text-sm text-gray-500 mt-1 flex items-center gap-2 flex-wrap">
+                                    <div className="text-sm text-lumex-muted mt-1 flex items-center gap-2 flex-wrap">
                                         <span>{sub.journal}</span>
                                         <span>·</span>
                                         <span>ID: {sub.id}</span>
@@ -82,7 +82,7 @@ export const SubmissionsPanel: React.FC<SubmissionsPanelProps> = ({ pastSubmissi
                                     {sub.status === 'Revision Required' && (
                                         <a
                                             href={`/submit-revision/${sub.id}`}
-                                            className="text-xs font-bold text-lumex-blue hover:underline bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100"
+                                            className="text-xs font-bold text-lumex-blue hover:underline bg-lumex-bg-deep px-3 py-1.5 rounded-lg border border-lumex-border"
                                         >
                                             Submit Revision
                                         </a>
@@ -90,7 +90,7 @@ export const SubmissionsPanel: React.FC<SubmissionsPanelProps> = ({ pastSubmissi
                                     {sub.status === 'Accepted' && (
                                         <a
                                             href={`/checkout-apc/${sub.id}`}
-                                            className="text-xs font-bold text-white bg-green-600 hover:bg-green-700 px-3 py-1.5 rounded-lg border border-green-700 shadow-sm"
+                                            className="text-xs font-bold text-white bg-prism-teal hover:bg-prism-teal px-3 py-1.5 rounded-lg border border-prism-teal shadow-sm"
                                         >
                                             Pay APC Fee
                                         </a>
@@ -98,7 +98,7 @@ export const SubmissionsPanel: React.FC<SubmissionsPanelProps> = ({ pastSubmissi
                                     {sub.status === 'Proofing' && (
                                         <a
                                             href={`/submit-proofing/${sub.id}`}
-                                            className="text-xs font-bold text-lumex-blue hover:underline bg-blue-50 px-3 py-1.5 rounded-lg border border-blue-100"
+                                            className="text-xs font-bold text-lumex-blue hover:underline bg-lumex-bg-deep px-3 py-1.5 rounded-lg border border-lumex-border"
                                         >
                                             Review Proof
                                         </a>
@@ -109,7 +109,7 @@ export const SubmissionsPanel: React.FC<SubmissionsPanelProps> = ({ pastSubmissi
                                 </div>
                             </div>
                             <div className="pt-4 border-t border-gray-50">
-                                <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">Manuscript Progress</p>
+                                <p className="text-[10px] font-bold text-lumex-muted uppercase tracking-widest mb-2">Manuscript Progress</p>
                                 <StatusTimeline currentStatus={sub.status} submittedAt={sub.submittedAt} />
                             </div>
                         </div>
