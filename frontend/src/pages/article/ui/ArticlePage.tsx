@@ -1,0 +1,253 @@
+import React, { useState, useEffect } from 'react';
+import { useParams, Navigate, Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+
+import { TwoColumnLayout } from '../../../app/layouts';
+import { Container, Skeleton, useToast } from '../../../shared/ui';
+import {
+    ArticleHero,
+    AbstractSection,
+    ArticleBody,
+    ReferencesSection,
+    CitationTools,
+    AccessGate,
+    FigureViewer,
+    useRecentlyViewed,
+    useSavedArticles,
+} from '../../../features/article';
+import { ArticleSidebar } from '../../../widgets/article-sidebar';
+import type { ArticleFigure } from '../../../entities/article/model/types';
+
+import { useArticle } from '../../../entities/article/api/articleQueries';
+
+type ArticleTab = 'article' | 'figures' | 'references';
+
+export const ArticlePage: React.FC = () => {
+    const { slug } = useParams<{ slug: string }>();
+    const doi = slug;
+    const [activeTab, setActiveTab] = useState<ArticleTab>('article');
+    const [showCitation, setShowCitation] = useState(false);
+    const [viewerFigure, setViewerFigure] = useState<ArticleFigure | null>(null);
+    const [figureIndex, setFigureIndex] = useState(0);
+
+    const { data: article, isLoading, isError } = useArticle(doi || '');
+    const { trackView } = useRecentlyViewed();
+    const { isSaved, toggleSave } = useSavedArticles();
+    const { toast } = useToast();
+
+    useEffect(() => {
+        if (article) {
+            trackView(article);
+        }
+    }, [article, trackView]);
+
+    const handleToggleSave = () => {
+        if (!article) return;
+        const saved = toggleSave(article);
+        toast({
+            title: saved ? 'Saved to Library' : 'Removed from Library',
+            description: saved
+                ? 'This article has been added to your library.'
+                : 'This article has been removed from your library.',
+        });
+    };
+
+    if (!doi) return <Navigate to="/" replace />;
+
+    if (isLoading) {
+        return (
+            <Container className="py-12">
+                <Skeleton className="h-12 w-3/4 mb-4" />
+                <Skeleton className="h-6 w-1/2 mb-8" />
+                <Skeleton className="h-64 w-full" />
+            </Container>
+        );
+    }
+
+    if (isError || !article) {
+        return (
+            <Container className="py-16 text-center">
+                <h1 className="text-3xl font-serif text-lumex-blue mb-4">Article Not Found</h1>
+                <p className="text-gray-600 mb-8">
+                    The article with DOI <code>{doi}</code> could not be found.
+                </p>
+                <Link to="/search" className="text-lumex-blue hover:underline font-bold">
+                    ← Back to Search
+                </Link>
+            </Container>
+        );
+    }
+
+    const allFigures = [...(article.figures || []), ...(article.tables || [])];
+
+    const openFigureViewer = (figure: ArticleFigure) => {
+        const idx = allFigures.findIndex(f => f.id === figure.id);
+        setFigureIndex(idx >= 0 ? idx : 0);
+        setViewerFigure(figure);
+    };
+
+    const tabs: { id: ArticleTab; label: string; count?: number }[] = [
+        { id: 'article', label: 'Article' },
+        { id: 'figures', label: 'Figures & Tables', count: allFigures.length },
+        { id: 'references', label: 'References', count: article.references?.length },
+    ];
+
+    const abstractText = article.abstract?.map(s => s.text).join(' ') || '';
+
+    return (
+        <>
+            <Helmet>
+                <title>{article.title}</title>
+                <meta name="description" content={abstractText ? `${abstractText.substring(0, 160)}...` : `Read the full research article on ${article.title}. Published by Lumex.`} />
+                <meta property="og:title" content={article.title} />
+                <meta property="og:description" content={abstractText.substring(0, 160)} />
+            </Helmet>
+            {/* Article Hero (full-width) */}
+            <ArticleHero
+                article={article}
+                isSaved={isSaved(article.doi)}
+                onToggleSave={handleToggleSave}
+                onDownloadPdf={() => {
+                    if (article.pdfUrl) {
+                        window.open(article.pdfUrl, '_blank');
+                        toast({
+                            title: 'Download Started',
+                            description: 'The article PDF is opening in a new tab.',
+                        });
+                    }
+                }}
+                onCite={() => setShowCitation(true)}
+                onShare={() => {
+                    void navigator.clipboard.writeText(window.location.href);
+                    toast({
+                        title: 'Link Copied',
+                        description: 'Article link copied to clipboard.',
+                    });
+                }}
+            />
+
+            {/* Tab Navigation */}
+            <div className="border-b border-lumex-border bg-lumex-card sticky top-0 z-30 shadow-sm transition-colors duration-200">
+                <Container>
+                    <nav className="flex gap-0 overflow-x-auto">
+                        {tabs.map(tab => (
+                            <button
+                                key={tab.id}
+                                onClick={() => setActiveTab(tab.id)}
+                                className={`px-5 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === tab.id
+                                    ? 'border-lumex-blue text-lumex-blue'
+                                    : 'border-transparent text-lumex-muted hover:text-lumex-text hover:border-lumex-border'
+                                    }`}
+                            >
+                                {tab.label}
+                                {tab.count !== undefined && tab.count > 0 && (
+                                    <span className="ml-2 px-1.5 py-0.5 bg-lumex-bg-deep text-lumex-muted rounded text-xs font-normal">
+                                        {tab.count}
+                                    </span>
+                                )}
+                            </button>
+                        ))}
+                    </nav>
+                </Container>
+            </div>
+
+            {/* Main Content */}
+            <TwoColumnLayout
+                main={
+                    <div className="py-8">
+                        {/* Article Tab */}
+                        {activeTab === 'article' && (
+                            <>
+                                {/* Access Gate – shown above abstract if paywalled */}
+                                <AccessGate article={article} />
+
+                                {/* Abstract */}
+                                <div className="mb-10 pb-10 border-b border-gray-200">
+                                    <AbstractSection article={article} />
+                                </div>
+
+                                {/* Full Body (HTML sections) */}
+                                <ArticleBody article={article} />
+                            </>
+                        )}
+
+                        {/* Figures & Tables Tab */}
+                        {activeTab === 'figures' && (
+                            <div>
+                                <h2 className="text-2xl font-serif font-bold text-lumex-blue mb-8">
+                                    Figures & Tables
+                                </h2>
+                                {allFigures.length === 0 ? (
+                                    <p className="text-gray-500 italic">
+                                        No figures or tables available for this article.
+                                    </p>
+                                ) : (
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        {allFigures.map(fig => (
+                                            <button
+                                                key={fig.id}
+                                                onClick={() => openFigureViewer(fig)}
+                                                className="group text-left border border-lumex-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+                                            >
+                                                <div className="aspect-video bg-gray-100 overflow-hidden">
+                                                    <img
+                                                        src={fig.url}
+                                                        alt={fig.alt}
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                                    />
+                                                </div>
+                                                <div className="p-3">
+                                                    <p className="text-xs font-bold text-lumex-blue mb-1">
+                                                        {fig.type === 'table' ? 'Table' : 'Fig.'}{' '}
+                                                        {fig.number}
+                                                    </p>
+                                                    <p className="text-xs text-gray-600 line-clamp-2">
+                                                        {fig.caption}
+                                                    </p>
+                                                </div>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* References Tab */}
+                        {activeTab === 'references' && (
+                            <ReferencesSection references={article.references || []} />
+                        )}
+                    </div>
+                }
+                sidebar={<ArticleSidebar article={article} activeTab={activeTab} />}
+            />
+
+            {/* Citation Modal */}
+            {showCitation && (
+                <CitationTools
+                    article={article}
+                    isOpen={showCitation}
+                    onClose={() => setShowCitation(false)}
+                />
+            )}
+
+            {/* Figure Lightbox */}
+            <FigureViewer
+                figure={viewerFigure}
+                isOpen={!!viewerFigure}
+                onClose={() => setViewerFigure(null)}
+                hasNext={figureIndex < allFigures.length - 1}
+                hasPrev={figureIndex > 0}
+                onNext={() => {
+                    const next = figureIndex + 1;
+                    setFigureIndex(next);
+                    setViewerFigure(allFigures[next]);
+                }}
+                onPrev={() => {
+                    const prev = figureIndex - 1;
+                    setFigureIndex(prev);
+                    setViewerFigure(allFigures[prev]);
+                }}
+            />
+        </>
+    );
+};
