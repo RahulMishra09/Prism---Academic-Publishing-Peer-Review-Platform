@@ -84,25 +84,27 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ className }) => {
                     {/* Left column */}
                     <div className="animate-fade-up">
                         {/* Badge */}
-                        <div className="mb-6 inline-flex items-center gap-2 rounded-md border border-lumex-blue/20 bg-lumex-blue-soft px-3 py-1">
-                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-lumex-blue" />
+                        <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-lumex-blue/20 bg-lumex-blue-soft px-3.5 py-1">
+                            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-lumex-blue" />
                             <span className="text-[0.68rem] font-semibold uppercase tracking-[0.08em] text-lumex-blue">
-                                Open Access · 2025
+                                Prism Open Access · 2025
                             </span>
                         </div>
 
                         {/* Heading */}
                         <h1
-                            className="mb-5 font-serif text-4xl font-semibold leading-[1.12] md:text-5xl lg:text-[3.4rem]"
+                            className="mb-5 font-serif text-4xl font-bold leading-[1.1] md:text-5xl lg:text-[3.2rem]"
                             style={{ letterSpacing: '-0.025em' }}
                         >
-                            The Home of
+                            The Platform for
                             <br />
-                            <span className="italic text-lumex-blue">Rigorous Science</span>
+                            <span className="bg-gradient-to-r from-lumex-blue to-prism-violet bg-clip-text italic text-transparent">
+                                Rigorous Science
+                            </span>
                         </h1>
 
                         {/* Description */}
-                        <p className="mb-8 max-w-[450px] text-base leading-relaxed text-lumex-muted">
+                        <p className="mb-8 max-w-[460px] text-[1rem] leading-relaxed text-lumex-muted">
                             Peer-reviewed research across every discipline — accessible to
                             researchers, clinicians, and policymakers worldwide.
                         </p>

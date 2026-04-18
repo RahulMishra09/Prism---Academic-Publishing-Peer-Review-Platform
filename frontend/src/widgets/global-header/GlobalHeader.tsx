@@ -105,7 +105,7 @@ export function GlobalHeader() {
     return (
         <header
             className={[
-                'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300',
+                'w-full transition-all duration-300',
                 isScrolled
                     ? 'bg-lumex-bg-white/90 backdrop-blur-md border-b border-lumex-border shadow-sm dark:bg-lumex-bg-deep/90'
                     : 'bg-lumex-bg-white border-b border-lumex-border/60',
