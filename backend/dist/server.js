@@ -1,7 +1,15 @@
 import "./config/env.js";
 import app from "./app.js";
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+import { ensureDevAuthUser } from "./config/devAuth.js";
+const PORT = process.env.PORT || 8080;
+const startServer = async () => {
+    await ensureDevAuthUser();
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+};
+void startServer().catch((error) => {
+    console.error("Failed to start server", error);
+    process.exit(1);
 });
 //# sourceMappingURL=server.js.map

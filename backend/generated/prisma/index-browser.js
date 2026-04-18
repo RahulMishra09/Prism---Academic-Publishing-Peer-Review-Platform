@@ -168,6 +168,16 @@ exports.Prisma.ReviewScalarFieldEnum = {
   assignmentId: 'assignmentId'
 };
 
+exports.Prisma.CommentScalarFieldEnum = {
+  id: 'id',
+  body: 'body',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  paperId: 'paperId',
+  authorId: 'authorId',
+  parentId: 'parentId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -206,7 +216,8 @@ exports.Prisma.ModelName = {
   User: 'User',
   Paper: 'Paper',
   ReviewerAssignment: 'ReviewerAssignment',
-  Review: 'Review'
+  Review: 'Review',
+  Comment: 'Comment'
 };
 
 /**

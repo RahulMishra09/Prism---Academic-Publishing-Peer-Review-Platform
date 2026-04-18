@@ -8,6 +8,7 @@ import papersRoutes from "./modules/papers/papers.routes.js";
 import reviewsRoutes from "./modules/reviews/reviews.routes.js";
 import editorRoutes from "./modules/editor/editor.routes.js";
 import commentsRoutes from "./modules/comments/comments.routes.js";
+import publicRoutes from "./modules/public/public.routes.js";
 const app = express();
 // ── Global middleware ──────────────────────────────────────────────────────
 app.use(cors());
@@ -26,6 +27,9 @@ app.get("/health", (_, res) => {
     res.json({ success: true, message: "Server is running" });
 });
 // ── API routes ─────────────────────────────────────────────────────────────
+// Public (unauthenticated) read routes
+app.use("/", publicRoutes);
+// Authenticated / role-gated routes
 app.use("/auth", authRoutes);
 app.use("/papers", papersRoutes);
 app.use("/reviews", reviewsRoutes);

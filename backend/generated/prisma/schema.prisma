@@ -3,9 +3,8 @@
 // ============================================================
 
 generator client {
-  provider        = "prisma-client-js"
-  output          = "../generated/prisma"
-  previewFeatures = ["driverAdapters"]
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
 }
 
 datasource db {
@@ -54,6 +53,7 @@ model User {
   papers              Paper[]              @relation("AuthorPapers")
   reviewerAssignments ReviewerAssignment[]
   reviews             Review[]
+  comments            Comment[]
 
   @@map("users")
 }
@@ -86,6 +86,7 @@ model Paper {
   author      User                 @relation("AuthorPapers", fields: [submittedBy], references: [id])
   assignments ReviewerAssignment[]
   reviews     Review[]
+  comments    Comment[]
 
   // Indexes
   @@index([status])
@@ -146,4 +147,33 @@ model Review {
   @@unique([paperId, reviewerId])
   @@index([paperId])
   @@map("reviews")
+}
+
+// ============================================================
+// COMMENT MODEL
+// ============================================================
+
+model Comment {
+  id        String   @id @default(cuid())
+  body      String   @db.VarChar(2000)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  paperId String
+  paper   Paper  @relation(fields: [paperId], references: [id])
+
+  authorId String
+  author   User   @relation(fields: [authorId], references: [id])
+
+  // Optional parent for threaded replies (one level deep)
+  parentId String?
+  parent   Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies  Comment[] @relation("CommentReplies")
+
+  // Indexes
+  @@index([paperId])
+  @@index([authorId])
+  @@index([parentId])
+  @@map("comments")
 }
