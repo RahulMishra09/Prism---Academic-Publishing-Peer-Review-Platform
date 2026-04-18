@@ -1,26 +1,100 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from '@shared/ui';
 import { useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaSearch, FaUser, FaSignOutAlt, FaSun, FaMoon } from 'react-icons/fa';
 import { MegaMenu } from '../mega-menu/MegaMenu';
 import { useAuthStore } from '../../app/store/useAuthStore';
 import { useThemeStore } from '../../entities/theme/model/useThemeStore';
+
+const PrismIcon = () => (
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+        <polygon points="16,3 29,27 3,27" fill="none" stroke="white" strokeWidth="1.8" strokeLinejoin="round" />
+        <line x1="16" y1="3" x2="16" y2="27" stroke="rgba(255,255,255,0.35)" strokeWidth="0.8" />
+        <line x1="16" y1="3" x2="29" y2="27" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" />
+        <circle cx="16" cy="3" r="1.5" fill="white" opacity="0.9" />
+        <line x1="29" y1="27" x2="33" y2="23" stroke="#818cf8" strokeWidth="1.5" strokeLinecap="round" />
+        <line x1="29" y1="27" x2="33" y2="27" stroke="#2dd4bf" strokeWidth="1.5" strokeLinecap="round" />
+        <line x1="29" y1="27" x2="32" y2="31" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+);
+
+const SearchIcon = () => (
+    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <circle cx="11" cy="11" r="8" /><path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35" />
+    </svg>
+);
+
+const UserIcon = () => (
+    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" />
+    </svg>
+);
+
+const LogoutIcon = () => (
+    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+    </svg>
+);
+
+const SunIcon = () => (
+    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <circle cx="12" cy="12" r="5" /><path strokeLinecap="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+    </svg>
+);
+
+const MoonIcon = () => (
+    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+    </svg>
+);
+
+const BarsIcon = () => (
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+    </svg>
+);
+
+const XIcon = () => (
+    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+    </svg>
+);
+
+const NAV_ITEMS = [
+    { id: '/', label: 'Home' },
+    { id: '/journals', label: 'Journals' },
+    { id: '/about', label: 'About' },
+];
 
 export function GlobalHeader() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isExploreOpen, setIsExploreOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+    const [isScrolled, setIsScrolled] = useState(false);
+    const searchRef = useRef<HTMLInputElement>(null);
     const navigate = useNavigate();
     const { user, isAuthenticated, logout } = useAuthStore();
     const { theme, toggleTheme } = useThemeStore();
+
+    useEffect(() => {
+        const onScroll = () => setIsScrolled(window.scrollY > 8);
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
 
     const handleSearch = (e: React.KeyboardEvent | React.FormEvent) => {
         e.preventDefault();
         if (searchQuery.trim()) {
             void navigate(`/search?query=${encodeURIComponent(searchQuery.trim())}`);
             setSearchQuery('');
+            setIsSearchExpanded(false);
             setIsMobileMenuOpen(false);
         }
+    };
+
+    const expandSearch = () => {
+        setIsSearchExpanded(true);
+        setTimeout(() => searchRef.current?.focus(), 50);
     };
 
     const closeMenus = () => {
@@ -28,179 +102,172 @@ export function GlobalHeader() {
         setIsExploreOpen(false);
     };
 
-    const NAV_ITEMS = [
-        { id: '/', label: 'Home' },
-        { id: '/journals', label: 'Journals' },
-        { id: '/about', label: 'About' },
-    ];
-
     return (
-        <header className="relative z-50 w-full border-b border-lumex-border bg-lumex-bg-white shadow-sm transition-colors duration-200">
-            {/* Desktop utility bar */}
-            <div className="hidden w-full lg:block border-b border-lumex-border/50">
+        <header
+            className={[
+                'fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300',
+                isScrolled
+                    ? 'bg-lumex-bg-white/90 backdrop-blur-md border-b border-lumex-border shadow-sm dark:bg-lumex-bg-deep/90'
+                    : 'bg-lumex-bg-white border-b border-lumex-border/60',
+            ].join(' ')}
+        >
+            {/* Utility bar — desktop only */}
+            <div className="hidden border-b border-lumex-border/40 lg:block">
                 <div className="mx-auto flex w-full max-w-container justify-end px-6">
                     <nav
                         aria-label="Utility navigation"
-                        className="flex items-center gap-6 py-1.5 text-[0.7rem] uppercase tracking-wider font-bold"
+                        className="flex items-center gap-5 py-1.5 text-[0.68rem] font-semibold uppercase tracking-widest text-lumex-muted"
                     >
                         {isAuthenticated && user ? (
-                            <div className="flex items-center gap-5">
-                                <span className="flex items-center gap-2 text-lumex-text">
-                                    <div className="w-5 h-5 rounded-full bg-lumex-blue/10 flex items-center justify-center text-lumex-blue">
-                                        <FaUser size={10} />
-                                    </div>
-                                    <span className="opacity-70">Hi,</span> {user.firstName}
+                            <>
+                                <span className="flex items-center gap-1.5 text-lumex-text">
+                                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-lumex-blue/10 text-lumex-blue">
+                                        <UserIcon />
+                                    </span>
+                                    <span className="opacity-60">Hi,</span>&nbsp;{user.firstName}
                                 </span>
-                                <Link
-                                    to="/account"
-                                    className="text-lumex-muted hover:text-lumex-blue transition-colors"
-                                >
+                                <Link to="/account" className="transition-colors hover:text-lumex-blue">
                                     My Account
                                 </Link>
                                 <button
                                     onClick={() => logout()}
-                                    className="flex items-center gap-1.5 text-lumex-muted hover:text-lumex-blue transition-colors"
+                                    className="flex items-center gap-1 transition-colors hover:text-lumex-blue"
                                 >
-                                    <FaSignOutAlt size={11} /> Log out
+                                    <LogoutIcon /> Sign out
                                 </button>
-                            </div>
+                            </>
                         ) : (
-                            <div className="flex items-center gap-5">
-                                <Link
-                                    to="/login"
-                                    className="flex items-center gap-1.5 text-lumex-muted hover:text-lumex-blue transition-colors"
-                                >
-                                    <FaUser size={11} /> Log in
+                            <>
+                                <Link to="/login" className="flex items-center gap-1 transition-colors hover:text-lumex-blue">
+                                    <UserIcon /> Log in
                                 </Link>
-                                <Link
-                                    to="/register"
-                                    className="text-lumex-muted hover:text-lumex-blue transition-colors"
-                                >
+                                <Link to="/register" className="transition-colors hover:text-lumex-blue">
                                     Register
                                 </Link>
-                            </div>
+                            </>
                         )}
-
-                        <div className="ml-2 border-l border-lumex-border pl-4">
+                        <div className="border-l border-lumex-border pl-4">
                             <button
                                 onClick={toggleTheme}
-                                className="flex h-7 w-7 items-center justify-center rounded-full bg-lumex-bg-deep text-lumex-muted transition-all hover:scale-110 hover:bg-lumex-blue-soft hover:text-lumex-blue"
                                 aria-label="Toggle theme"
+                                className="flex h-6 w-6 items-center justify-center rounded-full bg-lumex-bg-deep text-lumex-muted transition-all hover:bg-lumex-blue/10 hover:text-lumex-blue"
                             >
-                                {theme === 'light' ? <FaMoon size={12} /> : <FaSun size={12} />}
+                                {theme === 'light' ? <MoonIcon /> : <SunIcon />}
                             </button>
                         </div>
                     </nav>
                 </div>
             </div>
 
-            {/* Main navigation bar */}
+            {/* Main nav bar */}
             <div className="mx-auto w-full max-w-container px-6">
-                <div className="flex h-[72px] items-center justify-between">
-                    {/* Logo & Nav */}
-                    <div className="flex items-center gap-10">
-                        {/* Logo */}
-                        <Link to="/" onClick={closeMenus} className="group flex items-center gap-3">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-lumex-blue shadow-lg shadow-lumex-blue/20 transition-transform group-hover:scale-105">
-                                <span className="font-serif text-lg font-black italic text-white">
-                                    L
-                                </span>
-                            </div>
-                            <div className="flex flex-col leading-tight">
-                                <span className="font-serif text-xl font-extrabold text-lumex-text tracking-tight">
-                                    Lumex
-                                </span>
-                                <span className="text-[0.6rem] font-black uppercase tracking-[0.2em] text-lumex-blue/80">
-                                    Research
-                                </span>
-                            </div>
-                        </Link>
+                <div className="flex h-[68px] items-center justify-between gap-6">
+                    {/* Logo */}
+                    <Link to="/" onClick={closeMenus} className="group flex shrink-0 items-center gap-3">
+                        <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-lumex-blue to-prism-violet shadow-md shadow-lumex-blue/25 transition-transform duration-200 group-hover:scale-105">
+                            <PrismIcon />
+                        </div>
+                        <div className="flex flex-col leading-none">
+                            <span className="font-serif text-[1.15rem] font-bold tracking-tight text-lumex-text">
+                                Prism
+                            </span>
+                            <span className="text-[0.58rem] font-bold uppercase tracking-[0.22em] text-lumex-blue/70">
+                                Publishing
+                            </span>
+                        </div>
+                    </Link>
 
-                        {/* Desktop Navigation */}
-                        <nav className="hidden items-center gap-1.5 xl:flex">
-                            <button
-                                onClick={() => setIsExploreOpen(!isExploreOpen)}
-                                className={`rounded-lg px-4 py-2 text-[0.82rem] font-bold uppercase tracking-[0.08em] transition-all ${isExploreOpen
-                                    ? 'bg-lumex-blue text-white shadow-md shadow-lumex-blue/20'
-                                    : 'text-lumex-muted hover:text-lumex-blue'
-                                    }`}
-                                aria-expanded={isExploreOpen}
+                    {/* Desktop nav links */}
+                    <nav className="hidden items-center gap-0.5 xl:flex" aria-label="Main navigation">
+                        <button
+                            onClick={() => setIsExploreOpen(!isExploreOpen)}
+                            aria-expanded={isExploreOpen}
+                            className={[
+                                'rounded-lg px-4 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.07em] transition-all duration-150',
+                                isExploreOpen
+                                    ? 'bg-lumex-blue text-white shadow-sm shadow-lumex-blue/20'
+                                    : 'text-lumex-muted hover:bg-lumex-blue/5 hover:text-lumex-blue',
+                            ].join(' ')}
+                        >
+                            Explore
+                        </button>
+                        {NAV_ITEMS.map(item => (
+                            <Link
+                                key={item.id}
+                                to={item.id}
+                                className="rounded-lg px-4 py-2 text-[0.8rem] font-semibold uppercase tracking-[0.07em] text-lumex-muted transition-all duration-150 hover:bg-lumex-blue/5 hover:text-lumex-blue"
                             >
-                                Explore
-                            </button>
-                            {NAV_ITEMS.map(item => (
-                                <Link
-                                    key={item.id}
-                                    to={item.id}
-                                    className="rounded-lg px-4 py-2 text-[0.82rem] font-bold uppercase tracking-[0.08em] text-lumex-muted transition-all hover:text-lumex-blue hover:bg-lumex-blue/5"
-                                >
-                                    {item.label}
-                                </Link>
-                            ))}
-                        </nav>
-                    </div>
+                                {item.label}
+                            </Link>
+                        ))}
+                    </nav>
 
-                    {/* Right side: search + CTA */}
-                    <div className="flex items-center gap-4">
-                        {/* Search (Desktop) */}
+                    {/* Right cluster: search + CTA */}
+                    <div className="flex items-center gap-3">
+                        {/* Expanding search — desktop */}
                         <div className="hidden xl:block">
-                            <form onSubmit={handleSearch} className="relative group">
+                            <form onSubmit={handleSearch} className="relative">
                                 <input
+                                    ref={searchRef}
                                     type="search"
-                                    placeholder="Quick search…"
-                                    className="w-[260px] rounded-xl border border-lumex-border bg-lumex-card py-2.5 pl-10 pr-4 text-sm text-lumex-text outline-none transition-all placeholder:text-lumex-sub/60 focus:border-lumex-blue focus:ring-4 focus:ring-lumex-blue/10 group-hover:border-lumex-border-hover shadow-sm"
+                                    placeholder="Search articles, journals…"
                                     value={searchQuery}
                                     onChange={e => setSearchQuery(e.target.value)}
                                     onKeyDown={e => e.key === 'Enter' && handleSearch(e)}
+                                    onBlur={() => !searchQuery && setIsSearchExpanded(false)}
+                                    className={[
+                                        'rounded-xl border border-lumex-border bg-lumex-bg-deep/60 py-2 pl-9 pr-3 text-sm text-lumex-text outline-none',
+                                        'placeholder:text-lumex-sub/50 transition-all duration-300',
+                                        'focus:border-lumex-blue focus:bg-lumex-bg-white focus:ring-2 focus:ring-lumex-blue/15',
+                                        'hover:border-lumex-border-hover',
+                                        isSearchExpanded ? 'w-[280px]' : 'w-[200px]',
+                                    ].join(' ')}
+                                    onFocus={expandSearch}
                                 />
-                                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-lumex-sub transition-colors group-focus-within:text-lumex-blue">
-                                    <FaSearch size={13} />
+                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-lumex-sub">
+                                    <SearchIcon />
                                 </span>
                             </form>
                         </div>
 
                         {/* Submit Paper CTA */}
                         <button
-                            className="hidden premium-button rounded-xl bg-lumex-blue px-6 py-2.5 text-[0.82rem] font-bold uppercase tracking-wider text-white shadow-lg shadow-lumex-blue/20 transition-all hover:-translate-y-0.5 hover:bg-lumex-blue-dark active:translate-y-0 xl:block"
                             onClick={() => void navigate('/publish')}
+                            className="hidden rounded-xl bg-lumex-blue px-5 py-2 text-[0.8rem] font-bold uppercase tracking-wider text-white shadow-md shadow-lumex-blue/20 transition-all duration-150 hover:-translate-y-px hover:bg-lumex-blue-dark hover:shadow-lg active:translate-y-0 xl:block"
                         >
                             Submit Paper
                         </button>
 
-                        {/* Mobile hamburger */}
-                        <div className="flex items-center gap-1 xl:hidden">
+                        {/* Mobile controls */}
+                        <div className="flex items-center gap-0.5 xl:hidden">
                             <button
-                                className="p-2.5 text-lumex-muted hover:text-lumex-blue transition-colors"
                                 aria-label="Search"
+                                className="rounded-lg p-2 text-lumex-muted transition-colors hover:bg-lumex-blue/5 hover:text-lumex-blue"
                                 onClick={() => void navigate('/search')}
                             >
-                                <FaSearch size={18} />
+                                <SearchIcon />
                             </button>
                             <button
-                                className="p-2.5 text-lumex-muted hover:text-lumex-blue transition-colors"
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                aria-label="Toggle theme"
+                                className="rounded-lg p-2 text-lumex-muted transition-colors hover:bg-lumex-blue/5 hover:text-lumex-blue"
+                                onClick={toggleTheme}
+                            >
+                                {theme === 'light' ? <MoonIcon /> : <SunIcon />}
+                            </button>
+                            <button
                                 aria-expanded={isMobileMenuOpen}
                                 aria-label="Toggle menu"
+                                className="rounded-lg p-2 text-lumex-muted transition-colors hover:bg-lumex-blue/5 hover:text-lumex-blue"
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                             >
-                                {isMobileMenuOpen ? (
-                                    <FaTimes size={22} />
-                                ) : (
-                                    <FaBars size={22} />
-                                )}
-                            </button>
-                            <button
-                                onClick={toggleTheme}
-                                className="p-2.5 text-lumex-muted hover:text-lumex-blue transition-colors"
-                                aria-label="Toggle theme"
-                            >
-                                {theme === 'light' ? <FaMoon size={18} /> : <FaSun size={18} />}
+                                {isMobileMenuOpen ? <XIcon /> : <BarsIcon />}
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Mega Menu Dropdown */}
+            {/* Mega Menu */}
             <MegaMenu isOpen={isExploreOpen || isMobileMenuOpen} onClose={closeMenus} />
         </header>
     );
