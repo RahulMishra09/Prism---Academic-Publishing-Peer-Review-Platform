@@ -46,7 +46,7 @@ export const SearchFilterPanelView: React.FC<SearchFilterPanelViewProps> = ({
         <div className={`w-full ${className || ''}`}>
             {!hideHeader && (
                 <div className="flex justify-between items-end mb-5 px-1">
-                    <h2 className="text-[0.72rem] font-bold uppercase tracking-[0.08em] text-lumex-muted-more font-sans">
+                    <h2 className="text-[0.72rem] font-bold uppercase tracking-[0.08em] text-lumex-muted font-sans">
                         Refine your search
                     </h2>
                     {hasActiveFilters && (
@@ -116,7 +116,7 @@ export const SearchFilterPanelView: React.FC<SearchFilterPanelViewProps> = ({
                                                             <span className={`text-[0.81rem] truncate transition-colors ${isChecked ? 'text-lumex-text font-medium' : 'text-lumex-text-secondary group-hover:text-lumex-text'}`}>
                                                                 {val.label}
                                                             </span>
-                                                            <span className="ml-2 text-[0.68rem] font-bold px-2 py-0.5 rounded-full bg-lumex-bg-deep-more text-lumex-muted-more min-w-[24px] text-center">
+                                                            <span className="ml-2 text-[0.68rem] font-bold px-2 py-0.5 rounded-full bg-lumex-bg-deep-more text-lumex-muted min-w-[24px] text-center">
                                                                 {val.count > 999 ? `${(val.count/1000).toFixed(1)}k` : val.count}
                                                             </span>
                                                         </div>

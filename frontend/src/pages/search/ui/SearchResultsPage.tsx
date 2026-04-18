@@ -16,7 +16,7 @@ export const SearchResultsPage: React.FC = () => {
     return (
         <>
             {/* Search Header Banner */}
-            <div className="bg-lumex-bg-deep border-b border-lumex-border py-8 pt-6">
+            <div className="border-b border-lumex-border bg-lumex-bg-white py-6 pt-5">
                 <Container>
                     <div className="mb-6">
                         <Breadcrumb className="mb-4">
@@ -33,10 +33,10 @@ export const SearchResultsPage: React.FC = () => {
                         
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
                             <div>
-                                <h1 className="text-2xl font-serif text-lumex-text mb-1">
-                                    Search results for "<span className="text-lumex-blue font-bold">{query}</span>"
+                                <h1 className="mb-1 font-serif text-2xl font-bold text-lumex-text">
+                                    Results for "<span className="text-lumex-blue">{query}</span>"
                                 </h1>
-                                <p className="text-sm text-lumex-muted-more font-medium">
+                                <p className="text-sm text-lumex-muted font-medium">
                                     Showing {totalResults.toLocaleString()} relevant research articles and books
                                 </p>
                             </div>
@@ -108,7 +108,7 @@ export const SearchResultsPage: React.FC = () => {
                         <div className="sticky top-0 z-10 flex items-center justify-between p-5 px-6 bg-lumex-bg/90 backdrop-blur-md border-b border-lumex-border">
                             <div>
                                 <h2 className="text-lg font-serif text-lumex-text font-bold">Refine & Discover</h2>
-                                <p className="text-xs text-lumex-muted-more font-medium uppercase tracking-wider mt-0.5">Filter results & explore more</p>
+                                <p className="text-xs text-lumex-muted font-medium uppercase tracking-wider mt-0.5">Filter results & explore more</p>
                             </div>
                             <button
                                 onClick={() => setShowDrawer(false)}

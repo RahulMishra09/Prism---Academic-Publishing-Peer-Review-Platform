@@ -86,7 +86,7 @@ export const SearchResultsList: React.FC<SearchResultsListProps> = ({ className 
             {/* Top Bar: Sort only since count is in header */}
             <div className="flex justify-end items-center mb-6 pb-4 border-b border-lumex-border">
                 <div className="flex items-center gap-3">
-                    <span className="text-[0.82rem] font-bold text-lumex-muted-more uppercase tracking-wider whitespace-nowrap">
+                    <span className="text-[0.82rem] font-bold text-lumex-muted uppercase tracking-wider whitespace-nowrap">
                         Sort by:
                     </span>
                     <Select

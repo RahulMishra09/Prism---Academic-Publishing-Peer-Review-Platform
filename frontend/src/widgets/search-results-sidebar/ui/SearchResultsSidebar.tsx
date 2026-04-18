@@ -42,7 +42,7 @@ export const SearchResultsSidebar: React.FC<SearchResultsSidebarProps> = ({ clas
 
             {/* Trending Research Section */}
             <div className="bg-lumex-card border border-lumex-border rounded-xl p-4 shadow-sm transition-colors duration-200">
-                <h4 className="text-[0.72rem] font-bold text-lumex-muted-more mb-4 uppercase tracking-[0.08em] border-b border-lumex-border pb-2">
+                <h4 className="text-[0.72rem] font-bold text-lumex-muted mb-4 uppercase tracking-[0.08em] border-b border-lumex-border pb-2">
                     Trending Research
                 </h4>
                 {isTrendingLoading && (

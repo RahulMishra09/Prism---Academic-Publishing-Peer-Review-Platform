@@ -11,12 +11,14 @@ const config: Config = {
                     blue: 'var(--lumex-accent)',
                     'blue-dark': 'var(--lumex-accent-dark)',
                     'blue-soft': 'var(--lumex-accent-soft)',
+                    'accent-soft': 'var(--lumex-accent-soft)',
 
                     red: 'var(--lumex-red)',
                     'red-dark': 'var(--lumex-red-dark)',
                     'oa-gold': 'var(--lumex-oa-gold)',
 
                     text: 'var(--lumex-text)',
+                    'text-secondary': 'var(--lumex-text-muted)',
                     muted: 'var(--lumex-text-muted)',
                     sub: 'var(--lumex-text-sub)',
                     border: 'var(--lumex-border)',
