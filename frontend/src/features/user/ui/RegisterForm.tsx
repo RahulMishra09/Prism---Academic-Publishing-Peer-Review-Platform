@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useAuthStore } from '../../../app/store/useAuthStore';
 
 export interface RegisterFormProps {
     onSuccess?: () => void;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
+    const { register, isLoading, error: storeError, clearError } = useAuthStore();
     const [form, setForm] = useState({
         firstName: '',
         lastName: '',
@@ -21,7 +23,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
         institution?: string;
         agreeTerms?: string;
     }>({});
-    const [isLoading, setIsLoading] = useState(false);
 
     const set = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
         setForm(prev => ({
@@ -50,16 +51,23 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        clearError();
         const errs = validate();
         if (Object.keys(errs).length > 0) {
             setErrors(errs);
             return;
         }
         setErrors({});
-        setIsLoading(true);
-        await new Promise(r => setTimeout(r, 800));
-        setIsLoading(false);
-        onSuccess?.();
+        await register({
+            firstName: form.firstName,
+            lastName: form.lastName,
+            email: form.email,
+            password: form.password,
+        });
+        const currentError = useAuthStore.getState().error;
+        if (!currentError) {
+            onSuccess?.();
+        }
     };
 
     const field = (
@@ -129,6 +137,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
                     <p className="mt-1 text-xs text-lumex-red">{errors.agreeTerms}</p>
                 )}
             </div>
+
+            {storeError && (
+                <div className="rounded-md bg-lumex-red/10 border border-lumex-red/20 px-4 py-3 text-sm text-lumex-red" role="alert">
+                    {storeError}
+                </div>
+            )}
 
             <button
                 type="submit"

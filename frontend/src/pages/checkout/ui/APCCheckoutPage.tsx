@@ -54,8 +54,8 @@ export const APCCheckoutPage: React.FC = () => {
                         </div>
                     </section>
 
-                    <div className="p-4 bg-yellow-50 border border-yellow-100 rounded-lg">
-                        <p className="text-xs text-yellow-800 leading-relaxed">
+                    <div className="p-4 bg-lumex-oa-gold/5 border border-lumex-oa-gold/20 rounded-lg">
+                        <p className="text-xs text-lumex-oa-gold leading-relaxed">
                             <span className="font-bold">Note:</span> Many institutions have agreements with Lumex to cover APCs. If you believe your institution covers this fee, please select "Institutional Waiver".
                         </p>
                     </div>
@@ -68,7 +68,7 @@ export const APCCheckoutPage: React.FC = () => {
                         <div className="space-y-3 mb-8">
                             <button
                                 onClick={() => setPaymentMethod('card')}
-                                className={`w-full flex items-center justify-between p-4 border rounded-lg transition-all ${paymentMethod === 'card' ? 'border-lumex-blue bg-blue-50/30 ring-1 ring-lumex-blue' : 'border-lumex-border hover:border-lumex-border'
+                                className={`w-full flex items-center justify-between p-4 border rounded-lg transition-all ${paymentMethod === 'card' ? 'border-lumex-blue bg-lumex-blue/5 ring-1 ring-lumex-blue' : 'border-lumex-border hover:border-lumex-border'
                                     }`}
                             >
                                 <div className="flex items-center gap-3">
@@ -80,7 +80,7 @@ export const APCCheckoutPage: React.FC = () => {
 
                             <button
                                 onClick={() => setPaymentMethod('institution')}
-                                className={`w-full flex items-center justify-between p-4 border rounded-lg transition-all ${paymentMethod === 'institution' ? 'border-lumex-blue bg-blue-50/30 ring-1 ring-lumex-blue' : 'border-lumex-border hover:border-lumex-border'
+                                className={`w-full flex items-center justify-between p-4 border rounded-lg transition-all ${paymentMethod === 'institution' ? 'border-lumex-blue bg-lumex-blue/5 ring-1 ring-lumex-blue' : 'border-lumex-border hover:border-lumex-border'
                                     }`}
                             >
                                 <div className="flex items-center gap-3">

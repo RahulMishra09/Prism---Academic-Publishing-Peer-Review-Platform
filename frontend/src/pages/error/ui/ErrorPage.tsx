@@ -15,7 +15,7 @@ export const ErrorPage: React.FC = () => {
         <div className="min-h-screen flex items-center justify-center bg-lumex-bg-light py-16 px-4">
             <div className="text-center max-w-md">
                 {/* Icon */}
-                <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div className="w-20 h-20 bg-lumex-red/10 rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="36"
@@ -26,7 +26,7 @@ export const ErrorPage: React.FC = () => {
                         strokeWidth="1.5"
                         strokeLinecap="round"
                         strokeLinejoin="round"
-                        className="text-red-500"
+                        className="text-lumex-red"
                     >
                         <circle cx="12" cy="12" r="10" />
                         <line x1="12" y1="8" x2="12" y2="12" />
@@ -40,7 +40,7 @@ export const ErrorPage: React.FC = () => {
 
                 <p className="text-lumex-muted mb-2 text-sm">
                     {error?.status && (
-                        <span className="font-mono font-bold text-red-500 mr-2">
+                        <span className="font-mono font-bold text-lumex-red mr-2">
                             {error.status}
                         </span>
                     )}

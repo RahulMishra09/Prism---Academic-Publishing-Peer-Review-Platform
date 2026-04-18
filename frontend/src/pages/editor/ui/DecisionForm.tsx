@@ -81,14 +81,14 @@ export const DecisionForm: React.FC = () => {
 
                 {/* Right: Reviewer Summaries */}
                 <div className="space-y-6">
-                    <div className="bg-blue-50 border border-blue-100 p-6 rounded-lg sticky top-8">
+                    <div className="bg-lumex-bg-deep border border-lumex-border p-6 rounded-lg sticky top-8">
                         <h3 className="text-sm font-bold text-lumex-blue uppercase tracking-wider mb-4">Reviewer Feedback Summary</h3>
 
                         <div className="space-y-6">
-                            <div className="pb-4 border-b border-blue-100">
+                            <div className="pb-4 border-b border-lumex-border">
                                 <div className="flex justify-between items-center mb-1">
                                     <span className="text-sm font-bold text-lumex-text">Reviewer 1</span>
-                                    <span className="text-[10px] font-bold uppercase bg-orange-100 text-orange-600 px-2 py-0.5 rounded">Major Revision</span>
+                                    <span className="text-[10px] font-bold uppercase bg-orange-100 text-lumex-oa-gold px-2 py-0.5 rounded">Major Revision</span>
                                 </div>
                                 <p className="text-xs text-lumex-text-secondary line-clamp-3">
                                     The submission provides interesting new data but the methodology is lacking core controls...
@@ -96,10 +96,10 @@ export const DecisionForm: React.FC = () => {
                                 <button className="text-[10px] font-bold text-lumex-blue mt-1 hover:underline">Read Full Review →</button>
                             </div>
 
-                            <div className="pb-4 border-b border-blue-100">
+                            <div className="pb-4 border-b border-lumex-border">
                                 <div className="flex justify-between items-center mb-1">
                                     <span className="text-sm font-bold text-lumex-text">Reviewer 2</span>
-                                    <span className="text-[10px] font-bold uppercase bg-green-100 text-green-600 px-2 py-0.5 rounded">Accept</span>
+                                    <span className="text-[10px] font-bold uppercase bg-lumex-open-bg text-lumex-open-text px-2 py-0.5 rounded">Accept</span>
                                 </div>
                                 <p className="text-xs text-lumex-text-secondary line-clamp-3">
                                     High quality work with significant implications for urban planning...
@@ -117,7 +117,7 @@ export const DecisionForm: React.FC = () => {
                                 </div>
                                 <div className="flex justify-between text-xs">
                                     <span>Methodology</span>
-                                    <span className="font-bold text-red-500">2.0 / 5</span>
+                                    <span className="font-bold text-lumex-red">2.0 / 5</span>
                                 </div>
                                 <div className="flex justify-between text-xs">
                                     <span>Clarity</span>

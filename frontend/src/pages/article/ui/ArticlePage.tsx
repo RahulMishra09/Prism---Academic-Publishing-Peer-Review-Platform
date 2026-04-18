@@ -15,6 +15,7 @@ import {
     useRecentlyViewed,
     useSavedArticles,
 } from '../../../features/article';
+import { ArticleComments } from '../../../features/article/ui/ArticleComments';
 import { ArticleSidebar } from '../../../widgets/article-sidebar';
 import type { ArticleFigure } from '../../../entities/article/model/types';
 
@@ -171,6 +172,11 @@ export const ArticlePage: React.FC = () => {
 
                                 {/* Full Body (HTML sections) */}
                                 <ArticleBody article={article} />
+
+                                {/* Discussion / Comments */}
+                                <div className="mt-10 border-t border-lumex-border pt-10">
+                                    <ArticleComments paperId={article.id} />
+                                </div>
                             </>
                         )}
 

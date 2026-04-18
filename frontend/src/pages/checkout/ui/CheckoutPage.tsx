@@ -64,7 +64,7 @@ export const CheckoutPage: React.FC = () => {
                         <div className="space-y-4 pt-4 border-t border-lumex-border">
                             <h4 className="font-bold text-sm text-lumex-text">Select Access Option:</h4>
 
-                            <label className={`block border rounded-lg p-4 cursor-pointer transition-colors ${accessType === '48h' ? 'bg-blue-50 border-lumex-blue' : 'border-lumex-border hover:border-blue-200'}`}>
+                            <label className={`block border rounded-lg p-4 cursor-pointer transition-colors ${accessType === '48h' ? 'bg-lumex-bg-deep border-lumex-blue' : 'border-lumex-border hover:border-lumex-border'}`}>
                                 <div className="flex justify-between items-start">
                                     <div className="flex gap-3">
                                         <input
@@ -84,7 +84,7 @@ export const CheckoutPage: React.FC = () => {
                                 </div>
                             </label>
 
-                            <label className={`block border rounded-lg p-4 cursor-pointer transition-colors ${accessType === 'perpetual' ? 'bg-blue-50 border-lumex-blue' : 'border-lumex-border hover:border-blue-200'}`}>
+                            <label className={`block border rounded-lg p-4 cursor-pointer transition-colors ${accessType === 'perpetual' ? 'bg-lumex-bg-deep border-lumex-blue' : 'border-lumex-border hover:border-lumex-border'}`}>
                                 <div className="flex justify-between items-start">
                                     <div className="flex gap-3">
                                         <input

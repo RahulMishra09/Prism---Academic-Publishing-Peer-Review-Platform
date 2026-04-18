@@ -23,7 +23,7 @@ export const AccountDashboard: React.FC = () => {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-lumex-blue" />
         </div>
     );
-    if (isError || !dashboardData) return <div className="p-12 text-center text-red-500 font-bold">Failed to load dashboard data.</div>;
+    if (isError || !dashboardData) return <div className="p-12 text-center text-lumex-red font-bold">Failed to load dashboard data.</div>;
 
     const user = dashboardData.profile;
 

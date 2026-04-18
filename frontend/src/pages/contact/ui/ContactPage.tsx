@@ -49,7 +49,7 @@ export const ContactPage: React.FC = () => {
                         <div className="md:w-2/3 p-8">
                             {status === 'success' ? (
                                 <div className="h-full flex flex-col items-center justify-center text-center py-12">
-                                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                                    <div className="w-16 h-16 bg-lumex-open-bg rounded-full flex items-center justify-center mb-6">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                                     </div>
                                     <h2 className="text-2xl font-bold text-lumex-text mb-2">Message Sent!</h2>

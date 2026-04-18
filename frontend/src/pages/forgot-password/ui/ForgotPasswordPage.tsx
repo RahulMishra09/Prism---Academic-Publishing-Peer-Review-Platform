@@ -30,7 +30,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = () => {
                 <div className="bg-white border border-lumex-border rounded-xl p-8 shadow-sm">
                     {submitted ? (
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="w-16 h-16 bg-lumex-open-bg rounded-full flex items-center justify-center mx-auto mb-4">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="28"
@@ -85,7 +85,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = () => {
                                         className={`w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue transition ${error ? 'border-red-400 bg-red-50' : 'border-lumex-border'}`}
                                         placeholder="you@example.com"
                                     />
-                                    {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
+                                    {error && <p className="mt-1 text-xs text-lumex-red">{error}</p>}
                                 </div>
                                 <button
                                     type="submit"

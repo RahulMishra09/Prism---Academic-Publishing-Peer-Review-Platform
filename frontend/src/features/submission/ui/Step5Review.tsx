@@ -6,12 +6,14 @@ import { useSubmissionStore } from '@features/submission/model/useSubmissionStor
 import type { AuthorInfo, SuggestedReviewer, SubmissionFile } from '../../../shared/types/submission.types';
 import { Button } from '@shared/ui';
 import { Link, useNavigate } from 'react-router-dom';
+import { createPaper, submitPaper } from '../api/papersApi';
 
 export const Step5Review: React.FC = () => {
     const { draft, updateDraft, prevStep, resetDraft } = useSubmissionStore();
     const navigate = useNavigate();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submissionSuccess, setSubmissionSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
 
     const {
         register,
@@ -27,13 +29,27 @@ export const Step5Review: React.FC = () => {
     const onSubmit = async (data: Step6Data) => {
         updateDraft(data as Partial<typeof draft>);
         setIsSubmitting(true);
+        setSubmitError(null);
 
-        // Mock API call to submit the full draft
-        await new Promise((resolve) => setTimeout(resolve, 2000));
+        try {
+            // 1. Create paper draft on the backend
+            const paper = await createPaper({
+                title: draft.title ?? 'Untitled Manuscript',
+                abstract: draft.abstract ?? '',
+                domain: draft.journalSlug ?? 'general',
+                keywords: draft.keywords ?? [],
+            });
 
-        setIsSubmitting(false);
-        setSubmissionSuccess(true);
-        resetDraft(); // Clear local storage draft
+            // 2. Submit the paper for review
+            await submitPaper(paper.id);
+
+            setSubmissionSuccess(true);
+            resetDraft();
+        } catch (err) {
+            setSubmitError(err instanceof Error ? err.message : 'Submission failed. Please try again.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     if (submissionSuccess) {
@@ -212,12 +228,18 @@ export const Step5Review: React.FC = () => {
                     )}
                 </div>
 
+                {submitError && (
+                    <div className="mb-4 rounded-md bg-lumex-red/10 border border-lumex-red/20 px-4 py-3 text-sm text-lumex-red" role="alert">
+                        {submitError}
+                    </div>
+                )}
+
                 <div className="flex justify-between pt-6 border-t border-lumex-border">
                     <Button type="button" variant="outline" size="lg" onClick={prevStep} disabled={isSubmitting}>
                         Back
                     </Button>
                     <Button type="submit" variant="primary" size="lg" disabled={isSubmitting} className="min-w-[180px]">
-                        {isSubmitting ? 'Submitting...' : 'Submit Manuscript'}
+                        {isSubmitting ? 'Submitting…' : 'Submit Manuscript'}
                     </Button>
                 </div>
             </form>
