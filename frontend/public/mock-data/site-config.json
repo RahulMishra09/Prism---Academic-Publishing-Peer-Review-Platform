@@ -1,0 +1,34 @@
+{
+    "metrics": [
+        {
+            "label": "Articles Published YTD",
+            "value": "342,000",
+            "sub": "+16% vs 2024",
+            "color": "#5b7cf6"
+        },
+        {
+            "label": "Total Citations",
+            "value": "18.4M",
+            "sub": "Across all journals",
+            "color": "#0ea5e9"
+        },
+        {
+            "label": "Average Time to Decision",
+            "value": "28 days",
+            "sub": "For reviewed manuscripts",
+            "color": "#14b8a6"
+        },
+        {
+            "label": "Open Access Rate",
+            "value": "38%",
+            "sub": "Up from 29% in 2023",
+            "color": "#6366f1"
+        }
+    ],
+    "socialLinks": {
+        "twitter": "https://twitter.com/lumex",
+        "facebook": "https://facebook.com/lumex",
+        "linkedin": "https://linkedin.com/company/lumex",
+        "youtube": "https://youtube.com/lumex"
+    }
+}

@@ -1,0 +1,204 @@
+{
+    "jobs": [
+        {
+            "id": "job1",
+            "title": "Senior Editorial Manager",
+            "department": "Editorial",
+            "location": "London, UK (Hybrid)",
+            "type": "Full-time",
+            "description": "We are looking for an experienced Senior Editorial Manager to oversee a portfolio of high-impact journals in the Life Sciences domain."
+        },
+        {
+            "id": "job2",
+            "title": "Acquisitions Editor, Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        },
+        {
+            "id": "job3",
+            "title": "Frontend Software Engineer",
+            "department": "Technology",
+            "location": "Berlin, Germany (Remote)",
+            "type": "Full-time",
+            "description": "Help us build the next generation of our research platform using React, TypeScript, and modern web technologies."
+        },
+        {
+            "id": "job4",
+            "title": "Data Scientist, Recommendations",
+            "department": "Technology",
+            "location": "Remote",
+            "type": "Full-time",
+            "description": "Develop and optimize recommendation algorithms to connect researchers with the most relevant literature."
+        },
+        {
+            "id": "job5",
+            "title": "Marketing Executive, Open Access",
+            "department": "Marketing",
+            "location": "London, UK",
+            "type": "Full-time",
+            "description": "Drive awareness and engagement for our growing portfolio of open access journals through targeted campaigns."
+        },
+        {
+            "id": "job6",
+            "title": "Customer Support Specialist",
+            "department": "Customer Service",
+            "location": "Remote (APAC Region)",
+            "type": "Contract",
+            "description": "Provide excellent technical and account support to our authors, reviewers, and institutional subscribers in the APAC region."
+        },
+        {
+            "id": "job102",
+            "title": "Innovative Macroeconomic Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        },
+        {
+            "id": "job105",
+            "title": "Data Scientist, Recommendations - Part 1",
+            "department": "Technology",
+            "location": "Remote",
+            "type": "Full-time",
+            "description": "Develop and optimize recommendation algorithms to connect researchers with the most relevant literature."
+        },
+        {
+            "id": "job104",
+            "title": "Advances in Behavioral Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        },
+        {
+            "id": "job105",
+            "title": "Emerging Systems Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        },
+        {
+            "id": "job105",
+            "title": "Senior Editorial Manager - Part 4",
+            "department": "Editorial",
+            "location": "London, UK (Hybrid)",
+            "type": "Full-time",
+            "description": "We are looking for an experienced Senior Editorial Manager to oversee a portfolio of high-impact journals in the Life Sciences domain."
+        },
+        {
+            "id": "job110",
+            "title": "Comprehensive Climatological Open Access",
+            "department": "Marketing",
+            "location": "London, UK",
+            "type": "Full-time",
+            "description": "Drive awareness and engagement for our growing portfolio of open access journals through targeted campaigns."
+        },
+        {
+            "id": "job108",
+            "title": "Global Quantum Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        },
+        {
+            "id": "job108",
+            "title": "Senior Editorial Manager - Part 7",
+            "department": "Editorial",
+            "location": "London, UK (Hybrid)",
+            "type": "Full-time",
+            "description": "We are looking for an experienced Senior Editorial Manager to oversee a portfolio of high-impact journals in the Life Sciences domain."
+        },
+        {
+            "id": "job113",
+            "title": "Sustainable Organic Open Access",
+            "department": "Marketing",
+            "location": "London, UK",
+            "type": "Full-time",
+            "description": "Drive awareness and engagement for our growing portfolio of open access journals through targeted campaigns."
+        },
+        {
+            "id": "job111",
+            "title": "Global Neural Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        },
+        {
+            "id": "job115",
+            "title": "Computational Genomic Open Access",
+            "department": "Marketing",
+            "location": "London, UK",
+            "type": "Full-time",
+            "description": "Drive awareness and engagement for our growing portfolio of open access journals through targeted campaigns."
+        },
+        {
+            "id": "job115",
+            "title": "Data Scientist, Recommendations - Part 11",
+            "department": "Technology",
+            "location": "Remote",
+            "type": "Full-time",
+            "description": "Develop and optimize recommendation algorithms to connect researchers with the most relevant literature."
+        },
+        {
+            "id": "job114",
+            "title": "Computational Molecular Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        },
+        {
+            "id": "job118",
+            "title": "Advances in Molecular Open Access",
+            "department": "Marketing",
+            "location": "London, UK",
+            "type": "Full-time",
+            "description": "Drive awareness and engagement for our growing portfolio of open access journals through targeted campaigns."
+        },
+        {
+            "id": "job115",
+            "title": "Senior Editorial Manager - Part 14",
+            "department": "Editorial",
+            "location": "London, UK (Hybrid)",
+            "type": "Full-time",
+            "description": "We are looking for an experienced Senior Editorial Manager to oversee a portfolio of high-impact journals in the Life Sciences domain."
+        },
+        {
+            "id": "job117",
+            "title": "Integrated Climatological Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        },
+        {
+            "id": "job117",
+            "title": "Senior Editorial Manager - Part 16",
+            "department": "Editorial",
+            "location": "London, UK (Hybrid)",
+            "type": "Full-time",
+            "description": "We are looking for an experienced Senior Editorial Manager to oversee a portfolio of high-impact journals in the Life Sciences domain."
+        },
+        {
+            "id": "job122",
+            "title": "Innovative Macroeconomic Open Access",
+            "department": "Marketing",
+            "location": "London, UK",
+            "type": "Full-time",
+            "description": "Drive awareness and engagement for our growing portfolio of open access journals through targeted campaigns."
+        },
+        {
+            "id": "job120",
+            "title": "Strategic Genomic Physical Sciences",
+            "department": "Editorial",
+            "location": "New York, USA (Remote)",
+            "type": "Full-time",
+            "description": "Join our dynamic team to acquire and develop new book titles and reference works in physics and chemistry."
+        }
+    ]
+}

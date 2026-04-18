@@ -1,0 +1,13 @@
+{
+    "data": {
+        "user": {
+            "id": "u1",
+            "email": "demo@university.edu",
+            "firstName": "Sarah",
+            "lastName": "Chen",
+            "affiliation": "Mock University",
+            "orcid": "0000-0001-2345-6789"
+        },
+        "accessToken": "mock-jwt-token-xyz"
+    }
+}

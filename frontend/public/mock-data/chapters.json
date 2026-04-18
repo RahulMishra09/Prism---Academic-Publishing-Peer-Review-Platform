@@ -1,0 +1,1661 @@
+{
+    "chapters": [
+        {
+            "id": "ch-001",
+            "doi": "10.1007/978-3-031-12345-1_1",
+            "title": "Neural Network Fundamentals and the Perceptron",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "1\u201342",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-002",
+            "doi": "10.1007/978-3-031-12345-1_2",
+            "title": "Convolutional Neural Networks for Image Recognition",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "pages": "43\u201389",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-003",
+            "doi": "10.1007/978-3-031-12345-1_3",
+            "title": "Attention Mechanisms and Transformer Architectures",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "pages": "90\u2013148",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-004",
+            "doi": "10.1007/978-3-031-12345-1_4",
+            "title": "Large Language Models: Pretraining and Fine-tuning",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "149\u2013211",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-005",
+            "doi": "10.1007/978-3-031-12345-1_5",
+            "title": "Deployment and Production Considerations",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "pages": "212\u2013267",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-006",
+            "doi": "10.1007/978-3-031-67890-2_1",
+            "title": "Introduction to Quantum Mechanics for Computer Scientists",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "1\u201358",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-007",
+            "doi": "10.1007/978-3-031-67890-2_2",
+            "title": "Surface Codes and Topological Quantum Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-104",
+            "doi": "10.1007/978-3-031-12345-19437-0",
+            "title": "Sustainable Molecular and Fine-tuning",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "149\u2013211",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-102",
+            "doi": "10.1007/978-3-031-12345-83993-1",
+            "title": "Computational Macroeconomic the Perceptron",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "1\u201342",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-104",
+            "doi": "10.1007/978-3-031-12345-56992-2",
+            "title": "Integrated Structural Image Recognition",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "pages": "43\u201389",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-108",
+            "doi": "10.1007/978-3-031-12345-82993-3",
+            "title": "Comprehensive Structural Production Considerations",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "pages": "212\u2013267",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-111",
+            "doi": "10.1007/978-3-031-67890-88466-4",
+            "title": "Sustainable Climatological Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-112",
+            "doi": "10.1007/978-3-031-67890-36956-5",
+            "title": "Integrated Macroeconomic Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-110",
+            "doi": "10.1007/978-3-031-12345-98668-6",
+            "title": "Integrated Quantum and Fine-tuning",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "149\u2013211",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-109",
+            "doi": "10.1007/978-3-031-12345-57252-7",
+            "title": "Innovative Systems Image Recognition",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "pages": "43\u201389",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-112",
+            "doi": "10.1007/978-3-031-12345-98391-8",
+            "title": "Advances in Genomic and Fine-tuning",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "149\u2013211",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-114",
+            "doi": "10.1007/978-3-031-12345-47900-9",
+            "title": "Strategic Macroeconomic Production Considerations",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "pages": "212\u2013267",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-115",
+            "doi": "10.1007/978-3-031-12345-45237-10",
+            "title": "Innovative Organic Production Considerations",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "pages": "212\u2013267",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-118",
+            "doi": "10.1007/978-3-031-67890-32914-11",
+            "title": "Integrated Structural Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-117",
+            "doi": "10.1007/978-3-031-12345-30522-12",
+            "title": "Integrated Climatological Production Considerations",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "pages": "212\u2013267",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-117",
+            "doi": "10.1007/978-3-031-12345-34033-13",
+            "title": "Innovative Structural and Fine-tuning",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "149\u2013211",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-115",
+            "doi": "10.1007/978-3-031-12345-50408-14",
+            "title": "Sustainable Genomic the Perceptron",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "1\u201342",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-122",
+            "doi": "10.1007/978-3-031-67890-55306-15",
+            "title": "Strategic Neural Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-123",
+            "doi": "10.1007/978-3-031-67890-80930-16",
+            "title": "Strategic Structural Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-118",
+            "doi": "10.1007/978-3-031-12345-65162-17",
+            "title": "Global Behavioral the Perceptron",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "1\u201342",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-122",
+            "doi": "10.1007/978-3-031-12345-68669-18",
+            "title": "Global Behavioral and Fine-tuning",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "149\u2013211",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-122",
+            "doi": "10.1007/978-3-031-12345-29786-19",
+            "title": "Modern Structural Transformer Architectures",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "pages": "90\u2013148",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-121",
+            "doi": "10.1007/978-3-031-12345-82347-20",
+            "title": "Sustainable Molecular the Perceptron",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "1\u201342",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-122",
+            "doi": "10.1007/978-3-031-12345-15045-21",
+            "title": "Strategic Behavioral the Perceptron",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "1\u201342",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-129",
+            "doi": "10.1007/978-3-031-67890-71297-22",
+            "title": "Sustainable Neural Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-129",
+            "doi": "10.1007/978-3-031-67890-38124-23",
+            "title": "Sustainable Genomic Computer Scientists",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "1\u201358",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-130",
+            "doi": "10.1007/978-3-031-67890-44020-24",
+            "title": "Innovative Behavioral Computer Scientists",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "1\u201358",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-126",
+            "doi": "10.1007/978-3-031-12345-35355-25",
+            "title": "Integrated Behavioral the Perceptron",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing \u2013 original draft"
+                    ]
+                }
+            ],
+            "pages": "1\u201342",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-133",
+            "doi": "10.1007/978-3-031-67890-95890-26",
+            "title": "Global Organic Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-129",
+            "doi": "10.1007/978-3-031-12345-97188-27",
+            "title": "Sustainable Genomic Image Recognition",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "pages": "43\u201389",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-134",
+            "doi": "10.1007/978-3-031-67890-31127-28",
+            "title": "Comprehensive Molecular Computer Scientists",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "1\u201358",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-134",
+            "doi": "10.1007/978-3-031-12345-73009-29",
+            "title": "Strategic Macroeconomic Production Considerations",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "pages": "212\u2013267",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-137",
+            "doi": "10.1007/978-3-031-67890-77089-30",
+            "title": "Emerging Neural Error Correction",
+            "bookTitle": "Quantum Computing: Principles and Practice",
+            "bookDoi": "10.1007/978-3-031-67890-2",
+            "authors": [
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                },
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing \u2013 review & editing"
+                    ]
+                }
+            ],
+            "pages": "59\u2013127",
+            "publishYear": 2024
+        },
+        {
+            "id": "ch-136",
+            "doi": "10.1007/978-3-031-12345-65389-31",
+            "title": "Sustainable Organic Production Considerations",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "pages": "212\u2013267",
+            "publishYear": 2023
+        },
+        {
+            "id": "ch-134",
+            "doi": "10.1007/978-3-031-12345-36841-32",
+            "title": "Comprehensive Organic Image Recognition",
+            "bookTitle": "Deep Learning: Foundations and Applications",
+            "bookDoi": "10.1007/978-3-031-12345-1",
+            "authors": [
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "pages": "43\u201389",
+            "publishYear": 2023
+        }
+    ]
+}

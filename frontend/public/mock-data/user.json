@@ -1,0 +1,129 @@
+{
+    "profile": {
+        "name": "Jane Doe",
+        "email": "jane.doe@example.university.edu",
+        "institution": "University of Example, Technical Department"
+    },
+    "savedArticles": [
+        {
+            "id": "1",
+            "doi": "10.1007/s00001-024-0001-x",
+            "title": "Deep Learning Approaches in Scientific Literature Mining",
+            "authors": "Smith, J., Jones, A., et al.",
+            "journalTitle": "Nature Machine Intelligence",
+            "savedAt": "2024-11-15T14:30:00Z"
+        },
+        {
+            "id": "2",
+            "doi": "10.1007/s00002-024-0002-x",
+            "title": "Quantum Error Correction: A Comprehensive Review",
+            "authors": "Zhang, W., Kumar, P.",
+            "journalTitle": "Physical Review Letters",
+            "savedAt": "2024-10-30T09:12:00Z"
+        },
+        {
+            "id": "3",
+            "doi": "10.1007/s00285-024-02112-3",
+            "title": "Mathematical formulation of climate tipping points",
+            "authors": "Doe, J., Smith, A.",
+            "journalTitle": "Journal of Mathematical Biology",
+            "savedAt": "2024-01-10T11:45:00Z"
+        }
+    ],
+    "alerts": [
+        {
+            "id": "1",
+            "type": "journal",
+            "label": "Nature Machine Intelligence",
+            "frequency": "weekly",
+            "active": true
+        },
+        {
+            "id": "2",
+            "type": "topic",
+            "label": "Quantum Computing Algorithms",
+            "frequency": "monthly",
+            "active": true
+        },
+        {
+            "id": "3",
+            "type": "journal",
+            "label": "Physical Review Letters",
+            "frequency": "weekly",
+            "active": false
+        }
+    ],
+    "submissions": [
+        {
+            "id": "SUB-2024-001",
+            "title": "Neural Networks in Bioinformatics: A Review across Modalities",
+            "journal": "Nature Machine Intelligence",
+            "status": "Under Review",
+            "submittedAt": "2024-02-15T08:00:00Z"
+        },
+        {
+            "id": "SUB-2024-012",
+            "title": "Sustainable Urban Planning in Coastal Megacities",
+            "journal": "Lumex Sustainable Earth",
+            "status": "Accepted",
+            "submittedAt": "2024-02-28T11:00:00Z"
+        },
+        {
+            "id": "SUB-2024-005",
+            "title": "Quantum Computing in Healthcare: Opportunities and Challenges",
+            "journal": "Lumex Medicine",
+            "status": "Revision Required",
+            "submittedAt": "2024-03-01T10:00:00Z"
+        },
+        {
+            "id": "SUB-2024-009",
+            "title": "Machine Learning for Automated Seismic Interpretation",
+            "journal": "Nature Geoscience",
+            "status": "Proofing",
+            "submittedAt": "2024-01-20T14:30:00Z"
+        },
+        {
+            "id": "SUB-2023-042",
+            "title": "Quantum Advantage in Combinatorial Optimization through Annealing",
+            "journal": "Physical Review Letters",
+            "status": "Accepted",
+            "submittedAt": "2023-11-02T16:20:00Z"
+        },
+        {
+            "id": "SUB-2023-018",
+            "title": "Robust Resource Allocation in Edge Computing for IoT Clusters",
+            "journal": "IEEE Transactions on Computers",
+            "status": "Published",
+            "submittedAt": "2023-06-20T10:05:00Z"
+        }
+    ],
+    "reviews": {
+        "pending": [
+            {
+                "id": "REV-2024-081",
+                "title": "Novel Approaches to Quantum Error Correction in Superconducting Qubits",
+                "journal": "Nature Physics",
+                "deadline": "2024-03-25T23:59:59Z",
+                "status": "Action Required",
+                "invitedOn": "2024-02-28T09:15:00Z"
+            },
+            {
+                "id": "REV-2024-112",
+                "title": "Deep Reinforcement Learning for Autonomous Drone Navigation in High-Wind Environments",
+                "journal": "Nature Machine Intelligence",
+                "deadline": "2024-04-10T23:59:59Z",
+                "status": "Action Required",
+                "invitedOn": "2024-03-02T11:30:00Z"
+            }
+        ],
+        "completed": [
+            {
+                "id": "REV-2023-992",
+                "title": "An Analysis of Global Supply Chain Disruptions during Vector-borne Disease Outbreaks",
+                "journal": "Supply Chain Management Review",
+                "completedOn": "2023-11-15T14:22:00Z",
+                "decision": "Accept with minor revisions"
+            }
+        ]
+    }
+}

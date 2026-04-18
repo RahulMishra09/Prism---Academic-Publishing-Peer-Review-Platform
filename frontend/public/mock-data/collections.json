@@ -1,0 +1,229 @@
+{
+    "collections": [
+        {
+            "id": "c1",
+            "title": "Artificial Intelligence in Healthcare",
+            "description": "A curated collection of groundbreaking research on the applications of AI and machine learning in medical diagnosis, treatment planning, and patient care.",
+            "articleCount": 42,
+            "imageUrl": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "ai-in-healthcare",
+            "updatedAt": "2024-03-01T10:00:00Z"
+        },
+        {
+            "id": "c2",
+            "title": "Climate Change & Sustainability",
+            "description": "Essential studies tackling global warming, renewable energy, and sustainable practices across varied ecosystems.",
+            "articleCount": 85,
+            "imageUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "climate-change-sustainability",
+            "updatedAt": "2024-02-15T10:00:00Z"
+        },
+        {
+            "id": "c3",
+            "title": "Quantum Computing Frontiers",
+            "description": "Explore the latest advancements in quantum algorithms, hardware developments, and theoretical implications.",
+            "articleCount": 28,
+            "imageUrl": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "quantum-computing-frontiers",
+            "updatedAt": "2024-03-05T10:00:00Z"
+        },
+        {
+            "id": "c4",
+            "title": "Neuroscience and Behavior",
+            "description": "Recent discoveries in brain functionality, cognitive processes, and behavioral psychology.",
+            "articleCount": 56,
+            "imageUrl": "https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "neuroscience-behavior",
+            "updatedAt": "2024-01-20T10:00:00Z"
+        },
+        {
+            "id": "c5",
+            "title": "Nanotechnology Innovations",
+            "description": "Research on nanomaterials, nanoscale devices, and their applications in various scientific fields.",
+            "articleCount": 34,
+            "imageUrl": "https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "nanotechnology-innovations",
+            "updatedAt": "2024-02-28T10:00:00Z"
+        },
+        {
+            "id": "c6",
+            "title": "Genomics and Precision Medicine",
+            "description": "The latest studies on DNA sequencing, gene editing, and personalized medical treatments.",
+            "articleCount": 61,
+            "imageUrl": "https://images.unsplash.com/photo-1532187313867-b8637c35f992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "genomics-precision-medicine",
+            "updatedAt": "2024-03-02T10:00:00Z"
+        },
+        {
+            "id": "c104",
+            "title": "Neuroscience and Behavior - Part 0",
+            "description": "Recent discoveries in brain functionality, cognitive processes, and behavioral psychology.",
+            "articleCount": 56,
+            "imageUrl": "https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "neuroscience-behavior-10",
+            "updatedAt": "2024-01-20T10:00:00Z"
+        },
+        {
+            "id": "c107",
+            "title": "Global Genomic Precision Medicine",
+            "description": "The latest studies on DNA sequencing, gene editing, and personalized medical treatments.",
+            "articleCount": 61,
+            "imageUrl": "https://images.unsplash.com/photo-1532187313867-b8637c35f992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "genomics-precision-medicine-11",
+            "updatedAt": "2024-03-02T10:00:00Z"
+        },
+        {
+            "id": "c108",
+            "title": "Emerging Systems Precision Medicine",
+            "description": "The latest studies on DNA sequencing, gene editing, and personalized medical treatments.",
+            "articleCount": 61,
+            "imageUrl": "https://images.unsplash.com/photo-1532187313867-b8637c35f992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "genomics-precision-medicine-12",
+            "updatedAt": "2024-03-02T10:00:00Z"
+        },
+        {
+            "id": "c106",
+            "title": "Quantum Computing Frontiers - Part 3",
+            "description": "Explore the latest advancements in quantum algorithms, hardware developments, and theoretical implications.",
+            "articleCount": 28,
+            "imageUrl": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "quantum-computing-frontiers-13",
+            "updatedAt": "2024-03-05T10:00:00Z"
+        },
+        {
+            "id": "c109",
+            "title": "Nanotechnology Innovations - Part 4",
+            "description": "Research on nanomaterials, nanoscale devices, and their applications in various scientific fields.",
+            "articleCount": 34,
+            "imageUrl": "https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "nanotechnology-innovations-14",
+            "updatedAt": "2024-02-28T10:00:00Z"
+        },
+        {
+            "id": "c108",
+            "title": "Quantum Computing Frontiers - Part 5",
+            "description": "Explore the latest advancements in quantum algorithms, hardware developments, and theoretical implications.",
+            "articleCount": 28,
+            "imageUrl": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "quantum-computing-frontiers-15",
+            "updatedAt": "2024-03-05T10:00:00Z"
+        },
+        {
+            "id": "c111",
+            "title": "Nanotechnology Innovations - Part 6",
+            "description": "Research on nanomaterials, nanoscale devices, and their applications in various scientific fields.",
+            "articleCount": 34,
+            "imageUrl": "https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "nanotechnology-innovations-16",
+            "updatedAt": "2024-02-28T10:00:00Z"
+        },
+        {
+            "id": "c109",
+            "title": "Modern Quantum & Sustainability",
+            "description": "Essential studies tackling global warming, renewable energy, and sustainable practices across varied ecosystems.",
+            "articleCount": 85,
+            "imageUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "climate-change-sustainability-17",
+            "updatedAt": "2024-02-15T10:00:00Z"
+        },
+        {
+            "id": "c111",
+            "title": "Quantum Computing Frontiers - Part 8",
+            "description": "Explore the latest advancements in quantum algorithms, hardware developments, and theoretical implications.",
+            "articleCount": 28,
+            "imageUrl": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "quantum-computing-frontiers-18",
+            "updatedAt": "2024-03-05T10:00:00Z"
+        },
+        {
+            "id": "c114",
+            "title": "Nanotechnology Innovations - Part 9",
+            "description": "Research on nanomaterials, nanoscale devices, and their applications in various scientific fields.",
+            "articleCount": 34,
+            "imageUrl": "https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "nanotechnology-innovations-19",
+            "updatedAt": "2024-02-28T10:00:00Z"
+        },
+        {
+            "id": "c111",
+            "title": "Integrated Molecular in Healthcare",
+            "description": "A curated collection of groundbreaking research on the applications of AI and machine learning in medical diagnosis, treatment planning, and patient care.",
+            "articleCount": 42,
+            "imageUrl": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "ai-in-healthcare-20",
+            "updatedAt": "2024-03-01T10:00:00Z"
+        },
+        {
+            "id": "c117",
+            "title": "Emerging Macroeconomic Precision Medicine",
+            "description": "The latest studies on DNA sequencing, gene editing, and personalized medical treatments.",
+            "articleCount": 61,
+            "imageUrl": "https://images.unsplash.com/photo-1532187313867-b8637c35f992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "genomics-precision-medicine-21",
+            "updatedAt": "2024-03-02T10:00:00Z"
+        },
+        {
+            "id": "c118",
+            "title": "Strategic Behavioral Precision Medicine",
+            "description": "The latest studies on DNA sequencing, gene editing, and personalized medical treatments.",
+            "articleCount": 61,
+            "imageUrl": "https://images.unsplash.com/photo-1532187313867-b8637c35f992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "genomics-precision-medicine-22",
+            "updatedAt": "2024-03-02T10:00:00Z"
+        },
+        {
+            "id": "c117",
+            "title": "Neuroscience and Behavior - Part 13",
+            "description": "Recent discoveries in brain functionality, cognitive processes, and behavioral psychology.",
+            "articleCount": 56,
+            "imageUrl": "https://images.unsplash.com/photo-1559757175-5700dde675bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "neuroscience-behavior-23",
+            "updatedAt": "2024-01-20T10:00:00Z"
+        },
+        {
+            "id": "c119",
+            "title": "Nanotechnology Innovations - Part 14",
+            "description": "Research on nanomaterials, nanoscale devices, and their applications in various scientific fields.",
+            "articleCount": 34,
+            "imageUrl": "https://images.unsplash.com/photo-1614728263952-84ea256f9679?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "nanotechnology-innovations-24",
+            "updatedAt": "2024-02-28T10:00:00Z"
+        },
+        {
+            "id": "c118",
+            "title": "Quantum Computing Frontiers - Part 15",
+            "description": "Explore the latest advancements in quantum algorithms, hardware developments, and theoretical implications.",
+            "articleCount": 28,
+            "imageUrl": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "quantum-computing-frontiers-25",
+            "updatedAt": "2024-03-05T10:00:00Z"
+        },
+        {
+            "id": "c122",
+            "title": "Modern Structural Precision Medicine",
+            "description": "The latest studies on DNA sequencing, gene editing, and personalized medical treatments.",
+            "articleCount": 61,
+            "imageUrl": "https://images.unsplash.com/photo-1532187313867-b8637c35f992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "genomics-precision-medicine-26",
+            "updatedAt": "2024-03-02T10:00:00Z"
+        },
+        {
+            "id": "c120",
+            "title": "Quantum Computing Frontiers - Part 17",
+            "description": "Explore the latest advancements in quantum algorithms, hardware developments, and theoretical implications.",
+            "articleCount": 28,
+            "imageUrl": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "quantum-computing-frontiers-27",
+            "updatedAt": "2024-03-05T10:00:00Z"
+        },
+        {
+            "id": "c120",
+            "title": "Innovative Climatological & Sustainability",
+            "description": "Essential studies tackling global warming, renewable energy, and sustainable practices across varied ecosystems.",
+            "articleCount": 85,
+            "imageUrl": "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+            "slug": "climate-change-sustainability-28",
+            "updatedAt": "2024-02-15T10:00:00Z"
+        }
+    ]
+}

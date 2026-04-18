@@ -1,0 +1,153 @@
+{
+    "stats": [
+        {
+            "value": "185 million",
+            "label": "monthly downloads"
+        },
+        {
+            "value": "24 million",
+            "label": "monthly readers"
+        },
+        {
+            "value": "3 million",
+            "label": "authors submit annually"
+        }
+    ],
+    "quickLinks": [
+        {
+            "title": "Discover Open Access",
+            "description": "Freely available research from around the world",
+            "href": "/search?filter=open-access",
+            "bg": "linear-gradient(135deg, #0077b6 0%, #023e8a 100%)"
+        },
+        {
+            "title": "Publish with Us",
+            "description": "Submit your research to our trusted journals",
+            "href": "/publish",
+            "bg": "linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%)"
+        },
+        {
+            "title": "Track Your Research",
+            "description": "Follow citations & monitor your impact",
+            "href": "/account",
+            "bg": "linear-gradient(135deg, #7b2d8b 0%, #4a0e5c 100%)"
+        }
+    ],
+    "callForPapers": [
+        {
+            "id": 1,
+            "collection": "Collection",
+            "title": "Edge-Computing AI for Medical Devices",
+            "deadline": "31 October 2025",
+            "journal": "BioMedical Engineering OnLine",
+            "journalSlug": "biomedical-engineering-online",
+            "description": "Electronic medical devices can be implantables, wearables, and remote. These devices can collect various multimodal and multigrain bio-signals invasively or non-invasively.",
+            "imageUrl": "https://picsum.photos/seed/medical-ai/400/220",
+            "collectionSlug": "ai-in-healthcare"
+        },
+        {
+            "id": 2,
+            "collection": "Collection",
+            "title": "Interruption of Amino Acids Supply as Anti-Tumor Strategy",
+            "deadline": "31 December 2025",
+            "journal": "Cancer & Metabolism",
+            "journalSlug": "cancer-metabolism",
+            "description": "The interruption of amino acids supply has emerged as a promising anti-tumor strategy, with research focusing on the metabolic vulnerabilities of cancer cells.",
+            "imageUrl": "https://picsum.photos/seed/cancer-research/400/220",
+            "collectionSlug": "genomics-precision-medicine"
+        },
+        {
+            "id": 3,
+            "collection": "Collection",
+            "title": "Photothermal Membranes for Water Treatment",
+            "deadline": "23 June 2025",
+            "journal": "npj Clean Water",
+            "journalSlug": "npj-clean-water",
+            "description": "This topical collection showcases the latest developments in photothermal materials and their applications in solar-driven water treatment and desalination technologies.",
+            "imageUrl": "https://picsum.photos/seed/water-treatment/400/220",
+            "collectionSlug": "climate-change-sustainability"
+        }
+    ],
+    "trendingResearch": [
+        {
+            "id": 1,
+            "category": "Quantum Mechanics",
+            "title": "Quantum Entanglement Dynamics in Multi-Particle Thermal Systems",
+            "date": "12 Jan 2025",
+            "summary": "We investigate the evolution of entanglement entropy in closed quantum systems undergoing thermalization.",
+            "journal": "Scientific Reports",
+            "journalSlug": "scientific-reports",
+            "link": "/article/10.1038/s41598-024-00001-1",
+            "imageUrl": "https://picsum.photos/seed/quantum/400/260",
+            "accentColor": "#5b7cf6"
+        },
+        {
+            "id": 2,
+            "category": "Genomics",
+            "title": "CRISPR-Cas9 Off-Target Effects in Mammalian Genome Editing",
+            "date": "03 Feb 2025",
+            "summary": "Comprehensive analysis of non-target cleavage sites reveals high-frequency off-target activity.",
+            "journal": "Nature Astronomy",
+            "journalSlug": "nature-astronomy",
+            "link": "/article/10.1038/s41550-025-00002-6",
+            "imageUrl": "https://picsum.photos/seed/crispr/400/260",
+            "accentColor": "#0ea5e9"
+        },
+        {
+            "id": 3,
+            "category": "Climate",
+            "title": "Urban Heat Island Dynamics and Green Infrastructure Mitigation",
+            "date": "22 Jan 2025",
+            "summary": "A comparative study of thermal patterns in 50 global cities and mitigation strategies.",
+            "journal": "Nature Communications",
+            "journalSlug": "nature-communications",
+            "link": "/article/10.1038/s41467-025-00003-8",
+            "imageUrl": "https://picsum.photos/seed/climate/400/260",
+            "accentColor": "#14b8a6"
+        },
+        {
+            "id": 4,
+            "category": "Planetary Science",
+            "title": "Evidence for active volcanism on Venus from Magellan radar data",
+            "date": "14 Dec 2024",
+            "summary": "Analysis of Magellan radar images provides direct evidence for active volcanism on Venus.",
+            "journal": "npj Biofilms and Microbiomes",
+            "journalSlug": "npj-biofilms-and-microbiomes",
+            "link": "/article/10.1038/s41522-024-00004-5",
+            "imageUrl": "https://picsum.photos/seed/venus/400/260",
+            "accentColor": "#7c3aed"
+        },
+        {
+            "id": 5,
+            "category": "Microbiology",
+            "title": "Biofilms: from the cradle of life to life support",
+            "date": "10 Mar 2024",
+            "summary": "A comprehensive review of biofilm formation and its implications for biotechnology.",
+            "journal": "Scientific Reports",
+            "journalSlug": "scientific-reports",
+            "link": "/article/10.15252/embj.2024114890",
+            "imageUrl": "https://picsum.photos/seed/biofilm/400/260",
+            "accentColor": "#10b981"
+        }
+    ],
+    "platformStats": {
+        "totalJournals": 2900,
+        "totalBooks": 290000,
+        "totalArticles": 15000000,
+        "totalConferences": 1200
+    },
+    "disciplineCounts": {
+        "biological-sciences": "84.2k",
+        "business-management": "37.2k",
+        "chemistry": "58.9k",
+        "computer-science": "71.4k",
+        "earth-environmental-sciences": "43.8k",
+        "health-sciences": "130k",
+        "humanities-social-sciences": "37.2k",
+        "materials-science": "41.3k",
+        "mathematics": "29.4k",
+        "physics-astronomy": "62.1k",
+        "statistics": "18.7k",
+        "technology-engineering": "95.3k"
+    }
+}

@@ -1,0 +1,204 @@
+{
+    "news": [
+        {
+            "id": "n1",
+            "title": "Lumex Announces New Open Access Initiative",
+            "date": "2024-03-10T09:00:00Z",
+            "category": "Company News",
+            "summary": "We are expanding our commitment to open science with a new initiative that will make all publications in our 'Frontiers' series fully open access by 2025.",
+            "slug": "new-open-access-initiative"
+        },
+        {
+            "id": "n2",
+            "title": "Winner of the 2024 Lumex Excellence in Science Award",
+            "date": "2024-02-28T14:30:00Z",
+            "category": "Awards",
+            "summary": "Congratulations to Dr. Elena Rodriguez for her groundbreaking research in sustainable enzymology, which has won this year's Excellence in Science Award.",
+            "slug": "2024-excellence-in-science-award"
+        },
+        {
+            "id": "n3",
+            "title": "Major Update to the Lumex Author Submission Portal",
+            "date": "2024-02-15T11:00:00Z",
+            "category": "Platform Updates",
+            "summary": "We've listened to your feedback! The new author submission portal features a streamlined workflow, direct ORCID integration, and real-time status tracking.",
+            "slug": "author-submission-portal-update"
+        },
+        {
+            "id": "n4",
+            "title": "Call for Papers: Special Issue on Quantum Machine Learning",
+            "date": "2024-01-30T10:00:00Z",
+            "category": "Calls for Papers",
+            "summary": "The Journal of Advanced Computing is now accepting submissions for a special issue focusing on the intersection of quantum algorithms and machine learning models.",
+            "slug": "call-for-papers-quantum-machine-learning"
+        },
+        {
+            "id": "n5",
+            "title": "Lumex Partners with Global Research Coalition",
+            "date": "2024-01-12T08:00:00Z",
+            "category": "Partnerships",
+            "summary": "Lumex has joined forces with the Global Research Coalition to improve access to scientific literature for researchers in developing nations.",
+            "slug": "lumex-partners-with-global-research-coalition"
+        },
+        {
+            "id": "n104",
+            "title": "Global Macroeconomic Machine Learning",
+            "date": "2024-01-30T10:00:00Z",
+            "category": "Calls for Papers",
+            "summary": "The Journal of Advanced Computing is now accepting submissions for a special issue focusing on the intersection of quantum algorithms and machine learning models.",
+            "slug": "call-for-papers-quantum-machine-learning-10"
+        },
+        {
+            "id": "n104",
+            "title": "Comprehensive Macroeconomic Submission Portal",
+            "date": "2024-02-15T11:00:00Z",
+            "category": "Platform Updates",
+            "summary": "We've listened to your feedback! The new author submission portal features a streamlined workflow, direct ORCID integration, and real-time status tracking.",
+            "slug": "author-submission-portal-update-11"
+        },
+        {
+            "id": "n105",
+            "title": "Advances in Quantum Submission Portal",
+            "date": "2024-02-15T11:00:00Z",
+            "category": "Platform Updates",
+            "summary": "We've listened to your feedback! The new author submission portal features a streamlined workflow, direct ORCID integration, and real-time status tracking.",
+            "slug": "author-submission-portal-update-12"
+        },
+        {
+            "id": "n104",
+            "title": "Comprehensive Structural Access Initiative",
+            "date": "2024-03-10T09:00:00Z",
+            "category": "Company News",
+            "summary": "We are expanding our commitment to open science with a new initiative that will make all publications in our 'Frontiers' series fully open access by 2025.",
+            "slug": "new-open-access-initiative-13"
+        },
+        {
+            "id": "n108",
+            "title": "Computational Behavioral Machine Learning",
+            "date": "2024-01-30T10:00:00Z",
+            "category": "Calls for Papers",
+            "summary": "The Journal of Advanced Computing is now accepting submissions for a special issue focusing on the intersection of quantum algorithms and machine learning models.",
+            "slug": "call-for-papers-quantum-machine-learning-14"
+        },
+        {
+            "id": "n107",
+            "title": "Innovative Climatological Science Award",
+            "date": "2024-02-28T14:30:00Z",
+            "category": "Awards",
+            "summary": "Congratulations to Dr. Elena Rodriguez for her groundbreaking research in sustainable enzymology, which has won this year's Excellence in Science Award.",
+            "slug": "2024-excellence-in-science-award-15"
+        },
+        {
+            "id": "n110",
+            "title": "Sustainable Macroeconomic Machine Learning",
+            "date": "2024-01-30T10:00:00Z",
+            "category": "Calls for Papers",
+            "summary": "The Journal of Advanced Computing is now accepting submissions for a special issue focusing on the intersection of quantum algorithms and machine learning models.",
+            "slug": "call-for-papers-quantum-machine-learning-16"
+        },
+        {
+            "id": "n108",
+            "title": "Computational Structural Access Initiative",
+            "date": "2024-03-10T09:00:00Z",
+            "category": "Company News",
+            "summary": "We are expanding our commitment to open science with a new initiative that will make all publications in our 'Frontiers' series fully open access by 2025.",
+            "slug": "new-open-access-initiative-17"
+        },
+        {
+            "id": "n109",
+            "title": "Emerging Structural Access Initiative",
+            "date": "2024-03-10T09:00:00Z",
+            "category": "Company News",
+            "summary": "We are expanding our commitment to open science with a new initiative that will make all publications in our 'Frontiers' series fully open access by 2025.",
+            "slug": "new-open-access-initiative-18"
+        },
+        {
+            "id": "n111",
+            "title": "Advances in Systems Science Award",
+            "date": "2024-02-28T14:30:00Z",
+            "category": "Awards",
+            "summary": "Congratulations to Dr. Elena Rodriguez for her groundbreaking research in sustainable enzymology, which has won this year's Excellence in Science Award.",
+            "slug": "2024-excellence-in-science-award-19"
+        },
+        {
+            "id": "n112",
+            "title": "Comprehensive Molecular Science Award",
+            "date": "2024-02-28T14:30:00Z",
+            "category": "Awards",
+            "summary": "Congratulations to Dr. Elena Rodriguez for her groundbreaking research in sustainable enzymology, which has won this year's Excellence in Science Award.",
+            "slug": "2024-excellence-in-science-award-20"
+        },
+        {
+            "id": "n115",
+            "title": "Computational Neural Machine Learning",
+            "date": "2024-01-30T10:00:00Z",
+            "category": "Calls for Papers",
+            "summary": "The Journal of Advanced Computing is now accepting submissions for a special issue focusing on the intersection of quantum algorithms and machine learning models.",
+            "slug": "call-for-papers-quantum-machine-learning-21"
+        },
+        {
+            "id": "n113",
+            "title": "Global Quantum Access Initiative",
+            "date": "2024-03-10T09:00:00Z",
+            "category": "Company News",
+            "summary": "We are expanding our commitment to open science with a new initiative that will make all publications in our 'Frontiers' series fully open access by 2025.",
+            "slug": "new-open-access-initiative-22"
+        },
+        {
+            "id": "n116",
+            "title": "Advances in Behavioral Submission Portal",
+            "date": "2024-02-15T11:00:00Z",
+            "category": "Platform Updates",
+            "summary": "We've listened to your feedback! The new author submission portal features a streamlined workflow, direct ORCID integration, and real-time status tracking.",
+            "slug": "author-submission-portal-update-23"
+        },
+        {
+            "id": "n116",
+            "title": "Comprehensive Behavioral Science Award",
+            "date": "2024-02-28T14:30:00Z",
+            "category": "Awards",
+            "summary": "Congratulations to Dr. Elena Rodriguez for her groundbreaking research in sustainable enzymology, which has won this year's Excellence in Science Award.",
+            "slug": "2024-excellence-in-science-award-24"
+        },
+        {
+            "id": "n117",
+            "title": "Advances in Quantum Science Award",
+            "date": "2024-02-28T14:30:00Z",
+            "category": "Awards",
+            "summary": "Congratulations to Dr. Elena Rodriguez for her groundbreaking research in sustainable enzymology, which has won this year's Excellence in Science Award.",
+            "slug": "2024-excellence-in-science-award-25"
+        },
+        {
+            "id": "n117",
+            "title": "Sustainable Behavioral Access Initiative",
+            "date": "2024-03-10T09:00:00Z",
+            "category": "Company News",
+            "summary": "We are expanding our commitment to open science with a new initiative that will make all publications in our 'Frontiers' series fully open access by 2025.",
+            "slug": "new-open-access-initiative-26"
+        },
+        {
+            "id": "n120",
+            "title": "Modern Structural Submission Portal",
+            "date": "2024-02-15T11:00:00Z",
+            "category": "Platform Updates",
+            "summary": "We've listened to your feedback! The new author submission portal features a streamlined workflow, direct ORCID integration, and real-time status tracking.",
+            "slug": "author-submission-portal-update-27"
+        },
+        {
+            "id": "n123",
+            "title": "Emerging Structural Research Coalition",
+            "date": "2024-01-12T08:00:00Z",
+            "category": "Partnerships",
+            "summary": "Lumex has joined forces with the Global Research Coalition to improve access to scientific literature for researchers in developing nations.",
+            "slug": "lumex-partners-with-global-research-coalition-28"
+        },
+        {
+            "id": "n124",
+            "title": "Sustainable Climatological Research Coalition",
+            "date": "2024-01-12T08:00:00Z",
+            "category": "Partnerships",
+            "summary": "Lumex has joined forces with the Global Research Coalition to improve access to scientific literature for researchers in developing nations.",
+            "slug": "lumex-partners-with-global-research-coalition-29"
+        }
+    ]
+}

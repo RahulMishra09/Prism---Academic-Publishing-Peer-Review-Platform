@@ -1,0 +1,8 @@
+{
+    "institution": {
+        "id": "inst-1",
+        "name": "Mock University",
+        "ipAddress": "192.168.1.100",
+        "type": "university"
+    }
+}

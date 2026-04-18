@@ -1,0 +1,422 @@
+{
+    "icml-2024": {
+        "id": "conf-1",
+        "slug": "icml-2024",
+        "title": "International Conference on Machine Learning (ICML) 2024",
+        "date": "July 21-27, 2024",
+        "location": "Vienna, Austria",
+        "about": "The International Conference on Machine Learning (ICML) is the premier academic conference in machine learning. ICML is known for presenting and publishing cutting-edge research on all aspects of machine learning used in software, data science, statistics, and computing as well as important application areas such as robotic control and personalized medicine.",
+        "topics": [
+            "Deep Learning",
+            "Reinforcement Learning",
+            "Generative Models",
+            "AI Ethics",
+            "Optimization"
+        ],
+        "papers": [
+            {
+                "id": 1,
+                "title": "Attention Is All You Need Revisited",
+                "authors": "Smith, J., Doe, A.",
+                "citations": 142
+            },
+            {
+                "id": 2,
+                "title": "Efficient Transformers for Long Sequences",
+                "authors": "Wang, S., Chen, Y.",
+                "citations": 89
+            },
+            {
+                "id": 3,
+                "title": "Reinforcement Learning in Robotics Open Systems",
+                "authors": "Miller, T., Davis, R.",
+                "citations": 56
+            },
+            {
+                "id": 4,
+                "title": "Quantum Neural Networks for Drug Discovery",
+                "authors": "Zhang, H., Lee, K.",
+                "citations": 210
+            },
+            {
+                "id": 5,
+                "title": "Federated Learning with Differential Privacy Guarantees",
+                "authors": "Taylor, M.",
+                "citations": 75
+            }
+        ],
+        "price": 299.0
+    },
+    "neurips-2023": {
+        "id": "conf-2",
+        "slug": "neurips-2023",
+        "title": "Neural Information Processing Systems (NeurIPS) 2023",
+        "date": "December 10-16, 2023",
+        "location": "New Orleans, USA",
+        "about": "Neural Information Processing Systems (NeurIPS) is a machine learning and computational neuroscience conference held every December. The conference is currently a double-track meeting that includes invited talks and oral and poster presentations of refereed papers.",
+        "topics": [
+            "Neural Networks",
+            "Computational Neuroscience",
+            "Probabilistic Graphical Models",
+            "Vision",
+            "Speech"
+        ],
+        "papers": [
+            {
+                "id": 6,
+                "title": "Diffusion Models for High-Resolution Image Synthesis",
+                "authors": "Brown, L., Green, P.",
+                "citations": 450
+            },
+            {
+                "id": 7,
+                "title": "Scaling Laws for Neural Language Models",
+                "authors": "Kaplan, J., et al.",
+                "citations": 820
+            },
+            {
+                "id": 8,
+                "title": "Self-Supervised Learning from Raw Video",
+                "authors": "Gomez, F., Lopez, M.",
+                "citations": 125
+            }
+        ],
+        "price": 249.0
+    },
+    "conf-2024-0": {
+        "id": "conf-2",
+        "slug": "neurips-2023",
+        "title": "Emerging Conference on Organic Science 2024",
+        "date": "December 10-16, 2023",
+        "location": "New Orleans, USA",
+        "about": "Neural Information Processing Systems (NeurIPS) is a machine learning and computational neuroscience conference held every December. The conference is currently a double-track meeting that includes invited talks and oral and poster presentations of refereed papers.",
+        "topics": [
+            "Neural Networks",
+            "Computational Neuroscience",
+            "Probabilistic Graphical Models",
+            "Vision",
+            "Speech"
+        ],
+        "papers": [
+            {
+                "id": 6,
+                "title": "Diffusion Models for High-Resolution Image Synthesis",
+                "authors": "Brown, L., Green, P.",
+                "citations": 450
+            },
+            {
+                "id": 7,
+                "title": "Scaling Laws for Neural Language Models",
+                "authors": "Kaplan, J., et al.",
+                "citations": 820
+            },
+            {
+                "id": 8,
+                "title": "Self-Supervised Learning from Raw Video",
+                "authors": "Gomez, F., Lopez, M.",
+                "citations": 125
+            }
+        ],
+        "price": 249.0
+    },
+    "conf-2025-1": {
+        "id": "conf-1",
+        "slug": "icml-2024",
+        "title": "Computational Conference on Molecular Science 2025",
+        "date": "July 21-27, 2024",
+        "location": "Vienna, Austria",
+        "about": "The International Conference on Machine Learning (ICML) is the premier academic conference in machine learning. ICML is known for presenting and publishing cutting-edge research on all aspects of machine learning used in software, data science, statistics, and computing as well as important application areas such as robotic control and personalized medicine.",
+        "topics": [
+            "Deep Learning",
+            "Reinforcement Learning",
+            "Generative Models",
+            "AI Ethics",
+            "Optimization"
+        ],
+        "papers": [
+            {
+                "id": 1,
+                "title": "Attention Is All You Need Revisited",
+                "authors": "Smith, J., Doe, A.",
+                "citations": 142
+            },
+            {
+                "id": 2,
+                "title": "Efficient Transformers for Long Sequences",
+                "authors": "Wang, S., Chen, Y.",
+                "citations": 89
+            },
+            {
+                "id": 3,
+                "title": "Reinforcement Learning in Robotics Open Systems",
+                "authors": "Miller, T., Davis, R.",
+                "citations": 56
+            },
+            {
+                "id": 4,
+                "title": "Quantum Neural Networks for Drug Discovery",
+                "authors": "Zhang, H., Lee, K.",
+                "citations": 210
+            },
+            {
+                "id": 5,
+                "title": "Federated Learning with Differential Privacy Guarantees",
+                "authors": "Taylor, M.",
+                "citations": 75
+            }
+        ],
+        "price": 299.0
+    },
+    "conf-2026-2": {
+        "id": "conf-1",
+        "slug": "icml-2024",
+        "title": "Computational Conference on Genomic Science 2026",
+        "date": "July 21-27, 2024",
+        "location": "Vienna, Austria",
+        "about": "The International Conference on Machine Learning (ICML) is the premier academic conference in machine learning. ICML is known for presenting and publishing cutting-edge research on all aspects of machine learning used in software, data science, statistics, and computing as well as important application areas such as robotic control and personalized medicine.",
+        "topics": [
+            "Deep Learning",
+            "Reinforcement Learning",
+            "Generative Models",
+            "AI Ethics",
+            "Optimization"
+        ],
+        "papers": [
+            {
+                "id": 1,
+                "title": "Attention Is All You Need Revisited",
+                "authors": "Smith, J., Doe, A.",
+                "citations": 142
+            },
+            {
+                "id": 2,
+                "title": "Efficient Transformers for Long Sequences",
+                "authors": "Wang, S., Chen, Y.",
+                "citations": 89
+            },
+            {
+                "id": 3,
+                "title": "Reinforcement Learning in Robotics Open Systems",
+                "authors": "Miller, T., Davis, R.",
+                "citations": 56
+            },
+            {
+                "id": 4,
+                "title": "Quantum Neural Networks for Drug Discovery",
+                "authors": "Zhang, H., Lee, K.",
+                "citations": 210
+            },
+            {
+                "id": 5,
+                "title": "Federated Learning with Differential Privacy Guarantees",
+                "authors": "Taylor, M.",
+                "citations": 75
+            }
+        ],
+        "price": 299.0
+    },
+    "conf-2027-3": {
+        "id": "conf-2",
+        "slug": "neurips-2023",
+        "title": "Emerging Conference on Neural Science 2027",
+        "date": "December 10-16, 2023",
+        "location": "New Orleans, USA",
+        "about": "Neural Information Processing Systems (NeurIPS) is a machine learning and computational neuroscience conference held every December. The conference is currently a double-track meeting that includes invited talks and oral and poster presentations of refereed papers.",
+        "topics": [
+            "Neural Networks",
+            "Computational Neuroscience",
+            "Probabilistic Graphical Models",
+            "Vision",
+            "Speech"
+        ],
+        "papers": [
+            {
+                "id": 6,
+                "title": "Diffusion Models for High-Resolution Image Synthesis",
+                "authors": "Brown, L., Green, P.",
+                "citations": 450
+            },
+            {
+                "id": 7,
+                "title": "Scaling Laws for Neural Language Models",
+                "authors": "Kaplan, J., et al.",
+                "citations": 820
+            },
+            {
+                "id": 8,
+                "title": "Self-Supervised Learning from Raw Video",
+                "authors": "Gomez, F., Lopez, M.",
+                "citations": 125
+            }
+        ],
+        "price": 249.0
+    },
+    "conf-2028-4": {
+        "id": "conf-2",
+        "slug": "neurips-2023",
+        "title": "Integrated Conference on Genomic Science 2028",
+        "date": "December 10-16, 2023",
+        "location": "New Orleans, USA",
+        "about": "Neural Information Processing Systems (NeurIPS) is a machine learning and computational neuroscience conference held every December. The conference is currently a double-track meeting that includes invited talks and oral and poster presentations of refereed papers.",
+        "topics": [
+            "Neural Networks",
+            "Computational Neuroscience",
+            "Probabilistic Graphical Models",
+            "Vision",
+            "Speech"
+        ],
+        "papers": [
+            {
+                "id": 6,
+                "title": "Diffusion Models for High-Resolution Image Synthesis",
+                "authors": "Brown, L., Green, P.",
+                "citations": 450
+            },
+            {
+                "id": 7,
+                "title": "Scaling Laws for Neural Language Models",
+                "authors": "Kaplan, J., et al.",
+                "citations": 820
+            },
+            {
+                "id": 8,
+                "title": "Self-Supervised Learning from Raw Video",
+                "authors": "Gomez, F., Lopez, M.",
+                "citations": 125
+            }
+        ],
+        "price": 249.0
+    },
+    "conf-2029-5": {
+        "id": "conf-1",
+        "slug": "icml-2024",
+        "title": "Emerging Conference on Macroeconomic Science 2029",
+        "date": "July 21-27, 2024",
+        "location": "Vienna, Austria",
+        "about": "The International Conference on Machine Learning (ICML) is the premier academic conference in machine learning. ICML is known for presenting and publishing cutting-edge research on all aspects of machine learning used in software, data science, statistics, and computing as well as important application areas such as robotic control and personalized medicine.",
+        "topics": [
+            "Deep Learning",
+            "Reinforcement Learning",
+            "Generative Models",
+            "AI Ethics",
+            "Optimization"
+        ],
+        "papers": [
+            {
+                "id": 1,
+                "title": "Attention Is All You Need Revisited",
+                "authors": "Smith, J., Doe, A.",
+                "citations": 142
+            },
+            {
+                "id": 2,
+                "title": "Efficient Transformers for Long Sequences",
+                "authors": "Wang, S., Chen, Y.",
+                "citations": 89
+            },
+            {
+                "id": 3,
+                "title": "Reinforcement Learning in Robotics Open Systems",
+                "authors": "Miller, T., Davis, R.",
+                "citations": 56
+            },
+            {
+                "id": 4,
+                "title": "Quantum Neural Networks for Drug Discovery",
+                "authors": "Zhang, H., Lee, K.",
+                "citations": 210
+            },
+            {
+                "id": 5,
+                "title": "Federated Learning with Differential Privacy Guarantees",
+                "authors": "Taylor, M.",
+                "citations": 75
+            }
+        ],
+        "price": 299.0
+    },
+    "conf-2030-6": {
+        "id": "conf-2",
+        "slug": "neurips-2023",
+        "title": "Innovative Conference on Genomic Science 2030",
+        "date": "December 10-16, 2023",
+        "location": "New Orleans, USA",
+        "about": "Neural Information Processing Systems (NeurIPS) is a machine learning and computational neuroscience conference held every December. The conference is currently a double-track meeting that includes invited talks and oral and poster presentations of refereed papers.",
+        "topics": [
+            "Neural Networks",
+            "Computational Neuroscience",
+            "Probabilistic Graphical Models",
+            "Vision",
+            "Speech"
+        ],
+        "papers": [
+            {
+                "id": 6,
+                "title": "Diffusion Models for High-Resolution Image Synthesis",
+                "authors": "Brown, L., Green, P.",
+                "citations": 450
+            },
+            {
+                "id": 7,
+                "title": "Scaling Laws for Neural Language Models",
+                "authors": "Kaplan, J., et al.",
+                "citations": 820
+            },
+            {
+                "id": 8,
+                "title": "Self-Supervised Learning from Raw Video",
+                "authors": "Gomez, F., Lopez, M.",
+                "citations": 125
+            }
+        ],
+        "price": 249.0
+    },
+    "conf-2031-7": {
+        "id": "conf-1",
+        "slug": "icml-2024",
+        "title": "Advances in Conference on Structural Science 2031",
+        "date": "July 21-27, 2024",
+        "location": "Vienna, Austria",
+        "about": "The International Conference on Machine Learning (ICML) is the premier academic conference in machine learning. ICML is known for presenting and publishing cutting-edge research on all aspects of machine learning used in software, data science, statistics, and computing as well as important application areas such as robotic control and personalized medicine.",
+        "topics": [
+            "Deep Learning",
+            "Reinforcement Learning",
+            "Generative Models",
+            "AI Ethics",
+            "Optimization"
+        ],
+        "papers": [
+            {
+                "id": 1,
+                "title": "Attention Is All You Need Revisited",
+                "authors": "Smith, J., Doe, A.",
+                "citations": 142
+            },
+            {
+                "id": 2,
+                "title": "Efficient Transformers for Long Sequences",
+                "authors": "Wang, S., Chen, Y.",
+                "citations": 89
+            },
+            {
+                "id": 3,
+                "title": "Reinforcement Learning in Robotics Open Systems",
+                "authors": "Miller, T., Davis, R.",
+                "citations": 56
+            },
+            {
+                "id": 4,
+                "title": "Quantum Neural Networks for Drug Discovery",
+                "authors": "Zhang, H., Lee, K.",
+                "citations": 210
+            },
+            {
+                "id": 5,
+                "title": "Federated Learning with Differential Privacy Guarantees",
+                "authors": "Taylor, M.",
+                "citations": 75
+            }
+        ],
+        "price": 299.0
+    }
+}

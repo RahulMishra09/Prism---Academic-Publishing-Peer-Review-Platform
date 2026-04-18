@@ -1,0 +1,3954 @@
+{
+    "books": [
+        {
+            "id": "b-001",
+            "doi": "10.1007/978-3-031-12345-1",
+            "isbn": "978-3-031-12345-1",
+            "title": "Deep Learning: Foundations and Applications",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Biological Sciences"
+            ],
+            "subjectArea": "Biological Sciences"
+        },
+        {
+            "id": "b-002",
+            "doi": "10.1007/978-3-031-67890-2",
+            "isbn": "978-3-031-67890-2",
+            "title": "Quantum Computing: Principles and Practice",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Business and Management"
+            ],
+            "subjectArea": "Business and Management"
+        },
+        {
+            "id": "b-003",
+            "doi": "10.1007/978-3-031-11111-3",
+            "isbn": "978-3-031-11111-3",
+            "title": "Climate Dynamics: Advanced Methods in Analysis",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Chemistry"
+            ],
+            "subjectArea": "Chemistry"
+        },
+        {
+            "id": "b-101",
+            "doi": "10.1007/978-3-031-12345-41884-0",
+            "isbn": "978-3-031-12345-1",
+            "title": "Emerging Molecular and Applications",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Computer Science"
+            ],
+            "subjectArea": "Computer Science"
+        },
+        {
+            "id": "b-104",
+            "doi": "10.1007/978-3-031-11111-58509-1",
+            "isbn": "978-3-031-11111-3",
+            "title": "Strategic Molecular in Analysis",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Earth and Environmental Sciences"
+            ],
+            "subjectArea": "Earth and Environmental Sciences"
+        },
+        {
+            "id": "b-105",
+            "doi": "10.1007/978-3-031-11111-73221-2",
+            "isbn": "978-3-031-11111-3",
+            "title": "Innovative Quantum in Analysis",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Health Sciences"
+            ],
+            "subjectArea": "Health Sciences"
+        },
+        {
+            "id": "b-104",
+            "doi": "10.1007/978-3-031-12345-86010-3",
+            "isbn": "978-3-031-12345-1",
+            "title": "Integrated Structural and Applications",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Humanities and Social Sciences"
+            ],
+            "subjectArea": "Humanities and Social Sciences"
+        },
+        {
+            "id": "b-105",
+            "doi": "10.1007/978-3-031-12345-61403-4",
+            "isbn": "978-3-031-12345-1",
+            "title": "Computational Molecular and Applications",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Materials Science"
+            ],
+            "subjectArea": "Materials Science"
+        },
+        {
+            "id": "b-108",
+            "doi": "10.1007/978-3-031-11111-79084-5",
+            "isbn": "978-3-031-11111-3",
+            "title": "Innovative Systems in Analysis",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Mathematics"
+            ],
+            "subjectArea": "Mathematics"
+        },
+        {
+            "id": "b-107",
+            "doi": "10.1007/978-3-031-12345-37274-6",
+            "isbn": "978-3-031-12345-1",
+            "title": "Sustainable Macroeconomic and Applications",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Physics and Astronomy"
+            ],
+            "subjectArea": "Physics and Astronomy"
+        },
+        {
+            "id": "b-109",
+            "doi": "10.1007/978-3-031-67890-84421-7",
+            "isbn": "978-3-031-67890-2",
+            "title": "Innovative Macroeconomic and Practice",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Statistics"
+            ],
+            "subjectArea": "Statistics"
+        },
+        {
+            "id": "b-110",
+            "doi": "10.1007/978-3-031-67890-89760-8",
+            "isbn": "978-3-031-67890-2",
+            "title": "Integrated Structural and Practice",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Technology and Engineering"
+            ],
+            "subjectArea": "Technology and Engineering"
+        },
+        {
+            "id": "b-110",
+            "doi": "10.1007/978-3-031-12345-81968-9",
+            "isbn": "978-3-031-12345-1",
+            "title": "Comprehensive Organic and Applications",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Data Structures"
+            ],
+            "subjectArea": "Data Structures"
+        },
+        {
+            "id": "b-112",
+            "doi": "10.1007/978-3-031-67890-59020-10",
+            "isbn": "978-3-031-67890-2",
+            "title": "Emerging Climatological and Practice",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Cancer Research"
+            ],
+            "subjectArea": "Cancer Research"
+        },
+        {
+            "id": "b-113",
+            "doi": "10.1007/978-3-031-67890-34417-11",
+            "isbn": "978-3-031-67890-2",
+            "title": "Innovative Behavioral and Practice",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Genetics"
+            ],
+            "subjectArea": "Genetics"
+        },
+        {
+            "id": "b-001-c1",
+            "doi": "10.1007/978-3-031-12345-1",
+            "isbn": "978-3-031-12345-1-1",
+            "title": "Deep Learning: Foundations and Applications (Edition 2)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Neuroscience"
+            ],
+            "subjectArea": "Neuroscience"
+        },
+        {
+            "id": "b-002-c1",
+            "doi": "10.1007/978-3-031-67890-2",
+            "isbn": "978-3-031-67890-2-1",
+            "title": "Quantum Computing: Principles and Practice (Edition 2)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Pharmacology"
+            ],
+            "subjectArea": "Pharmacology"
+        },
+        {
+            "id": "b-003-c1",
+            "doi": "10.1007/978-3-031-11111-3",
+            "isbn": "978-3-031-11111-3-1",
+            "title": "Climate Dynamics: Advanced Methods in Analysis (Edition 2)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Artificial Intelligence"
+            ],
+            "subjectArea": "Artificial Intelligence"
+        },
+        {
+            "id": "b-101-c1",
+            "doi": "10.1007/978-3-031-12345-41884-0",
+            "isbn": "978-3-031-12345-1-1",
+            "title": "Emerging Molecular and Applications (Edition 2)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Software Engineering"
+            ],
+            "subjectArea": "Software Engineering"
+        },
+        {
+            "id": "b-104-c1",
+            "doi": "10.1007/978-3-031-11111-58509-1",
+            "isbn": "978-3-031-11111-3-1",
+            "title": "Strategic Molecular in Analysis (Edition 2)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Cybersecurity"
+            ],
+            "subjectArea": "Cybersecurity"
+        },
+        {
+            "id": "b-105-c1",
+            "doi": "10.1007/978-3-031-11111-73221-2",
+            "isbn": "978-3-031-11111-3-1",
+            "title": "Innovative Quantum in Analysis (Edition 2)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Climate Studies"
+            ],
+            "subjectArea": "Climate Studies"
+        },
+        {
+            "id": "b-104-c1",
+            "doi": "10.1007/978-3-031-12345-86010-3",
+            "isbn": "978-3-031-12345-1-1",
+            "title": "Integrated Structural and Applications (Edition 2)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Geology"
+            ],
+            "subjectArea": "Geology"
+        },
+        {
+            "id": "b-105-c1",
+            "doi": "10.1007/978-3-031-12345-61403-4",
+            "isbn": "978-3-031-12345-1-1",
+            "title": "Computational Molecular and Applications (Edition 2)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Oceanography"
+            ],
+            "subjectArea": "Oceanography"
+        },
+        {
+            "id": "b-108-c1",
+            "doi": "10.1007/978-3-031-11111-79084-5",
+            "isbn": "978-3-031-11111-3-1",
+            "title": "Innovative Systems in Analysis (Edition 2)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Genetics"
+            ],
+            "subjectArea": "Genetics"
+        },
+        {
+            "id": "b-107-c1",
+            "doi": "10.1007/978-3-031-12345-37274-6",
+            "isbn": "978-3-031-12345-1-1",
+            "title": "Sustainable Macroeconomic and Applications (Edition 2)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Geology"
+            ],
+            "subjectArea": "Geology"
+        },
+        {
+            "id": "b-109-c1",
+            "doi": "10.1007/978-3-031-67890-84421-7",
+            "isbn": "978-3-031-67890-2-1",
+            "title": "Innovative Macroeconomic and Practice (Edition 2)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Chemistry"
+            ],
+            "subjectArea": "Chemistry"
+        },
+        {
+            "id": "b-110-c1",
+            "doi": "10.1007/978-3-031-67890-89760-8",
+            "isbn": "978-3-031-67890-2-1",
+            "title": "Integrated Structural and Practice (Edition 2)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Genetics"
+            ],
+            "subjectArea": "Genetics"
+        },
+        {
+            "id": "b-110-c1",
+            "doi": "10.1007/978-3-031-12345-81968-9",
+            "isbn": "978-3-031-12345-1-1",
+            "title": "Comprehensive Organic and Applications (Edition 2)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Software Engineering"
+            ],
+            "subjectArea": "Software Engineering"
+        },
+        {
+            "id": "b-112-c1",
+            "doi": "10.1007/978-3-031-67890-59020-10",
+            "isbn": "978-3-031-67890-2-1",
+            "title": "Emerging Climatological and Practice (Edition 2)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Humanities and Social Sciences"
+            ],
+            "subjectArea": "Humanities and Social Sciences"
+        },
+        {
+            "id": "b-113-c1",
+            "doi": "10.1007/978-3-031-67890-34417-11",
+            "isbn": "978-3-031-67890-2-1",
+            "title": "Innovative Behavioral and Practice (Edition 2)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Humanities and Social Sciences"
+            ],
+            "subjectArea": "Humanities and Social Sciences"
+        },
+        {
+            "id": "b-001-c2",
+            "doi": "10.1007/978-3-031-12345-1",
+            "isbn": "978-3-031-12345-1-2",
+            "title": "Deep Learning: Foundations and Applications (Edition 3)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Geology"
+            ],
+            "subjectArea": "Geology"
+        },
+        {
+            "id": "b-002-c2",
+            "doi": "10.1007/978-3-031-67890-2",
+            "isbn": "978-3-031-67890-2-2",
+            "title": "Quantum Computing: Principles and Practice (Edition 3)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Cybersecurity"
+            ],
+            "subjectArea": "Cybersecurity"
+        },
+        {
+            "id": "b-003-c2",
+            "doi": "10.1007/978-3-031-11111-3",
+            "isbn": "978-3-031-11111-3-2",
+            "title": "Climate Dynamics: Advanced Methods in Analysis (Edition 3)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Health Sciences"
+            ],
+            "subjectArea": "Health Sciences"
+        },
+        {
+            "id": "b-101-c2",
+            "doi": "10.1007/978-3-031-12345-41884-0",
+            "isbn": "978-3-031-12345-1-2",
+            "title": "Emerging Molecular and Applications (Edition 3)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Artificial Intelligence"
+            ],
+            "subjectArea": "Artificial Intelligence"
+        },
+        {
+            "id": "b-104-c2",
+            "doi": "10.1007/978-3-031-11111-58509-1",
+            "isbn": "978-3-031-11111-3-2",
+            "title": "Strategic Molecular in Analysis (Edition 3)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Neuroscience"
+            ],
+            "subjectArea": "Neuroscience"
+        },
+        {
+            "id": "b-105-c2",
+            "doi": "10.1007/978-3-031-11111-73221-2",
+            "isbn": "978-3-031-11111-3-2",
+            "title": "Innovative Quantum in Analysis (Edition 3)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Humanities and Social Sciences"
+            ],
+            "subjectArea": "Humanities and Social Sciences"
+        },
+        {
+            "id": "b-104-c2",
+            "doi": "10.1007/978-3-031-12345-86010-3",
+            "isbn": "978-3-031-12345-1-2",
+            "title": "Integrated Structural and Applications (Edition 3)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Technology and Engineering"
+            ],
+            "subjectArea": "Technology and Engineering"
+        },
+        {
+            "id": "b-105-c2",
+            "doi": "10.1007/978-3-031-12345-61403-4",
+            "isbn": "978-3-031-12345-1-2",
+            "title": "Computational Molecular and Applications (Edition 3)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Pharmacology"
+            ],
+            "subjectArea": "Pharmacology"
+        },
+        {
+            "id": "b-108-c2",
+            "doi": "10.1007/978-3-031-11111-79084-5",
+            "isbn": "978-3-031-11111-3-2",
+            "title": "Innovative Systems in Analysis (Edition 3)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Data Structures"
+            ],
+            "subjectArea": "Data Structures"
+        },
+        {
+            "id": "b-107-c2",
+            "doi": "10.1007/978-3-031-12345-37274-6",
+            "isbn": "978-3-031-12345-1-2",
+            "title": "Sustainable Macroeconomic and Applications (Edition 3)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Materials Science"
+            ],
+            "subjectArea": "Materials Science"
+        },
+        {
+            "id": "b-109-c2",
+            "doi": "10.1007/978-3-031-67890-84421-7",
+            "isbn": "978-3-031-67890-2-2",
+            "title": "Innovative Macroeconomic and Practice (Edition 3)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Computer Science"
+            ],
+            "subjectArea": "Computer Science"
+        },
+        {
+            "id": "b-110-c2",
+            "doi": "10.1007/978-3-031-67890-89760-8",
+            "isbn": "978-3-031-67890-2-2",
+            "title": "Integrated Structural and Practice (Edition 3)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Pharmacology"
+            ],
+            "subjectArea": "Pharmacology"
+        },
+        {
+            "id": "b-110-c2",
+            "doi": "10.1007/978-3-031-12345-81968-9",
+            "isbn": "978-3-031-12345-1-2",
+            "title": "Comprehensive Organic and Applications (Edition 3)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Computer Science"
+            ],
+            "subjectArea": "Computer Science"
+        },
+        {
+            "id": "b-112-c2",
+            "doi": "10.1007/978-3-031-67890-59020-10",
+            "isbn": "978-3-031-67890-2-2",
+            "title": "Emerging Climatological and Practice (Edition 3)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Climate Studies"
+            ],
+            "subjectArea": "Climate Studies"
+        },
+        {
+            "id": "b-113-c2",
+            "doi": "10.1007/978-3-031-67890-34417-11",
+            "isbn": "978-3-031-67890-2-2",
+            "title": "Innovative Behavioral and Practice (Edition 3)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Earth and Environmental Sciences"
+            ],
+            "subjectArea": "Earth and Environmental Sciences"
+        },
+        {
+            "id": "b-001-c3",
+            "doi": "10.1007/978-3-031-12345-1",
+            "isbn": "978-3-031-12345-1-3",
+            "title": "Deep Learning: Foundations and Applications (Edition 4)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Statistics"
+            ],
+            "subjectArea": "Statistics"
+        },
+        {
+            "id": "b-002-c3",
+            "doi": "10.1007/978-3-031-67890-2",
+            "isbn": "978-3-031-67890-2-3",
+            "title": "Quantum Computing: Principles and Practice (Edition 4)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Physics and Astronomy"
+            ],
+            "subjectArea": "Physics and Astronomy"
+        },
+        {
+            "id": "b-003-c3",
+            "doi": "10.1007/978-3-031-11111-3",
+            "isbn": "978-3-031-11111-3-3",
+            "title": "Climate Dynamics: Advanced Methods in Analysis (Edition 4)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Pharmacology"
+            ],
+            "subjectArea": "Pharmacology"
+        },
+        {
+            "id": "b-101-c3",
+            "doi": "10.1007/978-3-031-12345-41884-0",
+            "isbn": "978-3-031-12345-1-3",
+            "title": "Emerging Molecular and Applications (Edition 4)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Humanities and Social Sciences"
+            ],
+            "subjectArea": "Humanities and Social Sciences"
+        },
+        {
+            "id": "b-104-c3",
+            "doi": "10.1007/978-3-031-11111-58509-1",
+            "isbn": "978-3-031-11111-3-3",
+            "title": "Strategic Molecular in Analysis (Edition 4)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Pharmacology"
+            ],
+            "subjectArea": "Pharmacology"
+        },
+        {
+            "id": "b-105-c3",
+            "doi": "10.1007/978-3-031-11111-73221-2",
+            "isbn": "978-3-031-11111-3-3",
+            "title": "Innovative Quantum in Analysis (Edition 4)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Climate Studies"
+            ],
+            "subjectArea": "Climate Studies"
+        },
+        {
+            "id": "b-104-c3",
+            "doi": "10.1007/978-3-031-12345-86010-3",
+            "isbn": "978-3-031-12345-1-3",
+            "title": "Integrated Structural and Applications (Edition 4)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Humanities and Social Sciences"
+            ],
+            "subjectArea": "Humanities and Social Sciences"
+        },
+        {
+            "id": "b-105-c3",
+            "doi": "10.1007/978-3-031-12345-61403-4",
+            "isbn": "978-3-031-12345-1-3",
+            "title": "Computational Molecular and Applications (Edition 4)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Genetics"
+            ],
+            "subjectArea": "Genetics"
+        },
+        {
+            "id": "b-108-c3",
+            "doi": "10.1007/978-3-031-11111-79084-5",
+            "isbn": "978-3-031-11111-3-3",
+            "title": "Innovative Systems in Analysis (Edition 4)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Materials Science"
+            ],
+            "subjectArea": "Materials Science"
+        },
+        {
+            "id": "b-107-c3",
+            "doi": "10.1007/978-3-031-12345-37274-6",
+            "isbn": "978-3-031-12345-1-3",
+            "title": "Sustainable Macroeconomic and Applications (Edition 4)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Data Structures"
+            ],
+            "subjectArea": "Data Structures"
+        },
+        {
+            "id": "b-109-c3",
+            "doi": "10.1007/978-3-031-67890-84421-7",
+            "isbn": "978-3-031-67890-2-3",
+            "title": "Innovative Macroeconomic and Practice (Edition 4)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Humanities and Social Sciences"
+            ],
+            "subjectArea": "Humanities and Social Sciences"
+        },
+        {
+            "id": "b-110-c3",
+            "doi": "10.1007/978-3-031-67890-89760-8",
+            "isbn": "978-3-031-67890-2-3",
+            "title": "Integrated Structural and Practice (Edition 4)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Software Engineering"
+            ],
+            "subjectArea": "Software Engineering"
+        },
+        {
+            "id": "b-110-c3",
+            "doi": "10.1007/978-3-031-12345-81968-9",
+            "isbn": "978-3-031-12345-1-3",
+            "title": "Comprehensive Organic and Applications (Edition 4)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Genetics"
+            ],
+            "subjectArea": "Genetics"
+        },
+        {
+            "id": "b-112-c3",
+            "doi": "10.1007/978-3-031-67890-59020-10",
+            "isbn": "978-3-031-67890-2-3",
+            "title": "Emerging Climatological and Practice (Edition 4)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Oceanography"
+            ],
+            "subjectArea": "Oceanography"
+        },
+        {
+            "id": "b-113-c3",
+            "doi": "10.1007/978-3-031-67890-34417-11",
+            "isbn": "978-3-031-67890-2-3",
+            "title": "Innovative Behavioral and Practice (Edition 4)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Cancer Research"
+            ],
+            "subjectArea": "Cancer Research"
+        },
+        {
+            "id": "b-001-c4",
+            "doi": "10.1007/978-3-031-12345-1",
+            "isbn": "978-3-031-12345-1-4",
+            "title": "Deep Learning: Foundations and Applications (Edition 5)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Cybersecurity"
+            ],
+            "subjectArea": "Cybersecurity"
+        },
+        {
+            "id": "b-002-c4",
+            "doi": "10.1007/978-3-031-67890-2",
+            "isbn": "978-3-031-67890-2-4",
+            "title": "Quantum Computing: Principles and Practice (Edition 5)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Chemistry"
+            ],
+            "subjectArea": "Chemistry"
+        },
+        {
+            "id": "b-003-c4",
+            "doi": "10.1007/978-3-031-11111-3",
+            "isbn": "978-3-031-11111-3-4",
+            "title": "Climate Dynamics: Advanced Methods in Analysis (Edition 5)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Chemistry"
+            ],
+            "subjectArea": "Chemistry"
+        },
+        {
+            "id": "b-101-c4",
+            "doi": "10.1007/978-3-031-12345-41884-0",
+            "isbn": "978-3-031-12345-1-4",
+            "title": "Emerging Molecular and Applications (Edition 5)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Computer Science"
+            ],
+            "subjectArea": "Computer Science"
+        },
+        {
+            "id": "b-104-c4",
+            "doi": "10.1007/978-3-031-11111-58509-1",
+            "isbn": "978-3-031-11111-3-4",
+            "title": "Strategic Molecular in Analysis (Edition 5)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Earth and Environmental Sciences"
+            ],
+            "subjectArea": "Earth and Environmental Sciences"
+        },
+        {
+            "id": "b-105-c4",
+            "doi": "10.1007/978-3-031-11111-73221-2",
+            "isbn": "978-3-031-11111-3-4",
+            "title": "Innovative Quantum in Analysis (Edition 5)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Pharmacology"
+            ],
+            "subjectArea": "Pharmacology"
+        },
+        {
+            "id": "b-104-c4",
+            "doi": "10.1007/978-3-031-12345-86010-3",
+            "isbn": "978-3-031-12345-1-4",
+            "title": "Integrated Structural and Applications (Edition 5)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Data Structures"
+            ],
+            "subjectArea": "Data Structures"
+        },
+        {
+            "id": "b-105-c4",
+            "doi": "10.1007/978-3-031-12345-61403-4",
+            "isbn": "978-3-031-12345-1-4",
+            "title": "Computational Molecular and Applications (Edition 5)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Business and Management"
+            ],
+            "subjectArea": "Business and Management"
+        },
+        {
+            "id": "b-108-c4",
+            "doi": "10.1007/978-3-031-11111-79084-5",
+            "isbn": "978-3-031-11111-3-4",
+            "title": "Innovative Systems in Analysis (Edition 5)",
+            "authors": [
+                {
+                    "id": "a3",
+                    "name": "Priya Patel",
+                    "firstName": "Priya",
+                    "lastName": "Patel",
+                    "orcid": "0000-0003-4567-8901",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-oxford",
+                            "name": "University of Oxford",
+                            "department": "Department of Physics",
+                            "city": "Oxford",
+                            "country": "UK"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Data curation",
+                        "Formal Analysis"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2022,
+            "type": "monograph",
+            "disciplines": [
+                "Physics and Astronomy"
+            ],
+            "subjectArea": "Physics and Astronomy"
+        },
+        {
+            "id": "b-107-c4",
+            "doi": "10.1007/978-3-031-12345-37274-6",
+            "isbn": "978-3-031-12345-1-4",
+            "title": "Sustainable Macroeconomic and Applications (Edition 5)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Data Structures"
+            ],
+            "subjectArea": "Data Structures"
+        },
+        {
+            "id": "b-109-c4",
+            "doi": "10.1007/978-3-031-67890-84421-7",
+            "isbn": "978-3-031-67890-2-4",
+            "title": "Innovative Macroeconomic and Practice (Edition 5)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Geology"
+            ],
+            "subjectArea": "Geology"
+        },
+        {
+            "id": "b-110-c4",
+            "doi": "10.1007/978-3-031-67890-89760-8",
+            "isbn": "978-3-031-67890-2-4",
+            "title": "Integrated Structural and Practice (Edition 5)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Chemistry"
+            ],
+            "subjectArea": "Chemistry"
+        },
+        {
+            "id": "b-110-c4",
+            "doi": "10.1007/978-3-031-12345-81968-9",
+            "isbn": "978-3-031-12345-1-4",
+            "title": "Comprehensive Organic and Applications (Edition 5)",
+            "subtitle": "From Theory to Production Systems",
+            "authors": [
+                {
+                    "id": "a1",
+                    "name": "James R. Smith",
+                    "firstName": "James",
+                    "lastName": "Smith",
+                    "orcid": "0000-0001-2345-6789",
+                    "email": "j.smith@mit.edu",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-mit",
+                            "name": "Massachusetts Institute of Technology",
+                            "department": "Department of Electrical Engineering and Computer Science",
+                            "city": "Cambridge",
+                            "country": "USA"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Conceptualization",
+                        "Writing – original draft"
+                    ]
+                },
+                {
+                    "id": "a2",
+                    "name": "Wei Zhang",
+                    "firstName": "Wei",
+                    "lastName": "Zhang",
+                    "orcid": "0000-0002-3456-7890",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Methodology",
+                        "Software"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2023,
+            "type": "textbook",
+            "edition": "2nd",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589330273594-fade1ee91647?w=400&q=80",
+            "disciplines": [
+                "Chemistry"
+            ],
+            "subjectArea": "Chemistry"
+        },
+        {
+            "id": "b-112-c4",
+            "doi": "10.1007/978-3-031-67890-59020-10",
+            "isbn": "978-3-031-67890-2-4",
+            "title": "Emerging Climatological and Practice (Edition 5)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Cancer Research"
+            ],
+            "subjectArea": "Cancer Research"
+        },
+        {
+            "id": "b-113-c4",
+            "doi": "10.1007/978-3-031-67890-34417-11",
+            "isbn": "978-3-031-67890-2-4",
+            "title": "Innovative Behavioral and Practice (Edition 5)",
+            "editors": [
+                {
+                    "id": "a5",
+                    "name": "Li-Wei Chang",
+                    "firstName": "Li-Wei",
+                    "lastName": "Chang",
+                    "orcid": "0000-0005-6789-0123",
+                    "isCorresponding": true,
+                    "affiliations": [
+                        {
+                            "id": "aff-cam",
+                            "name": "University of Cambridge",
+                            "department": "Cavendish Laboratory",
+                            "city": "Cambridge",
+                            "country": "UK"
+                        }
+                    ],
+                    "email": "lw.chang@cam.ac.uk",
+                    "creditRoles": [
+                        "Writing – review & editing"
+                    ]
+                },
+                {
+                    "id": "a4",
+                    "name": "Hans Mueller",
+                    "firstName": "Hans",
+                    "lastName": "Mueller",
+                    "orcid": "0000-0004-5678-9012",
+                    "isCorresponding": false,
+                    "affiliations": [
+                        {
+                            "id": "aff-eth",
+                            "name": "ETH Zurich",
+                            "department": "Department of Computer Science",
+                            "city": "Zurich",
+                            "country": "Switzerland"
+                        }
+                    ],
+                    "creditRoles": [
+                        "Validation"
+                    ]
+                }
+            ],
+            "publisher": "Lumex",
+            "publishYear": 2024,
+            "type": "edited-volume",
+            "disciplines": [
+                "Climate Studies"
+            ],
+            "subjectArea": "Climate Studies"
+        }
+    ]
+}

@@ -1,0 +1,63 @@
+[
+    {
+        "id": "rev-1",
+        "name": "Dr. Sarah Chen",
+        "expertise": [
+            "Quantum Computing",
+            "Condensed Matter Physics"
+        ],
+        "institution": "MIT",
+        "activeReviews": 1,
+        "completedReviews": 12,
+        "rating": 4.8
+    },
+    {
+        "id": "rev-2",
+        "name": "Prof. Michael Brown",
+        "expertise": [
+            "Bioinformatics",
+            "Genomics",
+            "Deep Learning"
+        ],
+        "institution": "Stanford University",
+        "activeReviews": 2,
+        "completedReviews": 45,
+        "rating": 4.9
+    },
+    {
+        "id": "rev-3",
+        "name": "Dr. Elena Rodriguez",
+        "expertise": [
+            "Climate Modeling",
+            "Atmospheric Science"
+        ],
+        "institution": "ETH Zurich",
+        "activeReviews": 0,
+        "completedReviews": 8,
+        "rating": 4.5
+    },
+    {
+        "id": "rev-4",
+        "name": "Prof. Akihiro Sato",
+        "expertise": [
+            "Robotics",
+            "Control Systems"
+        ],
+        "institution": "University of Tokyo",
+        "activeReviews": 3,
+        "completedReviews": 21,
+        "rating": 4.2
+    },
+    {
+        "id": "rev-5",
+        "name": "Dr. Lisa Wang",
+        "expertise": [
+            "Cancer Research",
+            "Molecular Biology"
+        ],
+        "institution": "Harvard Medical School",
+        "activeReviews": 1,
+        "completedReviews": 34,
+        "rating": 4.9
+    }
+]
