@@ -1,84 +1,145 @@
 import React, { useState } from 'react';
-import { Container, Button } from '@shared/ui';
+import { Container, Button, Spinner } from '@shared/ui';
 import { useUserDashboard } from '../../../features/user';
 
-export const ReviewerDashboard: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'invitations' | 'pending' | 'completed'>('invitations');
+type Tab = 'invitations' | 'pending' | 'completed';
 
+const MOCK_INVITATIONS = [
+    {
+        id: 'INV-7721',
+        title: 'Machine Learning Approaches in Climate Modeling',
+        journal: 'Journal of Environmental Science',
+        invitedOn: '2026-03-01',
+        deadline: '2026-03-15',
+    },
+];
+
+const TabButton = ({
+    active,
+    onClick,
+    children,
+}: {
+    active: boolean;
+    onClick: () => void;
+    children: React.ReactNode;
+}) => (
+    <button
+        onClick={onClick}
+        className={[
+            'relative whitespace-nowrap px-3 py-3 text-[0.82rem] font-semibold transition-colors',
+            'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:rounded-t-full after:transition-all',
+            active
+                ? 'text-lumex-blue after:bg-lumex-blue'
+                : 'text-lumex-muted after:bg-transparent hover:text-lumex-text',
+        ].join(' ')}
+    >
+        {children}
+    </button>
+);
+
+export const ReviewerDashboard: React.FC = () => {
+    const [activeTab, setActiveTab] = useState<Tab>('invitations');
     const { data: dashboardData, isLoading, isError } = useUserDashboard();
 
-    if (isLoading) return (
-        <div className="bg-lumex-bg-light min-h-screen py-20 flex justify-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-lumex-blue" />
-        </div>
-    );
-    if (isError || !dashboardData) return <div className="p-12 text-center text-red-500 font-bold">Failed to load reviewer data.</div>;
+    if (isLoading) {
+        return (
+            <div className="flex min-h-[60vh] items-center justify-center">
+                <Spinner size="lg" />
+            </div>
+        );
+    }
 
-    // Mock invitations since they might not be in the dashboard data yet
-    const invitations = [
-        { id: 'INV-7721', title: 'Machine Learning Approaches in Climate Modeling', journal: 'Journal of Environmental Science', invitedOn: '2026-03-01', deadline: '2026-03-15' },
-    ];
+    if (isError || !dashboardData) {
+        return (
+            <div className="p-12 text-center font-semibold text-lumex-red">
+                Failed to load reviewer data.
+            </div>
+        );
+    }
 
+    const invitations = MOCK_INVITATIONS;
     const pendingReviews = dashboardData.reviews.pending;
     const completedReviews = dashboardData.reviews.completed;
 
     return (
-        <Container className="py-12 min-h-screen">
-            <h1 className="text-3xl font-serif font-bold text-lumex-text mb-8">Reviewer Workspace</h1>
-
-            <div className="flex gap-4 border-b border-lumex-border mb-8">
-                <button
-                    onClick={() => setActiveTab('invitations')}
-                    className={`pb-3 px-2 font-bold transition-colors ${activeTab === 'invitations' ? 'text-lumex-blue border-b-2 border-lumex-blue' : 'text-gray-500 hover:text-lumex-text'}`}
-                >
-                    Invitations ({invitations.length})
-                </button>
-                <button
-                    onClick={() => setActiveTab('pending')}
-                    className={`pb-3 px-2 font-bold transition-colors ${activeTab === 'pending' ? 'text-lumex-blue border-b-2 border-lumex-blue' : 'text-gray-500 hover:text-lumex-text'}`}
-                >
-                    Active Reviews ({pendingReviews.length})
-                </button>
-                <button
-                    onClick={() => setActiveTab('completed')}
-                    className={`pb-3 px-2 font-bold transition-colors ${activeTab === 'completed' ? 'text-lumex-blue border-b-2 border-lumex-blue' : 'text-gray-500 hover:text-lumex-text'}`}
-                >
-                    History ({completedReviews.length})
-                </button>
+        <Container className="min-h-screen py-10">
+            <div className="mb-8">
+                <p className="mb-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-lumex-blue">
+                    Reviewer
+                </p>
+                <h1 className="font-serif text-3xl font-bold tracking-tight text-lumex-text">
+                    Reviewer Workspace
+                </h1>
             </div>
 
+            {/* Tabs */}
+            <div className="mb-8 border-b border-lumex-border">
+                <nav className="flex gap-1">
+                    <TabButton active={activeTab === 'invitations'} onClick={() => setActiveTab('invitations')}>
+                        Invitations{' '}
+                        <span className="ml-1.5 rounded-md bg-lumex-bg-deep px-1.5 py-0.5 text-xs font-normal text-lumex-muted">
+                            {invitations.length}
+                        </span>
+                    </TabButton>
+                    <TabButton active={activeTab === 'pending'} onClick={() => setActiveTab('pending')}>
+                        Active Reviews{' '}
+                        <span className="ml-1.5 rounded-md bg-lumex-bg-deep px-1.5 py-0.5 text-xs font-normal text-lumex-muted">
+                            {pendingReviews.length}
+                        </span>
+                    </TabButton>
+                    <TabButton active={activeTab === 'completed'} onClick={() => setActiveTab('completed')}>
+                        History{' '}
+                        <span className="ml-1.5 rounded-md bg-lumex-bg-deep px-1.5 py-0.5 text-xs font-normal text-lumex-muted">
+                            {completedReviews.length}
+                        </span>
+                    </TabButton>
+                </nav>
+            </div>
+
+            {/* Invitations Tab */}
             {activeTab === 'invitations' && (
-                <div className="space-y-6">
+                <div className="space-y-5">
                     {invitations.length === 0 ? (
-                        <p className="text-gray-500 italic">No new invitations today.</p>
+                        <p className="italic text-lumex-muted">No new invitations today.</p>
                     ) : (
-                        invitations.map(invitation => (
-                            <div key={invitation.id} className="p-6 border-l-4 border-lumex-blue bg-blue-50/30 rounded-r-lg shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                        invitations.map(inv => (
+                            <div
+                                key={inv.id}
+                                className="flex flex-col gap-6 rounded-xl border-l-4 border-lumex-blue bg-lumex-blue/[0.04] p-6 shadow-sm md:flex-row md:items-center md:justify-between"
+                            >
                                 <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <span className="bg-lumex-blue text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                                    <div className="mb-2 flex items-center gap-2.5">
+                                        <span className="rounded bg-lumex-blue px-2 py-0.5 text-[0.68rem] font-bold uppercase tracking-wider text-white">
                                             New Invitation
                                         </span>
-                                        <span className="text-sm text-gray-500 font-medium italic">Sent: {new Date(invitation.invitedOn).toLocaleDateString()}</span>
+                                        <span className="text-xs italic text-lumex-muted">
+                                            Sent: {new Date(inv.invitedOn).toLocaleDateString()}
+                                        </span>
                                     </div>
-                                    <h3 className="font-bold text-lumex-text text-lg leading-snug mb-1">{invitation.title}</h3>
-                                    <p className="text-sm text-lumex-text-secondary mb-3">{invitation.journal}</p>
-
-                                    <div className="flex items-center gap-6 text-xs font-bold text-lumex-muted">
-                                        <div className="flex items-center gap-1.5">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
-                                            Response Due: {new Date(invitation.deadline).toLocaleDateString()}
-                                        </div>
-                                        <div className="flex items-center gap-1.5">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
-                                            ~8,500 words
-                                        </div>
+                                    <h3 className="mb-1 text-lg font-bold leading-snug text-lumex-text">
+                                        {inv.title}
+                                    </h3>
+                                    <p className="mb-3 text-sm text-lumex-muted">{inv.journal}</p>
+                                    <div className="flex flex-wrap gap-5 text-xs font-semibold text-lumex-muted">
+                                        <span className="flex items-center gap-1.5">
+                                            <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                                                <circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" />
+                                            </svg>
+                                            Response due: {new Date(inv.deadline).toLocaleDateString()}
+                                        </span>
+                                        <span>~8,500 words</span>
                                     </div>
                                 </div>
-                                <div className="shrink-0 w-full md:w-auto flex flex-col gap-2">
-                                    <Button variant="primary" className="w-full justify-center">Accept Invitation</Button>
-                                    <Button variant="outline" className="w-full justify-center text-red-600 hover:bg-red-50 hover:border-red-200">Decline</Button>
-                                    <button className="text-xs text-lumex-blue font-bold hover:underline mt-1">View Abstract</button>
+                                <div className="flex w-full shrink-0 flex-col gap-2 md:w-auto">
+                                    <Button variant="primary" className="w-full justify-center">
+                                        Accept Invitation
+                                    </Button>
+                                    <Button variant="outline" className="w-full justify-center text-lumex-red hover:border-lumex-red/30 hover:bg-lumex-red/5">
+                                        Decline
+                                    </Button>
+                                    <button className="mt-0.5 text-xs font-semibold text-lumex-blue hover:underline">
+                                        View Abstract
+                                    </button>
                                 </div>
                             </div>
                         ))
@@ -86,30 +147,47 @@ export const ReviewerDashboard: React.FC = () => {
                 </div>
             )}
 
+            {/* Active Reviews Tab */}
             {activeTab === 'pending' && (
-                <div className="space-y-6">
+                <div className="space-y-5">
                     {pendingReviews.length === 0 ? (
-                        <p className="text-gray-500 italic">No pending reviews at this time.</p>
+                        <p className="italic text-lumex-muted">No pending reviews at this time.</p>
                     ) : (
                         pendingReviews.map(review => (
-                            <div key={review.id} className="p-6 border border-lumex-border rounded-lg bg-white shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                            <div
+                                key={review.id}
+                                className="flex flex-col gap-6 rounded-xl border border-lumex-border bg-lumex-bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between"
+                            >
                                 <div className="flex-1">
-                                    <div className="flex items-center gap-3 mb-2">
-                                        <span className="bg-red-100 text-red-800 text-xs font-bold px-2 py-0.5 rounded uppercase">
+                                    <div className="mb-2 flex items-center gap-3">
+                                        <span className="rounded bg-lumex-red/10 px-2 py-0.5 text-xs font-bold uppercase text-lumex-red">
                                             {review.status}
                                         </span>
-                                        <span className="text-sm text-gray-500 font-medium">Due: {review.deadline ? new Date(review.deadline).toLocaleDateString() : 'N/A'}</span>
+                                        <span className="text-sm text-lumex-muted">
+                                            Due: {review.deadline ? new Date(review.deadline).toLocaleDateString() : 'N/A'}
+                                        </span>
                                     </div>
-                                    <h3 className="font-bold text-lumex-text text-lg leading-snug">{review.title}</h3>
-                                    <div className="text-sm text-gray-500 mt-2 flex gap-4">
+                                    <h3 className="mb-1 text-lg font-bold leading-snug text-lumex-text">
+                                        {review.title}
+                                    </h3>
+                                    <div className="flex flex-wrap gap-4 text-sm text-lumex-muted">
                                         <span>Journal: {review.journal}</span>
-                                        <span>Invited: {review.invitedOn ? new Date(review.invitedOn).toLocaleDateString() : 'N/A'}</span>
-                                        <span>ID: {review.id}</span>
+                                        <span>
+                                            Invited:{' '}
+                                            {review.invitedOn
+                                                ? new Date(review.invitedOn).toLocaleDateString()
+                                                : 'N/A'}
+                                        </span>
+                                        <span className="text-xs text-lumex-sub">ID: {review.id}</span>
                                     </div>
                                 </div>
-                                <div className="shrink-0 w-full md:w-auto flex flex-col gap-2">
-                                    <Button variant="primary" className="w-full justify-center">Submit Review</Button>
-                                    <Button variant="outline" className="w-full justify-center">View Manuscript</Button>
+                                <div className="flex w-full shrink-0 flex-col gap-2 md:w-auto">
+                                    <Button variant="primary" className="w-full justify-center">
+                                        Submit Review
+                                    </Button>
+                                    <Button variant="outline" className="w-full justify-center">
+                                        View Manuscript
+                                    </Button>
                                 </div>
                             </div>
                         ))
@@ -117,21 +195,32 @@ export const ReviewerDashboard: React.FC = () => {
                 </div>
             )}
 
+            {/* History Tab */}
             {activeTab === 'completed' && (
-                <div className="space-y-6">
+                <div className="space-y-4">
                     {completedReviews.map(review => (
-                        <div key={review.id} className="p-6 border border-gray-200 rounded-lg bg-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-gray-500">
+                        <div
+                            key={review.id}
+                            className="flex flex-col gap-4 rounded-xl border border-lumex-border bg-lumex-bg-deep/40 p-5 md:flex-row md:items-center md:justify-between"
+                        >
                             <div className="flex-1">
-                                <h3 className="font-bold text-gray-700 text-lg leading-snug">{review.title}</h3>
-                                <div className="text-sm mt-2 flex gap-4">
+                                <h3 className="mb-1 font-semibold leading-snug text-lumex-text">
+                                    {review.title}
+                                </h3>
+                                <div className="flex flex-wrap gap-4 text-sm text-lumex-muted">
                                     <span>Journal: {review.journal}</span>
-                                    <span>ID: {review.id}</span>
+                                    <span className="text-xs text-lumex-sub">ID: {review.id}</span>
                                 </div>
                             </div>
-                            <div className="shrink-0 text-sm text-right">
-                                <p className="font-bold text-gray-800 mb-1">Recommendation:</p>
-                                <p className="italic">{review.decision}</p>
-                                <p className="mt-2 text-xs">Completed: {review.completedOn ? new Date(review.completedOn).toLocaleDateString() : 'N/A'}</p>
+                            <div className="shrink-0 text-right text-sm">
+                                <p className="mb-0.5 font-semibold text-lumex-text">Recommendation:</p>
+                                <p className="italic text-lumex-muted">{review.decision}</p>
+                                <p className="mt-1.5 text-xs text-lumex-sub">
+                                    Completed:{' '}
+                                    {review.completedOn
+                                        ? new Date(review.completedOn).toLocaleDateString()
+                                        : 'N/A'}
+                                </p>
                             </div>
                         </div>
                     ))}
