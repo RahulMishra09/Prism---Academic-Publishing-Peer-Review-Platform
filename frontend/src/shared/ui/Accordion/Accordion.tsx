@@ -1,6 +1,10 @@
 ﻿import React from 'react';
 import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { FaChevronDown } from 'react-icons/fa';
+const ChevronDown = () => (
+    <svg className="h-4 w-4 shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    </svg>
+);
 import { clsx } from 'clsx';
 
 export const Accordion = AccordionPrimitive.Root;
@@ -31,7 +35,7 @@ export const AccordionTrigger = React.forwardRef<
             {...props}
         >
             {children}
-            <FaChevronDown className="h-4 w-4 shrink-0 transition-transform duration-200" />
+            <ChevronDown />
         </AccordionPrimitive.Trigger>
     </AccordionPrimitive.Header>
 ));

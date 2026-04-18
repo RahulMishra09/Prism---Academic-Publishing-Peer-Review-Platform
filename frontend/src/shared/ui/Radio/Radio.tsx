@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
 import { clsx } from 'clsx';
-import { FaCircle } from 'react-icons/fa';
 
 export const RadioGroup = React.forwardRef<
     React.ElementRef<typeof RadioGroupPrimitive.Root>,
@@ -24,7 +23,7 @@ export const RadioGroupItem = React.forwardRef<
         {...props}
     >
         <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-            <FaCircle className="h-2 w-2 fill-current text-current" />
+            <svg className="h-2 w-2" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="8" r="4" /></svg>
         </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
 ));

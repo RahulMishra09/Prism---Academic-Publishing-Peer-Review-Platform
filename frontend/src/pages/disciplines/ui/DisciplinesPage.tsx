@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container } from '../../../shared/ui';
 import { DISCIPLINES } from '../../../shared/constants/disciplines';
-import { FaArrowRight } from 'react-icons/fa';
+const ArrowRight = () => <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>;
 
 export const DisciplinesPage: React.FC = () => {
     return (
@@ -31,7 +31,7 @@ export const DisciplinesPage: React.FC = () => {
                                     {discipline.icon}
                                 </span>
                                 <div className="h-8 w-8 rounded-full bg-lumex-bg flex items-center justify-center text-lumex-muted group-hover:bg-lumex-blue group-hover:text-white transition-colors">
-                                    <FaArrowRight className="h-3 w-3" />
+                                    <ArrowRight />
                                 </div>
                             </div>
 
