@@ -44,7 +44,7 @@ function getDevAuthRole(rawRole: string | undefined): Role {
 }
 
 export const env = {
-  PORT: process.env["PORT"] ?? "5000",
+  PORT: process.env["PORT"] ?? "8080",
   NODE_ENV: process.env["NODE_ENV"] ?? "development",
   DATABASE_URL: validateDatabaseUrl(process.env["DATABASE_URL"] as string),
   JWT_SECRET: process.env["JWT_SECRET"] as string,

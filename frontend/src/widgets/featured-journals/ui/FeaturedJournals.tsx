@@ -174,9 +174,9 @@ export const FeaturedJournals: React.FC<FeaturedJournalsProps> = ({ className })
                                 return (
                                     <AnimateIn key={String(journal.id || idx)} delay={idx * 80}>
                                         <Link
-                                        to={`/journal/${journal.slug || journal.id}`}
-                                        className="group block overflow-hidden rounded-card border border-lumex-border bg-lumex-card transition-all hover:-translate-y-0.5 hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
-                                    >
+                                            to={`/journal/${journal.slug || journal.id}`}
+                                            className="group block overflow-hidden rounded-card border border-lumex-border bg-lumex-card transition-all hover:-translate-y-0.5 hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
+                                        >
                                         <div className="h-[3px]" style={{ background: color }} />
                                         <div className="p-5">
                                             {/* Journal icon + title */}
@@ -269,7 +269,7 @@ export const FeaturedJournals: React.FC<FeaturedJournalsProps> = ({ className })
                                             </div>
                                         </div>
                                         </Link>
-                                    </AnimateIn>
+                                        </AnimateIn>
                                 );
                             })}
                     </div>

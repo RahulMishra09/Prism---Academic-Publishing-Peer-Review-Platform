@@ -30,7 +30,7 @@ function getDevAuthRole(rawRole) {
     throw new Error(`Invalid DEV_AUTH_ROLE "${rawRole}". Expected one of: ${Object.values(Role).join(", ")}`);
 }
 export const env = {
-    PORT: process.env["PORT"] ?? "5000",
+    PORT: process.env["PORT"] ?? "8080",
     NODE_ENV: process.env["NODE_ENV"] ?? "development",
     DATABASE_URL: validateDatabaseUrl(process.env["DATABASE_URL"]),
     JWT_SECRET: process.env["JWT_SECRET"],

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container } from '../../../shared/ui';
+import { Container, AnimateIn } from '../../../shared/ui';
 import { SearchBar } from '../../../features/search';
 import { useHomepageData, type TrendingArticle } from '../../../features/homepage/api/homepageQueries';
 import { useThemeStore } from '../../../entities/theme/model/useThemeStore';
@@ -74,7 +74,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ className }) => {
 
             <Container className="relative z-10">
                 {/* Heading block — centred, editorial */}
-                <div className="mx-auto mb-10 max-w-4xl text-center">
+                <AnimateIn className="mx-auto mb-10 max-w-4xl text-center" distance="lg">
                     <h1
                         className="mb-5 font-serif text-[2.6rem] font-bold leading-[1.08] md:text-[3.4rem] lg:text-[4rem]"
                         style={{ letterSpacing: '-0.03em' }}
@@ -109,10 +109,10 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ className }) => {
                         <span className="opacity-30">·</span>
                         <Link to="/journals" className="text-lumex-blue hover:underline">All Journals</Link>
                     </div>
-                </div>
+                </AnimateIn>
 
                 {/* Stats band */}
-                <div className="mx-auto mb-12 flex max-w-3xl flex-wrap justify-center gap-0 divide-x divide-lumex-border rounded-2xl border border-lumex-border bg-lumex-bg-white shadow-sm">
+                <AnimateIn delay={150} className="mx-auto mb-12 flex max-w-3xl flex-wrap justify-center gap-0 divide-x divide-lumex-border rounded-2xl border border-lumex-border bg-lumex-bg-white shadow-sm">
                     {displayStats.map(({ value, label }) => (
                         <div key={label} className="flex flex-1 flex-col items-center px-6 py-5 min-w-[120px]">
                             <span className="font-serif text-[1.85rem] font-bold leading-none text-lumex-text">
@@ -123,7 +123,7 @@ export const HomeHero: React.FC<HomeHeroProps> = ({ className }) => {
                             </span>
                         </div>
                     ))}
-                </div>
+                </AnimateIn>
 
                 {/* Discipline tags scrolling marquee */}
                 <div className="relative -mx-4 mb-0 overflow-hidden sm:-mx-6 lg:-mx-8">
