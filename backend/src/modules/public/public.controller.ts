@@ -52,55 +52,86 @@ function mapPaperToArticle(paper: {
 
 export const getArticles = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const page = Math.max(1, parseInt(String(req.query.page ?? "1")));
+    const page     = Math.max(1, parseInt(String(req.query.page ?? "1")));
     const pageSize = Math.min(50, Math.max(1, parseInt(String(req.query.pageSize ?? "20"))));
-    const query = String(req.query.query ?? "").trim();
-    const trending = req.query.trending === "true";
-    const skip = (page - 1) * pageSize;
+    const query    = String(req.query.query ?? "").trim();
+    const skip     = (page - 1) * pageSize;
 
-    const where: Record<string, unknown> = { status: "APPROVED" };
-
+    // Full-text search via tsvector when a query term is present
     if (query) {
-      where.OR = [
-        { title: { contains: query, mode: "insensitive" } },
-        { abstract: { contains: query, mode: "insensitive" } },
-        { domain: { contains: query, mode: "insensitive" } },
-        { keywords: { has: query } },
-        { author: { name: { contains: query, mode: "insensitive" } } },
-      ];
+      type PaperRow = {
+        id: string;
+        title: string;
+        abstract: string;
+        domain: string;
+        keywords: string[];
+        createdAt: Date;
+        approvedAt: Date | null;
+        author_id: string;
+        author_name: string;
+        author_email: string;
+        total_count: string;
+      };
+
+      // plainto_tsquery is safe against injection — it parses the string as
+      // plain-English words and does NOT allow query operators
+      const rows = await prisma.$queryRaw<PaperRow[]>`
+        SELECT
+          p.id, p.title, p.abstract, p.domain, p.keywords,
+          p."createdAt", p."approvedAt",
+          u.id   AS author_id,
+          u.name  AS author_name,
+          u.email AS author_email,
+          COUNT(*) OVER () AS total_count
+        FROM papers p
+        JOIN users u ON u.id = p."submittedBy"
+        WHERE p.status = 'APPROVED'
+          AND (
+            p.search_vector @@ plainto_tsquery('english', ${query})
+            OR p.title    ILIKE ${'%' + query + '%'}
+            OR p.abstract ILIKE ${'%' + query + '%'}
+          )
+        ORDER BY
+          ts_rank(COALESCE(p.search_vector, to_tsvector('english', p.title || ' ' || p.abstract)), plainto_tsquery('english', ${query})) DESC,
+          p."approvedAt" DESC NULLS LAST
+        LIMIT ${pageSize} OFFSET ${skip}
+      `;
+
+      const total  = rows.length > 0 ? parseInt(rows[0]!.total_count) : 0;
+      const papers = rows.map((r) =>
+        mapPaperToArticle({
+          id: r.id, title: r.title, abstract: r.abstract,
+          domain: r.domain, keywords: r.keywords,
+          createdAt: r.createdAt, approvedAt: r.approvedAt,
+          author: { id: r.author_id, name: r.author_name, email: r.author_email },
+        }),
+      );
+
+      res.json({
+        success: true, message: "Articles fetched",
+        data: papers,
+        pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
+      });
+      return;
     }
 
-    const orderBy = trending
-      ? { approvedAt: "desc" as const }
-      : { approvedAt: "desc" as const };
-
+    // No query — plain paginated list sorted by approvedAt
     const [papers, total] = await Promise.all([
       prisma.paper.findMany({
-        where,
-        orderBy,
-        skip,
-        take: pageSize,
-        include: {
-          author: { select: { id: true, name: true, email: true } },
-        },
+        where:   { status: "APPROVED" },
+        orderBy: { approvedAt: "desc" },
+        skip, take: pageSize,
+        include: { author: { select: { id: true, name: true, email: true } } },
       }),
-      prisma.paper.count({ where }),
+      prisma.paper.count({ where: { status: "APPROVED" } }),
     ]);
 
     res.json({
-      success: true,
-      message: "Articles fetched",
+      success: true, message: "Articles fetched",
       data: papers.map(mapPaperToArticle),
-      pagination: {
-        page,
-        pageSize,
-        total,
-        totalPages: Math.ceil(total / pageSize),
-      },
+      pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) },
     });
-  } catch (err) {
-    next(err);
-  }
+  } catch (err) { next(err); }
 };
 
 export const getArticle = async (

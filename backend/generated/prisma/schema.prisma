@@ -35,6 +35,24 @@ enum AssignmentStatus {
   COMPLETED
 }
 
+enum AuditAction {
+  USER_CREATED
+  USER_UPDATED
+  USER_BANNED
+  USER_UNBANNED
+  ROLE_CHANGED
+  PAPER_SUBMITTED
+  PAPER_APPROVED
+  PAPER_REJECTED
+  REVIEWER_ASSIGNED
+  REVIEWER_UNASSIGNED
+  REVIEW_SUBMITTED
+  FILE_UPLOADED
+  COMMENT_DELETED
+  LOGIN
+  LOGOUT
+}
+
 // ============================================================
 // USER MODEL
 // ============================================================
@@ -54,8 +72,29 @@ model User {
   reviewerAssignments ReviewerAssignment[]
   reviews             Review[]
   comments            Comment[]
+  refreshTokens       RefreshToken[]
+  auditLogs           AuditLog[]           @relation("ActorLogs")
 
   @@map("users")
+}
+
+// ============================================================
+// REFRESH TOKEN MODEL
+// ============================================================
+
+model RefreshToken {
+  id        String    @id @default(cuid())
+  token     String    @unique
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+  revokedAt DateTime?
+  isRevoked Boolean   @default(false)
+
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
 }
 
 // ============================================================
@@ -71,10 +110,20 @@ model Paper {
   status          PaperStatus @default(DRAFT)
   rejectionReason String?
 
+  // File attachment
+  fileUrl       String?
+  fileKey       String? // storage key / filename on disk
+  fileName      String? // original filename
+  fileMimeType  String?
+  fileSizeBytes Int?
+
   // AI fields (nullable — prepared for future, no logic yet)
   aiSummary          String?
   embedding          Float[]
   reviewAISuggestion String?
+
+  // Full-text search vector (maintained by DB trigger)
+  searchVector Unsupported("tsvector")?
 
   // Timestamps
   createdAt  DateTime  @default(now())
@@ -176,4 +225,25 @@ model Comment {
   @@index([authorId])
   @@index([parentId])
   @@map("comments")
+}
+
+// ============================================================
+// AUDIT LOG MODEL
+// ============================================================
+
+model AuditLog {
+  id         String      @id @default(cuid())
+  action     AuditAction
+  actorId    String?
+  actor      User?       @relation("ActorLogs", fields: [actorId], references: [id], onDelete: SetNull)
+  targetId   String? // userId, paperId, etc.
+  targetType String? // "user", "paper", "review", etc.
+  meta       Json? // arbitrary extra context
+  ip         String?
+  createdAt  DateTime    @default(now())
+
+  @@index([actorId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
 }

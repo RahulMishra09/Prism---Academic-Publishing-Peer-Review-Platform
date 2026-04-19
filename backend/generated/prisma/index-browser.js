@@ -131,6 +131,16 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RefreshTokenScalarFieldEnum = {
+  id: 'id',
+  token: 'token',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  revokedAt: 'revokedAt',
+  isRevoked: 'isRevoked'
+};
+
 exports.Prisma.PaperScalarFieldEnum = {
   id: 'id',
   title: 'title',
@@ -139,6 +149,11 @@ exports.Prisma.PaperScalarFieldEnum = {
   keywords: 'keywords',
   status: 'status',
   rejectionReason: 'rejectionReason',
+  fileUrl: 'fileUrl',
+  fileKey: 'fileKey',
+  fileName: 'fileName',
+  fileMimeType: 'fileMimeType',
+  fileSizeBytes: 'fileSizeBytes',
   aiSummary: 'aiSummary',
   embedding: 'embedding',
   reviewAISuggestion: 'reviewAISuggestion',
@@ -178,9 +193,25 @@ exports.Prisma.CommentScalarFieldEnum = {
   parentId: 'parentId'
 };
 
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  actorId: 'actorId',
+  targetId: 'targetId',
+  targetType: 'targetType',
+  meta: 'meta',
+  ip: 'ip',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.QueryMode = {
@@ -191,6 +222,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.Role = exports.$Enums.Role = {
   READER: 'READER',
@@ -212,12 +249,32 @@ exports.AssignmentStatus = exports.$Enums.AssignmentStatus = {
   COMPLETED: 'COMPLETED'
 };
 
+exports.AuditAction = exports.$Enums.AuditAction = {
+  USER_CREATED: 'USER_CREATED',
+  USER_UPDATED: 'USER_UPDATED',
+  USER_BANNED: 'USER_BANNED',
+  USER_UNBANNED: 'USER_UNBANNED',
+  ROLE_CHANGED: 'ROLE_CHANGED',
+  PAPER_SUBMITTED: 'PAPER_SUBMITTED',
+  PAPER_APPROVED: 'PAPER_APPROVED',
+  PAPER_REJECTED: 'PAPER_REJECTED',
+  REVIEWER_ASSIGNED: 'REVIEWER_ASSIGNED',
+  REVIEWER_UNASSIGNED: 'REVIEWER_UNASSIGNED',
+  REVIEW_SUBMITTED: 'REVIEW_SUBMITTED',
+  FILE_UPLOADED: 'FILE_UPLOADED',
+  COMMENT_DELETED: 'COMMENT_DELETED',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
+  RefreshToken: 'RefreshToken',
   Paper: 'Paper',
   ReviewerAssignment: 'ReviewerAssignment',
   Review: 'Review',
-  Comment: 'Comment'
+  Comment: 'Comment',
+  AuditLog: 'AuditLog'
 };
 
 /**

@@ -3,7 +3,7 @@ import { Role } from "../../generated/prisma/index.js";
 
 dotenv.config();
 
-const requiredEnvVars = ["DATABASE_URL", "JWT_SECRET"] as const;
+const requiredEnvVars = ["DATABASE_URL", "JWT_SECRET", "JWT_REFRESH_SECRET"] as const;
 
 for (const key of requiredEnvVars) {
   if (!process.env[key]) {
@@ -47,10 +47,19 @@ export const env = {
   PORT: process.env["PORT"] ?? "8080",
   NODE_ENV: process.env["NODE_ENV"] ?? "development",
   DATABASE_URL: validateDatabaseUrl(process.env["DATABASE_URL"] as string),
+  UPLOADS_DATABASE_URL: process.env["UPLOADS_DATABASE_URL"] ?? process.env["DATABASE_URL"] as string,
   JWT_SECRET: process.env["JWT_SECRET"] as string,
-  JWT_EXPIRES_IN: process.env["JWT_EXPIRES_IN"] ?? "7d",
+  JWT_REFRESH_SECRET: process.env["JWT_REFRESH_SECRET"] as string,
+  JWT_EXPIRES_IN: process.env["JWT_EXPIRES_IN"] ?? "15m",
   DEV_AUTH_EMAIL: process.env["DEV_AUTH_EMAIL"] ?? "test@lumex.com",
   DEV_AUTH_PASSWORD: process.env["DEV_AUTH_PASSWORD"] ?? "password",
   DEV_AUTH_NAME: process.env["DEV_AUTH_NAME"] ?? "Lumex Test User",
   DEV_AUTH_ROLE: getDevAuthRole(process.env["DEV_AUTH_ROLE"]),
+  // Email (SMTP / nodemailer)
+  SMTP_HOST: process.env["SMTP_HOST"] ?? "",
+  SMTP_PORT: Number(process.env["SMTP_PORT"] ?? "587"),
+  SMTP_USER: process.env["SMTP_USER"] ?? "",
+  SMTP_PASS: process.env["SMTP_PASS"] ?? "",
+  EMAIL_FROM: process.env["EMAIL_FROM"] ?? "no-reply@prism.io",
+  FRONTEND_URL: process.env["FRONTEND_URL"] ?? "http://localhost:5173",
 };

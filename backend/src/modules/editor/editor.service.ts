@@ -1,6 +1,8 @@
 import { PaperStatus, Role, Prisma } from "../../../generated/prisma/index.js";
 import { prisma } from "../../config/prisma.js";
 import { AppError } from "../../middleware/error.middleware.js";
+import { sendReviewerAssignedEmail } from "../emails/email.service.js";
+import { createAuditLog } from "../admin/admin.service.js";
 import type { AssignReviewerInput, EditorListPapersQuery } from "./editor.schema.js";
 
 // Shared select for paper list items
@@ -169,6 +171,10 @@ export const assignReviewer = async (
       },
     },
   });
+
+  // Fire-and-forget email + audit log
+  sendReviewerAssignedEmail(reviewer.email, reviewer.name, paper.title, paperId);
+  createAuditLog({ action: "REVIEWER_ASSIGNED", targetId: paperId, targetType: "paper", meta: { reviewerId } });
 
   return assignment;
 };

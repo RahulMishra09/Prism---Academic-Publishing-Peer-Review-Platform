@@ -1,6 +1,8 @@
 import { PaperStatus, Role, Prisma } from "../../../generated/prisma/index.js";
 import { prisma } from "../../config/prisma.js";
 import { AppError } from "../../middleware/error.middleware.js";
+import { sendSubmissionConfirmation, sendDecisionEmail } from "../emails/email.service.js";
+import { createAuditLog } from "../admin/admin.service.js";
 import type {
   CreatePaperInput,
   UpdatePaperInput,
@@ -308,11 +310,17 @@ export const submitPaper = async (paperId: string, authorId: string) => {
     );
   }
 
-  return prisma.paper.update({
+  const updated = await prisma.paper.update({
     where:  { id: paperId },
     data:   { status: PaperStatus.SUBMITTED },
-    select: paperSelect,
+    select: { ...paperSelect, author: { select: { id: true, name: true, email: true } } },
   });
+
+  // Fire-and-forget email + audit log
+  sendSubmissionConfirmation(updated.author.email, updated.author.name, updated.title);
+  createAuditLog({ action: "PAPER_SUBMITTED", actorId: authorId, targetId: paperId, targetType: "paper" });
+
+  return updated;
 };
 
 //  approvePaper 
@@ -348,14 +356,16 @@ export const approvePaper = async (paperId: string) => {
     );
   }
 
-  return prisma.paper.update({
+  const approved = await prisma.paper.update({
     where:  { id: paperId },
-    data: {
-      status:     PaperStatus.APPROVED,
-      approvedAt: new Date(),
-    },
-    select: paperSelect,
+    data: { status: PaperStatus.APPROVED, approvedAt: new Date() },
+    select: { ...paperSelect, author: { select: { id: true, name: true, email: true } } },
   });
+
+  sendDecisionEmail(approved.author.email, approved.author.name, approved.title, "APPROVED");
+  createAuditLog({ action: "PAPER_APPROVED", targetId: paperId, targetType: "paper" });
+
+  return approved;
 };
 
 //  rejectPaper 
@@ -387,12 +397,14 @@ export const rejectPaper = async (
   // Editors may reject a paper at any point (e.g. out-of-scope, plagiarism)
   // without requiring peer review first — no review count guard here.
 
-  return prisma.paper.update({
+  const rejected = await prisma.paper.update({
     where:  { id: paperId },
-    data: {
-      status:          PaperStatus.REJECTED,
-      rejectionReason: input.rejectionReason,
-    },
-    select: paperSelect,
+    data: { status: PaperStatus.REJECTED, rejectionReason: input.rejectionReason },
+    select: { ...paperSelect, author: { select: { id: true, name: true, email: true } } },
   });
+
+  sendDecisionEmail(rejected.author.email, rejected.author.name, rejected.title, "REJECTED", input.rejectionReason);
+  createAuditLog({ action: "PAPER_REJECTED", targetId: paperId, targetType: "paper", meta: { reason: input.rejectionReason } });
+
+  return rejected;
 };
