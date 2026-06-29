@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { useAuthStore } from '../../../app/store/useAuthStore';
+import { fetchClient, ApiError } from '../../../shared/api/base';
 
 export interface RegisterFormProps {
     onSuccess?: () => void;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
-    const { register, isLoading, error: storeError, clearError } = useAuthStore();
     const [form, setForm] = useState({
         firstName: '',
         lastName: '',
@@ -23,6 +22,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
         institution?: string;
         agreeTerms?: string;
     }>({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [serverError, setServerError] = useState('');
 
     const set = (field: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) =>
         setForm(prev => ({
@@ -51,22 +52,34 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        clearError();
         const errs = validate();
         if (Object.keys(errs).length > 0) {
             setErrors(errs);
             return;
         }
         setErrors({});
-        await register({
-            firstName: form.firstName,
-            lastName: form.lastName,
-            email: form.email,
-            password: form.password,
-        });
-        const currentError = useAuthStore.getState().error;
-        if (!currentError) {
+        setServerError('');
+        setIsLoading(true);
+        try {
+            await fetchClient('/auth/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: `${form.firstName} ${form.lastName}`.trim(),
+                    email: form.email,
+                    password: form.password,
+                }),
+            });
             onSuccess?.();
+        } catch (err) {
+            const message = err instanceof ApiError
+                ? err.message
+                : err instanceof Error
+                ? err.message
+                : 'Registration failed. Please try again.';
+            setServerError(message);
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -117,7 +130,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
                         type="checkbox"
                         checked={form.agreeTerms}
                         onChange={set('agreeTerms')}
-                        className="w-4 h-4 mt-0.5 rounded border-lumex-border text-lumex-blue focus:ring-lumex-blue"
+                        className="w-4 h-4 mt-0.5 rounded border-gray-300 text-lumex-blue focus:ring-lumex-blue"
                     />
                     <span className="text-sm text-lumex-text-secondary">
                         I agree to the{' '}
@@ -138,10 +151,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess }) => {
                 )}
             </div>
 
-            {storeError && (
-                <div className="rounded-md bg-lumex-red/10 border border-lumex-red/20 px-4 py-3 text-sm text-lumex-red" role="alert">
-                    {storeError}
-                </div>
+            {serverError && (
+                <p className="text-sm text-lumex-red bg-lumex-red/5 border border-lumex-red/20 rounded px-3 py-2">
+                    {serverError}
+                </p>
             )}
 
             <button

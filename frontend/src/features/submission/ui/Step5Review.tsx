@@ -6,14 +6,13 @@ import { useSubmissionStore } from '@features/submission/model/useSubmissionStor
 import type { AuthorInfo, SuggestedReviewer, SubmissionFile } from '../../../shared/types/submission.types';
 import { Button } from '@shared/ui';
 import { Link, useNavigate } from 'react-router-dom';
-import { createPaper, submitPaper } from '../api/papersApi';
+import { fetchClient } from '../../../shared/api/base';
 
 export const Step5Review: React.FC = () => {
     const { draft, updateDraft, prevStep, resetDraft } = useSubmissionStore();
     const navigate = useNavigate();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submissionSuccess, setSubmissionSuccess] = useState(false);
-    const [submitError, setSubmitError] = useState<string | null>(null);
 
     const {
         register,
@@ -26,27 +25,64 @@ export const Step5Review: React.FC = () => {
         },
     });
 
+    const [submitError, setSubmitError] = useState('');
+
     const onSubmit = async (data: Step6Data) => {
         updateDraft(data as Partial<typeof draft>);
         setIsSubmitting(true);
-        setSubmitError(null);
+        setSubmitError('');
 
         try {
-            // 1. Create paper draft on the backend
-            const paper = await createPaper({
-                title: draft.title ?? 'Untitled Manuscript',
-                abstract: draft.abstract ?? '',
-                domain: draft.journalSlug ?? 'general',
-                keywords: draft.keywords ?? [],
+            // 1. Create the submission on the backend
+            const res = await fetchClient<{ data: { id: string } }>('/submissions', {
+                method: 'POST',
+                body: JSON.stringify({
+                    title: draft.title,
+                    abstract: draft.abstract,
+                    keywords: draft.keywords || [],
+                    journalSlug: draft.journalSlug || undefined,
+                    coverLetter: draft.coverLetter || undefined,
+                }),
             });
 
-            // 2. Submit the paper for review
-            await submitPaper(paper.id);
+            const submissionId = res.data.id;
+
+            // 2. Update draft metadata (title, abstract, keywords, cover letter)
+            await fetchClient(`/submissions/${submissionId}/draft`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    title: draft.title,
+                    abstract: draft.abstract,
+                    keywords: draft.keywords || [],
+                    coverLetter: draft.coverLetter || undefined,
+                    journalSlug: draft.journalSlug || undefined,
+                }),
+            });
+
+            // 3. Upload files (if any)
+            const filesToUpload = (draft.uploadedFiles || []).filter(f => f.file);
+            for (const fileEntry of filesToUpload) {
+                if (!fileEntry.file) continue;
+                const formData = new FormData();
+                formData.append('file', fileEntry.file);
+                const fileType = fileEntry.type === 'manuscript' ? 'MANUSCRIPT' : fileEntry.type === 'cover-letter' ? 'COVER_LETTER' : 'SUPPLEMENTARY';
+                await fetch(`/api/submissions/${submissionId}/files?fileType=${fileType}`, {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('mock_token') || ''}`,
+                    },
+                    body: formData,
+                });
+            }
+
+            // 4. Submit the submission (move from DRAFT to SUBMITTED)
+            await fetchClient(`/submissions/${submissionId}/submit`, { method: 'POST' });
 
             setSubmissionSuccess(true);
             resetDraft();
         } catch (err) {
-            setSubmitError(err instanceof Error ? err.message : 'Submission failed. Please try again.');
+            const message = err instanceof Error ? err.message : 'Submission failed. Please try again.';
+            setSubmitError(message);
         } finally {
             setIsSubmitting(false);
         }
@@ -55,8 +91,8 @@ export const Step5Review: React.FC = () => {
     if (submissionSuccess) {
         return (
             <div className="max-w-2xl mx-auto text-center py-12">
-                <div className="w-20 h-20 bg-lumex-open-bg rounded-full flex items-center justify-center mx-auto mb-6">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-lumex-open-text">
+                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="text-green-600">
                         <polyline points="20 6 9 17 4 12" />
                     </svg>
                 </div>
@@ -78,7 +114,7 @@ export const Step5Review: React.FC = () => {
     return (
         <div className="max-w-4xl mx-auto">
             <h2 className="text-2xl font-serif text-lumex-text font-bold mb-2">
-                Step 6: Review & Submit
+                Step 7: Review & Submit
             </h2>
             <p className="text-lumex-muted mb-8">
                 Please review all the information below. Once you are satisfied, agree to the terms and click Submit.
@@ -187,7 +223,7 @@ export const Step5Review: React.FC = () => {
 
                 {/* Files */}
                 <div className="mb-4">
-                    <h3 className="text-sm font-bold text-lumex-text uppercase tracking-wider mb-3 pb-2 border-b border-lumex-border">
+                    <h3 className="text-sm font-bold text-lumex-text uppercase tracking-wider mb-3 pb-2 border-b border-gray-200">
                         Uploaded Files
                     </h3>
                     <ul className="space-y-2 text-sm text-lumex-text">
@@ -224,14 +260,14 @@ export const Step5Review: React.FC = () => {
                         </div>
                     </label>
                     {errors.agreedToTerms && (
-                        <p className="text-lumex-red text-sm mt-2 ml-8 font-bold">{errors.agreedToTerms.message}</p>
+                        <p className="text-red-600 text-sm mt-2 ml-8 font-bold">{errors.agreedToTerms.message}</p>
                     )}
                 </div>
 
                 {submitError && (
-                    <div className="mb-4 rounded-md bg-lumex-red/10 border border-lumex-red/20 px-4 py-3 text-sm text-lumex-red" role="alert">
+                    <p className="text-sm text-red-500 bg-red-50 border border-red-100 rounded px-3 py-2 mb-4">
                         {submitError}
-                    </div>
+                    </p>
                 )}
 
                 <div className="flex justify-between pt-6 border-t border-lumex-border">
@@ -239,7 +275,7 @@ export const Step5Review: React.FC = () => {
                         Back
                     </Button>
                     <Button type="submit" variant="primary" size="lg" disabled={isSubmitting} className="min-w-[180px]">
-                        {isSubmitting ? 'Submitting…' : 'Submit Manuscript'}
+                        {isSubmitting ? 'Submitting...' : 'Submit Manuscript'}
                     </Button>
                 </div>
             </form>

@@ -35,17 +35,21 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
     // Extract unique affiliations across all authors
     const allAffiliations = Array.from(
         new Map(
-            article.authors
-                .flatMap((a: Author) => a.affiliations)
+            (article.authors || [])
+                .flatMap((a: Author) => a.affiliations || [])
+                .filter(Boolean)
                 .map((aff: Affiliation) => [aff.id, aff])
         ).values()
-    ).sort((a: Affiliation, b: Affiliation) => a.id.localeCompare(b.id));
+    ).sort((a: Affiliation, b: Affiliation) => a?.id?.localeCompare(b?.id));
 
     const visibleAffiliations = showAllAffiliations ? allAffiliations : allAffiliations.slice(0, 3);
 
+    const pubDate = article.publishedDate ? new Date(article.publishedDate) : null;
+    const isValidDate = pubDate && !isNaN(pubDate.getTime());
+
     return (
         <div
-            className={`bg-lumex-bg border-b border-lumex-border pb-8 ${className || ''}`}
+            className={`bg-lumex-bg-light border-b border-lumex-border pb-8 ${className || ''}`}
         >
             <div className="max-w-4xl pt-8 px-4 sm:px-6 lg:px-8 mx-auto xl:mx-0 xl:ml-[max(0px,calc((100vw-1280px)/2))]">
                 {/* Top Metadata Row */}
@@ -60,14 +64,16 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
                         </Badge>
                     )}
                     <span className="text-lumex-muted">|</span>
-                    <span className="text-lumex-muted">
-                        Published:{' '}
-                        {new Intl.DateTimeFormat('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                        }).format(new Date(article.publishedDate))}
-                    </span>
+                    {isValidDate && (
+                        <span className="text-lumex-muted">
+                            Published:{' '}
+                            {new Intl.DateTimeFormat('en-US', {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                            }).format(pubDate)}
+                        </span>
+                    )}
                 </div>
 
                 {/* Title */}
@@ -91,14 +97,14 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
                     <span className="text-lumex-muted ml-2">
                         {article.volume && `volume ${article.volume}`}
                         {article.issue && `, issue ${article.issue}`}
-                        {article.pages && `, pages ${article.pages}`} (
-                        {new Date(article.publishedDate).getFullYear()})
+                        {article.pages && `, pages ${article.pages}`}
+                        {isValidDate && ` (${pubDate.getFullYear()})`}
                     </span>
                 </div>
 
                 {/* Authors List */}
                 <div className="mb-6 text-lumex-blue font-medium leading-relaxed">
-                    {article.authors.map((author: Author, index: number) => (
+                    {(article.authors || []).map((author: Author, index: number) => (
                         <span key={author.id} className="inline-flex items-center">
                             <a
                                 href={`/search?author=${encodeURIComponent(author.name)}`}
@@ -106,8 +112,8 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
                             >
                                 {author.name}
                             </a>
-                            {author.affiliations.length > 0 && (
-                                <sup className="ml-0.5 text-lumex-muted">
+                            {author.affiliations && author.affiliations.length > 0 && (
+                                <sup className="ml-0.5 text-gray-500">
                                     {author.affiliations
                                         .map(
                                             (a: Affiliation) =>
@@ -130,7 +136,7 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
                                                     viewBox="0 0 24 24"
                                                     fill="currentColor"
                                                     stroke="none"
-                                                    className="ml-1 text-lumex-muted inline cursor-help"
+                                                    className="ml-1 text-gray-400 inline cursor-help"
                                                 >
                                                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                                                     <polyline
@@ -157,7 +163,7 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
 
                 {/* Affiliations List */}
                 {allAffiliations.length > 0 && (
-                    <div className="mb-8 text-sm text-lumex-muted space-y-1">
+                    <div className="mb-8 text-sm text-gray-600 space-y-1">
                         {visibleAffiliations.map((aff: Affiliation) => (
                             <div key={aff.id} className="flex">
                                 <sup className="mr-2 mt-1">
@@ -189,7 +195,7 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
                     <Button
                         variant="primary"
                         className="font-bold shadow-md bg-lumex-accent hover:bg-lumex-accent-dark"
-                        onClick={() => void navigate(`/article/${article.id}/read`)}
+                        onClick={() => void navigate(`/article/${encodeURIComponent(article.doi)}/read`)}
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -208,6 +214,10 @@ export const ArticleHero: React.FC<ArticleHeroProps> = ({
                         </svg>
                         Read Full Article
                     </Button>
+                    <span className="hidden sm:flex text-xs text-lumex-blue ml-1 font-bold items-center gap-1.5 px-2 py-1 bg-lumex-blue/10 rounded-full border border-lumex-blue/20">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                        AI Insights Available
+                    </span>
 
                     <Button
                         variant="outline"

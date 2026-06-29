@@ -72,11 +72,16 @@ export const Step2Authors: React.FC = () => {
                                 <span className="text-xs font-bold text-lumex-muted uppercase tracking-wider">
                                     Author {index + 1}
                                 </span>
+                                {item.autoParsed && (
+                                    <span className="px-2 py-0.5 bg-lumex-blue/10 text-lumex-blue rounded-full text-[10px] font-bold border border-lumex-blue/20">
+                                        Auto-parsed
+                                    </span>
+                                )}
                                 {fields.length > 1 && (
                                     <button
                                         type="button"
                                         onClick={() => remove(index)}
-                                        className="text-lumex-muted hover:text-lumex-red transition-colors"
+                                        className="text-gray-400 hover:text-red-500 transition-colors"
                                         aria-label={`Remove Author ${index + 1}`}
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -107,7 +112,7 @@ export const Step2Authors: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                                 <div>
                                     <label className="block text-sm font-bold text-lumex-text mb-1">Email Address *</label>
                                     <Input
@@ -115,6 +120,15 @@ export const Step2Authors: React.FC = () => {
                                         {...register(`authors.${index}.email` as const)}
                                         className="w-full"
                                         error={errors.authors?.[index]?.email?.message}
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-bold text-lumex-text mb-1">Phone (Optional)</label>
+                                    <Input
+                                        type="tel"
+                                        {...register(`authors.${index}.phone` as const)}
+                                        placeholder="+1 (555) 123-4567"
+                                        className="w-full"
                                     />
                                 </div>
                                 <div>
@@ -171,7 +185,7 @@ export const Step2Authors: React.FC = () => {
                                     <input
                                         type="checkbox"
                                         {...register(`authors.${index}.isCorresponding` as const)}
-                                        className="rounded border-lumex-border text-lumex-blue focus:ring-lumex-blue w-4 h-4 cursor-pointer"
+                                        className="rounded border-gray-300 text-lumex-blue focus:ring-lumex-blue w-4 h-4 cursor-pointer"
                                     />
                                     Designate as corresponding author
                                 </label>
@@ -195,7 +209,7 @@ export const Step2Authors: React.FC = () => {
                 </div>
 
                 {errors.authors?.root && (
-                    <div className="p-4 mb-6 bg-lumex-red/5 text-lumex-red border border-lumex-red/20 rounded-md">
+                    <div className="p-4 mb-6 bg-red-50 text-red-700 border border-red-200 rounded-md">
                         {errors.authors.root.message}
                     </div>
                 )}

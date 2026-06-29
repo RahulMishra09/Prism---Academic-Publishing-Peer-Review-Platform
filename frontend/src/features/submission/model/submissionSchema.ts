@@ -9,6 +9,7 @@ export const AuthorSchema = z.object({
     firstName: z.string().min(1, 'First name is required'),
     lastName: z.string().min(1, 'Last name is required'),
     email: z.string().email('Valid email is required'),
+    phone: z.string().optional().or(z.literal('')),
     institution: z.string().min(1, 'Institution is required'),
     department: z.string().min(1, 'Department is required'),
     city: z.string().min(1, 'City is required'),
@@ -19,6 +20,7 @@ export const AuthorSchema = z.object({
         .optional()
         .or(z.literal('')),
     isCorresponding: z.boolean(),
+    autoParsed: z.boolean().optional(),
 });
 
 export const Step2Schema = z.object({

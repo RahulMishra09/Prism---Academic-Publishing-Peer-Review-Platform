@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import type { Article, AccessLevel } from '../../../entities/article/model/types';
 import { Button } from '../../../shared/ui';
 
@@ -40,7 +40,7 @@ const accessMessages: Record<
 export const AccessGate: React.FC<AccessGateProps> = ({ article, onPurchase, onSubscribe }) => {
     const info = accessMessages[article.accessLevel];
 
-    if (!info.showActions) return null;
+    if (!info?.showActions) return null;
 
     return (
         <div className="my-10 border-2 border-lumex-border rounded-lg overflow-hidden shadow-md">
@@ -64,7 +64,7 @@ export const AccessGate: React.FC<AccessGateProps> = ({ article, onPurchase, onS
             </div>
 
             {/* Body */}
-            <div className="bg-white px-6 py-6">
+            <div className="bg-lumex-card px-6 py-6">
                 <p className="text-lumex-text mb-6 leading-relaxed">{info.description}</p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
@@ -89,7 +89,7 @@ export const AccessGate: React.FC<AccessGateProps> = ({ article, onPurchase, onS
                     </Button>
                 </div>
 
-                <p className="mt-4 text-xs text-lumex-muted">
+                <p className="mt-4 text-xs text-gray-500">
                     Institutional users may also access full-text articles through their library
                     subscriptions.
                     <a href="/info/access" className="text-lumex-blue hover:underline ml-1">

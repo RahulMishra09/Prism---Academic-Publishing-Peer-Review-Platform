@@ -1,4 +1,5 @@
-﻿import React from 'react';
+import React from 'react';
+import { useSavedArticlesQuery, useUnsaveArticle } from '../api/useUserDashboard';
 import type { SavedArticle } from '../api/useUserDashboard';
 
 export interface SavedArticlesPanelProps {
@@ -7,12 +8,31 @@ export interface SavedArticlesPanelProps {
 }
 
 export const SavedArticlesPanel: React.FC<SavedArticlesPanelProps> = ({
-    articles = [],
+    articles: propArticles,
     onRemove,
 }) => {
+    const { data, isLoading } = useSavedArticlesQuery();
+    const unsaveMutation = useUnsaveArticle();
+
+    // Prefer backend-fetched articles; fall back to prop articles
+    const articles = (data?.articles?.length ? data.articles : propArticles) ?? [];
+
+    const handleRemove = (doi: string) => {
+        unsaveMutation.mutate(doi);
+        onRemove?.(doi);
+    };
+
+    if (isLoading) {
+        return (
+            <div className="flex justify-center py-12">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-lumex-blue" />
+            </div>
+        );
+    }
+
     if (articles.length === 0) {
         return (
-            <div className="text-center py-16 text-lumex-muted">
+            <div className="text-center py-16 text-gray-400">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="48"
@@ -44,8 +64,8 @@ export const SavedArticlesPanel: React.FC<SavedArticlesPanelProps> = ({
                         >
                             {article.title}
                         </a>
-                        <p className="text-sm text-lumex-muted mt-1">{article.authors}</p>
-                        <div className="flex items-center gap-3 mt-1.5 text-xs text-lumex-muted">
+                        <p className="text-sm text-gray-500 mt-1">{article.authors}</p>
+                        <div className="flex items-center gap-3 mt-1.5 text-xs text-gray-400">
                             <em>{article.journalTitle}</em>
                             <span>·</span>
                             <span>
@@ -59,8 +79,9 @@ export const SavedArticlesPanel: React.FC<SavedArticlesPanelProps> = ({
                         </div>
                     </div>
                     <button
-                        onClick={() => onRemove?.(article.doi)}
-                        className="shrink-0 p-1.5 text-lumex-muted hover:text-lumex-red rounded transition-colors opacity-0 group-hover:opacity-100"
+                        onClick={() => handleRemove(article.doi)}
+                        disabled={unsaveMutation.isPending}
+                        className="shrink-0 p-1.5 text-gray-300 hover:text-red-500 rounded transition-colors opacity-0 group-hover:opacity-100 disabled:opacity-30"
                         aria-label="Remove saved article"
                     >
                         <svg

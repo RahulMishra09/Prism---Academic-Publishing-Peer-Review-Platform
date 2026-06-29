@@ -1,7 +1,7 @@
-﻿import React from 'react';
+import React from 'react';
 import type { BookChapter } from '../../../entities/book/model/types';
 import type { Author } from '../../../entities/article/model/types';
-import { Button } from '../../../shared/ui';
+import { Button, Container, Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from '../../../shared/ui';
 
 export interface ChapterHeroProps {
     chapter: BookChapter;
@@ -12,26 +12,27 @@ export interface ChapterHeroProps {
 export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf, onCite }) => {
     return (
         <div className="bg-lumex-bg-light border-b border-lumex-border pb-8">
-            <div className="max-w-4xl mx-auto pt-8 px-4 sm:px-6 lg:px-8">
+            <Container className="pt-8">
                 {/* Breadcrumb */}
-                <nav className="text-sm text-lumex-muted mb-5 flex items-center flex-wrap gap-1">
-                    <a href="/" className="hover:text-lumex-blue">
-                        Home
-                    </a>
-                    <span>›</span>
-                    <a
-                        href={`/book/${encodeURIComponent(chapter.bookDoi)}`}
-                        className="hover:text-lumex-blue line-clamp-1 max-w-[200px]"
-                    >
-                        {chapter.bookTitle}
-                    </a>
-                    <span>›</span>
-                    <span className="text-lumex-text font-medium line-clamp-1">Chapter</span>
-                </nav>
+                <Breadcrumb className="mb-6">
+                    <BreadcrumbList>
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbLink href={`/book/${encodeURIComponent(chapter.bookDoi)}`} className="line-clamp-1 max-w-[300px] inline-block align-bottom">{chapter.bookTitle}</BreadcrumbLink>
+                        </BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem>
+                            <BreadcrumbPage>Chapter</BreadcrumbPage>
+                        </BreadcrumbItem>
+                    </BreadcrumbList>
+                </Breadcrumb>
 
                 {/* Book source link */}
                 <div className="mb-4 text-sm">
-                    <span className="text-lumex-muted">Chapter in: </span>
+                    <span className="text-gray-500">Chapter in: </span>
                     <a
                         href={`/book/${encodeURIComponent(chapter.bookDoi)}`}
                         className="text-lumex-blue hover:underline font-bold font-serif italic"
@@ -39,9 +40,9 @@ export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf
                         {chapter.bookTitle}
                     </a>
                     {chapter.pages && (
-                        <span className="text-lumex-muted ml-2">· pp. {chapter.pages}</span>
+                        <span className="text-gray-500 ml-2">· pp. {chapter.pages}</span>
                     )}
-                    <span className="text-lumex-muted ml-2">· {chapter.publishYear}</span>
+                    <span className="text-gray-500 ml-2">· {chapter.publishYear}</span>
                 </div>
 
                 {/* Chapter title */}
@@ -67,7 +68,7 @@ export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf
                 </div>
 
                 {/* Action Bar */}
-                <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-lumex-border">
+                <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-gray-200">
                     <Button
                         variant="primary"
                         className="font-bold shadow-sm"
@@ -98,12 +99,12 @@ export const ChapterHero: React.FC<ChapterHeroProps> = ({ chapter, onDownloadPdf
                         href={`https://doi.org/${chapter.doi}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-xs text-lumex-muted hover:text-lumex-blue font-mono"
+                        className="text-xs text-gray-500 hover:text-lumex-blue font-mono"
                     >
                         DOI: {chapter.doi}
                     </a>
                 </div>
-            </div>
+            </Container>
         </div>
     );
 };

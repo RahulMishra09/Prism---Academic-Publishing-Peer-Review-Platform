@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react';
+import React, { useState } from 'react';
 import type { BookChapter } from '../../../entities/book/model/types';
 
 export interface ChapterListProps {
@@ -25,7 +25,7 @@ export const ChapterList: React.FC<ChapterListProps> = ({ chapters, className })
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Search chapters…"
-                    className="w-full pl-10 pr-4 py-2.5 border border-lumex-border rounded text-sm focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue transition"
+                    className="w-full pl-10 pr-4 py-2.5 border border-lumex-border bg-lumex-bg-light text-lumex-text placeholder:text-lumex-muted rounded text-sm focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue transition"
                 />
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -37,7 +37,7 @@ export const ChapterList: React.FC<ChapterListProps> = ({ chapters, className })
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="absolute left-3 top-1/2 -translate-y-1/2 text-lumex-muted"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                 >
                     <circle cx="11" cy="11" r="8" />
                     <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -45,7 +45,7 @@ export const ChapterList: React.FC<ChapterListProps> = ({ chapters, className })
             </div>
 
             {/* Chapter count */}
-            <p className="text-sm text-lumex-muted mb-4">
+            <p className="text-sm text-gray-500 mb-4">
                 {filtered.length === chapters.length
                     ? `${chapters.length} chapter${chapters.length !== 1 ? 's' : ''}`
                     : `${filtered.length} of ${chapters.length} chapters`}
@@ -53,7 +53,7 @@ export const ChapterList: React.FC<ChapterListProps> = ({ chapters, className })
 
             {/* List */}
             {filtered.length === 0 ? (
-                <p className="text-center text-lumex-muted py-12 italic">
+                <p className="text-center text-gray-400 py-12 italic">
                     No chapters match your search.
                 </p>
             ) : (
@@ -61,9 +61,9 @@ export const ChapterList: React.FC<ChapterListProps> = ({ chapters, className })
                     {filtered.map((chapter, idx) => (
                         <li
                             key={chapter.id}
-                            className="flex items-start gap-4 p-4 bg-white hover:bg-lumex-bg-light transition-colors group"
+                            className="flex items-start gap-4 p-4 bg-lumex-card hover:bg-lumex-bg transition-colors group"
                         >
-                            <span className="text-lg font-bold text-lumex-muted shrink-0 w-8 text-right mt-0.5">
+                            <span className="text-lg font-bold text-gray-300 shrink-0 w-8 text-right mt-0.5">
                                 {idx + 1}
                             </span>
                             <div className="flex-1 min-w-0">
@@ -73,10 +73,10 @@ export const ChapterList: React.FC<ChapterListProps> = ({ chapters, className })
                                 >
                                     {chapter.title}
                                 </a>
-                                <p className="text-sm text-lumex-muted mt-1">
+                                <p className="text-sm text-gray-500 mt-1">
                                     {chapter.authors.map(a => a.name).join(', ')}
                                 </p>
-                                <div className="flex items-center gap-4 mt-2 text-xs text-lumex-muted">
+                                <div className="flex items-center gap-4 mt-2 text-xs text-gray-400">
                                     {chapter.pages && <span>Pages {chapter.pages}</span>}
                                     <a
                                         href={`https://doi.org/${chapter.doi}`}
@@ -98,7 +98,7 @@ export const ChapterList: React.FC<ChapterListProps> = ({ chapters, className })
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                className="text-lumex-muted group-hover:text-lumex-blue transition-colors shrink-0 mt-1"
+                                className="text-gray-300 group-hover:text-lumex-blue transition-colors shrink-0 mt-1"
                             >
                                 <polyline points="9 18 15 12 9 6" />
                             </svg>

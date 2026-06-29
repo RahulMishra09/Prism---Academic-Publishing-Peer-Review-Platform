@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from '@shared/ui';
+import { fetchClient } from '../../../shared/api/base';
 
 interface Reviewer {
     id: string;
@@ -30,13 +31,24 @@ export const ReviewerAssigner: React.FC<ReviewerAssignerProps> = ({
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch('/mock-data/reviewers.json')
-            .then(res => res.json())
-            .then((data: Reviewer[]) => {
-                setReviewers(data);
+        fetchClient<{ data: { data: any[] } }>('/users/reviewers?pageSize=50')
+            .then(res => {
+                const mapped = res.data.data.map(u => ({
+                    id: u.id,
+                    name: u.name,
+                    expertise: u.bio ? u.bio.split(',').map((s: string) => s.trim()) : [],
+                    institution: u.affiliation || 'Unknown',
+                    activeReviews: u._count?.reviewAssignments || 0,
+                    completedReviews: u._count?.submissionReviews || 0,
+                    rating: 4.8 // Mock rating for now
+                }));
+                setReviewers(mapped);
                 setLoading(false);
             })
-            .catch(err => console.error('Failed to load reviewers', err));
+            .catch(err => {
+                console.error('Failed to load reviewers', err);
+                setLoading(false);
+            });
     }, []);
 
     const filtered = reviewers.filter(r =>
@@ -53,30 +65,41 @@ export const ReviewerAssigner: React.FC<ReviewerAssignerProps> = ({
 
     return (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <Container className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col p-0">
+            <Container className="bg-lumex-card rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col p-0">
                 {/* Header */}
-                <div className="p-6 border-b border-lumex-border bg-lumex-bg/50">
+                <div className="p-6 border-b border-lumex-border bg-lumex-bg-deep">
                     <div className="flex justify-between items-start mb-4">
                         <div>
                             <h2 className="text-xl font-bold text-lumex-text">Assign Reviewers</h2>
-                            <p className="text-sm text-lumex-text-secondary mt-1">
+                            <p className="text-sm text-lumex-muted mt-1">
                                 <span className="font-bold text-lumex-blue">{manuscriptId}:</span> {manuscriptTitle}
                             </p>
                         </div>
-                        <button onClick={onClose} className="text-lumex-muted hover:text-lumex-muted">
+                        <button onClick={onClose} className="text-lumex-sub hover:text-lumex-text transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                         </button>
                     </div>
 
-                    <div className="relative">
-                        <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-lumex-muted" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
-                        <input
-                            type="text"
-                            placeholder="Search by name, expertise, or institution..."
-                            className="w-full pl-10 pr-4 py-2.5 bg-white border border-lumex-border rounded-lg outline-none focus:ring-2 focus:ring-lumex-blue/20 focus:border-lumex-blue text-sm"
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
+                    <div className="flex gap-3">
+                        <div className="relative flex-1">
+                            <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-lumex-sub" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                            <input
+                                type="text"
+                                placeholder="Search by name, expertise, or institution..."
+                                className="w-full pl-10 pr-4 py-2.5 bg-lumex-bg-white border border-lumex-border rounded-lg outline-none focus:ring-2 focus:ring-lumex-blue/20 focus:border-lumex-blue text-sm text-lumex-text placeholder:text-lumex-sub"
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                            />
+                        </div>
+                        <Button
+                            variant="outline"
+                            className="shrink-0 text-lumex-blue border-lumex-blue hover:bg-lumex-blue/10"
+                            onClick={() => {
+                                // Simulated AI suggestion logic
+                            }}
+                        >
+                            ✨ AI Suggest
+                        </Button>
                     </div>
                 </div>
 
@@ -92,14 +115,14 @@ export const ReviewerAssigner: React.FC<ReviewerAssignerProps> = ({
                                 <div
                                     key={rev.id}
                                     className={`p-4 border rounded-lg transition-all cursor-pointer ${selected.includes(rev.id)
-                                        ? 'border-lumex-blue bg-lumex-blue/5 ring-1 ring-lumex-blue'
-                                        : 'border-lumex-border bg-white hover:border-lumex-border'
+                                        ? 'border-lumex-blue bg-lumex-blue/10 ring-1 ring-lumex-blue'
+                                        : 'border-lumex-border bg-lumex-card hover:border-lumex-border-hover'
                                         }`}
                                     onClick={() => toggleSelection(rev.id)}
                                 >
                                     <div className="flex justify-between items-start">
                                         <div className="flex gap-4">
-                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white shrink-0 ${selected.includes(rev.id) ? 'bg-lumex-blue' : 'bg-gray-300'
+                                            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-white shrink-0 ${selected.includes(rev.id) ? 'bg-lumex-blue' : 'bg-lumex-sub'
                                                 }`}>
                                                 {rev.name.split(' ').pop()?.[0]}
                                             </div>
@@ -108,7 +131,7 @@ export const ReviewerAssigner: React.FC<ReviewerAssignerProps> = ({
                                                 <p className="text-xs text-lumex-muted">{rev.institution}</p>
                                                 <div className="flex flex-wrap gap-1 mt-2">
                                                     {rev.expertise.map(exp => (
-                                                        <span key={exp} className="text-[10px] px-2 py-0.5 bg-lumex-bg text-lumex-muted rounded-full">
+                                                        <span key={exp} className="text-[10px] px-2 py-0.5 bg-lumex-bg-deep text-lumex-muted rounded-full">
                                                             {exp}
                                                         </span>
                                                     ))}
@@ -120,7 +143,7 @@ export const ReviewerAssigner: React.FC<ReviewerAssignerProps> = ({
                                                 <svg className="text-amber-400" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                                                 {rev.rating}
                                             </div>
-                                            <p className="text-[10px] text-lumex-muted mt-1 uppercase font-bold tracking-wider">
+                                            <p className="text-[10px] text-lumex-sub mt-1 uppercase font-bold tracking-wider">
                                                 {rev.activeReviews} Active · {rev.completedReviews} Done
                                             </p>
                                         </div>
@@ -132,7 +155,7 @@ export const ReviewerAssigner: React.FC<ReviewerAssignerProps> = ({
                 </div>
 
                 {/* Footer */}
-                <div className="p-6 border-t border-lumex-border bg-lumex-bg/50 flex justify-between items-center">
+                <div className="p-6 border-t border-lumex-border bg-lumex-bg-deep flex justify-between items-center">
                     <p className="text-sm font-medium text-lumex-muted">
                         {selected.length} {selected.length === 1 ? 'reviewer' : 'reviewers'} selected
                     </p>
