@@ -5,6 +5,7 @@ import { ArticleBadge } from './ArticleBadge';
 import { ArticleMeta } from './ArticleMeta';
 import { AuthorList } from './AuthorList';
 import { KeywordList } from './KeywordList';
+import { usePrefetchArticle } from '../api/articleQueries';
 
 export interface ArticleCardFullProps {
     article: Article;
@@ -12,6 +13,7 @@ export interface ArticleCardFullProps {
 }
 
 export const ArticleCardFull: React.FC<ArticleCardFullProps> = ({ article, className }) => {
+    const prefetch = usePrefetchArticle();
     return (
         <article
             className={`p-6 bg-lumex-card border border-lumex-border shadow-sm ${className || ''}`}
@@ -34,6 +36,7 @@ export const ArticleCardFull: React.FC<ArticleCardFullProps> = ({ article, class
                     <Link
                         to={`/article/${encodeURIComponent(article.doi)}`}
                         className="hover:underline"
+                        onMouseEnter={() => prefetch(article.doi)}
                     >
                         {article.title}
                     </Link>
@@ -59,7 +62,7 @@ export const ArticleCardFull: React.FC<ArticleCardFullProps> = ({ article, class
                     <div className="mt-2 text-lumex-text text-sm leading-relaxed">
                         <h4 className="font-bold text-lumex-text mb-1">Abstract</h4>
                         <p className="line-clamp-4">
-                            {article.abstract.map(a => a.text).join(' ')}
+                            {Array.isArray(article.abstract) ? article.abstract.map(a => a.text).join(' ') : article.abstract}
                         </p>
                     </div>
                 )}

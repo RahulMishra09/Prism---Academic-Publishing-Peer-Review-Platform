@@ -12,7 +12,10 @@ export interface Book {
     publisher: string;
     publishYear: number;
     coverImageUrl?: string;
-    type: 'monograph' | 'edited-volume' | 'textbook' | 'reference-work';
+    type: 'monograph' | 'edited-volume' | 'textbook' | 'reference-work' | string;
+    description?: string;
+    discipline?: string;
+    price?: string;
 }
 
 export interface BookChapter {

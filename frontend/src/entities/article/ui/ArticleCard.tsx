@@ -35,8 +35,8 @@ export const ArticleCard: React.FC<ArticleCardProps> = ({ article, className }) 
                 </div>
 
                 <div className="mt-2 text-sm text-lumex-text-secondary line-clamp-2">
-                    {'abstract' in article && article.abstract && article.abstract.length > 0 && (
-                        <span>{article.abstract[0].text}</span>
+                    {'abstract' in article && article.abstract && (
+                        <span>{Array.isArray(article.abstract) ? article.abstract[0]?.text : String(article.abstract).slice(0, 200)}</span>
                     )}
                 </div>
 

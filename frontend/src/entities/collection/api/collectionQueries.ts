@@ -14,11 +14,12 @@ export const useCollectionsList = () => {
     return useQuery({
         queryKey: collectionKeys.list(),
         queryFn: async () => {
-            const res = await fetchWithFallback<{ collections: Collection[] }>(
+            const res = await fetchWithFallback<{ collections?: Collection[]; data?: Collection[] }>(
                 '/collections',
                 '/mock-data/collections.json'
             );
-            return res.collections || [];
+            // Backend returns { data: [...] }, mock returns { collections: [...] }
+            return res.data || res.collections || [];
         },
     });
 };
@@ -28,11 +29,29 @@ export const useCollection = (slug?: string) => {
         queryKey: slug ? collectionKeys.detail(slug) : [],
         queryFn: async () => {
             if (!slug) return null;
-            const res = await fetchWithFallback<{ collections: Collection[] }>(
-                '/collections',
+            // Try fetching single collection from backend
+            const res = await fetchWithFallback<{ collections?: Collection[]; data?: any }>(
+                `/collections/${slug}`,
                 '/mock-data/collections.json'
             );
-            return res.collections?.find(c => c.slug === slug) || null;
+            // Backend single: { data: Collection }
+            let collection = null;
+            if (res.data && !Array.isArray(res.data)) {
+                collection = res.data;
+            } else {
+                // Backend list or mock fallback
+                const list = (Array.isArray(res.data) ? res.data : res.collections) || [];
+                collection = list.find(c => c.slug === slug) || null;
+            }
+            
+            if (!collection) return null;
+            
+            return {
+                ...collection,
+                imageUrl: collection.coverImageUrl || collection.imageUrl,
+                articleCount: collection._count?.articles ?? collection.articleCount ?? 0,
+                updatedAt: collection.updatedAt || collection.createdAt || new Date().toISOString()
+            } as Collection;
         },
         enabled: !!slug,
     });
@@ -43,14 +62,13 @@ export const useCollectionArticles = (slug?: string) => {
         queryKey: slug ? collectionKeys.articles(slug) : [],
         queryFn: async () => {
             if (!slug) return [];
-            const res = await fetchWithFallback<{ articles: (ArticleSummary & { collectionSlug?: string })[] }>(
-                '/articles',
+            const res = await fetchWithFallback<{ articles?: (ArticleSummary & { collectionSlug?: string })[]; data?: (ArticleSummary & { collectionSlug?: string })[] }>(
+                `/collections/${slug}/articles`,
                 '/mock-data/articles.json'
             );
-
-            // Filter articles that belong to this collection
-            // In a real API, this would be a server-side filter
-            return res.articles?.filter(a => a.collectionSlug === slug) || [];
+            // Backend returns { data: [...] }, mock returns { articles: [...] }
+            const articles = res.data || res.articles || [];
+            return articles.filter(a => !a.collectionSlug || a.collectionSlug === slug);
         },
         enabled: !!slug,
     });

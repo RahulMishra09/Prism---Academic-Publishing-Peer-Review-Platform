@@ -9,6 +9,8 @@ export const journalKeys = {
     bySlug: (slug: string) => [...journalKeys.all, 'detail', slug] as const,
     list: (params: { page: number; pageSize: number; discipline?: string }) =>
         [...journalKeys.all, 'list', params] as const,
+    adminList: [...['journals'], 'admin-list'] as const,
+    specialIssues: (slug: string) => [...['journals'], 'special-issues', slug] as const,
 };
 
 export function useJournal(slug: string) {
@@ -29,6 +31,7 @@ export function useJournal(slug: string) {
             return (res).data;
         },
         enabled: !!slug,
+        staleTime: 30 * 60 * 1000, // 30 minutes — journals change infrequently
     });
 }
 
@@ -69,5 +72,6 @@ export function useJournalsList(params: { page: number; pageSize: number; discip
             }
             return res;
         },
+        staleTime: 30 * 60 * 1000, // 30 minutes
     });
 }

@@ -81,10 +81,10 @@ export const JournalCard: React.FC<JournalCardProps> = ({ journal, className }) 
 
                     <div className="mt-auto pt-2 pb-1 flex justify-between items-end">
                         <div className="text-[11px] text-lumex-muted leading-relaxed max-w-[80%] pr-2">
-                            {journal.discipline && journal.discipline.length > 0 && (
+                            {journal.discipline && (
                                 <>
                                     <span className="font-semibold">Disciplines:</span>{' '}
-                                    {journal.discipline.slice(0, 2).join(', ')}
+                                    {Array.isArray(journal.discipline) ? journal.discipline.slice(0, 2).join(', ') : journal.discipline}
                                 </>
                             )}
                         </div>

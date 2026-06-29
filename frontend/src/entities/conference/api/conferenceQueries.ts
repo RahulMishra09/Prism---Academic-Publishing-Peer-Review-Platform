@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchFromJson } from '../../../shared/api/fetchWithFallback';
+import { fetchWithFallback } from '../../../shared/api/fetchWithFallback';
 import type { Conference } from '../model/types';
 
 export const conferenceKeys = {
@@ -11,12 +11,26 @@ export const useConference = (slug: string) => {
     return useQuery({
         queryKey: conferenceKeys.detail(slug),
         queryFn: async () => {
-            const data = await fetchFromJson<Record<string, Conference>>('/mock-data/conferences.json');
-            const conference = data[slug];
-            if (!conference) {
-                throw new Error(`Conference with slug "${slug}" not found`);
+            try {
+                const res = await fetchWithFallback<{ data: Conference }>(
+                    `/conferences/${slug}`,
+                    '/mock-data/conferences.json'
+                );
+                // Real API returns { data: Conference }
+                if ('data' in res && res.data) return res.data;
+                // Fallback JSON is Record<string, Conference>
+                const fallback = res as unknown as Record<string, Conference>;
+                const conference = fallback[slug];
+                if (!conference) throw new Error(`Conference with slug "${slug}" not found`);
+                return conference;
+            } catch {
+                // Final fallback: try mock JSON directly
+                const raw = await fetch('/mock-data/conferences.json');
+                const data = await raw.json() as Record<string, Conference>;
+                const conference = data[slug];
+                if (!conference) throw new Error(`Conference with slug "${slug}" not found`);
+                return conference;
             }
-            return conference;
         },
         enabled: !!slug,
     });
