@@ -6,10 +6,11 @@ import { ScrollToTop } from '../../shared/ui/ScrollToTop/ScrollToTop';
 export function PageLayout() {
     return (
         <div className="flex min-h-screen flex-col bg-lumex-bg">
-            <Helmet titleTemplate="%s | Prism" defaultTitle="Prism | Academic Publishing & Peer Review">
-                <meta name="description" content="Prism is a peer-reviewed academic publishing platform advancing open science across all disciplines." />
-                <meta property="og:site_name" content="Prism Publishing" />
+            <Helmet titleTemplate="%s | Lumex Research" defaultTitle="Lumex Research | Advancing Discovery">
+                <meta name="description" content="Lumex is a leading global research publisher, dedicated to advancing discovery by publishing robust and insightful science." />
+                <meta property="og:site_name" content="Lumex Research" />
                 <meta property="og:type" content="website" />
+                <link rel="alternate" type="application/rss+xml" title="Lumex Research — Latest Articles" href="/api/feeds/latest.xml" />
             </Helmet>
             <ScrollToTop />
             <div className="sticky top-0 z-50 w-full">

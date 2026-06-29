@@ -1,16 +1,17 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { API_BASE_URL } from '../../shared/api/base';
+import { fetchClient, ApiError } from '../../shared/api/base';
+import { fetchWithFallback } from '../../shared/api/fetchWithFallback';
+import type { UserRole } from '../../shared/types/user.types';
 
 export interface AuthUser {
     id: string;
     email: string;
     firstName: string;
     lastName: string;
-    name: string;
-    role: 'READER' | 'AUTHOR' | 'REVIEWER' | 'EDITOR' | 'ADMIN';
     institution?: string;
     orcid?: string;
+    role: UserRole;
 }
 
 export interface InstitutionalAccess {
@@ -26,23 +27,6 @@ export interface LoginCredentials {
     rememberMe?: boolean;
 }
 
-export interface RegisterCredentials {
-    firstName: string;
-    lastName: string;
-    email: string;
-    password: string;
-}
-
-// Shape of backend success envelope: { success, message, data }
-interface BackendAuthResponse {
-    success: boolean;
-    message: string;
-    data: {
-        user: { id: string; name: string; email: string; role: AuthUser['role'] };
-        token: string;
-    };
-}
-
 interface AuthState {
     user: AuthUser | null;
     institution: InstitutionalAccess | null;
@@ -52,42 +36,16 @@ interface AuthState {
     isCheckingAccess: boolean;
     error: string | null;
     login: (credentials: LoginCredentials) => Promise<void>;
-    register: (credentials: RegisterCredentials) => Promise<void>;
     logout: () => void;
+    verifyAuth: () => Promise<void>;
     checkInstitutionalAccess: () => Promise<void>;
     setUser: (user: AuthUser) => void;
     clearError: () => void;
 }
 
-/** Parse "John Doe" → { firstName: "John", lastName: "Doe" } */
-function splitName(name: string) {
-    const parts = name.trim().split(/\s+/);
-    return {
-        firstName: parts[0] ?? '',
-        lastName: parts.slice(1).join(' ') || (parts[0] ?? ''),
-    };
-}
-
-async function callAuthApi(path: string, body: object): Promise<BackendAuthResponse> {
-    const res = await fetch(`${API_BASE_URL}${path}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
-    });
-    const json = await res.json() as BackendAuthResponse & { message?: string; error?: string };
-    if (!res.ok) {
-        throw new Error(
-            (json as unknown as { message?: string; error?: string }).message ||
-            (json as unknown as { message?: string; error?: string }).error ||
-            'Request failed'
-        );
-    }
-    return json;
-}
-
 export const useAuthStore = create<AuthState>()(
     persist(
-        (set) => ({
+        set => ({
             user: null,
             institution: null,
             isAuthenticated: false,
@@ -99,96 +57,132 @@ export const useAuthStore = create<AuthState>()(
             login: async (credentials: LoginCredentials) => {
                 set({ isLoading: true, error: null });
                 try {
-                    const res = await callAuthApi('/auth/login', {
-                        email: credentials.email,
-                        password: credentials.password,
-                    });
+                    const loginRes = await fetchClient<{ data: { user: AuthUser & { affiliation?: string; role?: UserRole; name?: string }, accessToken: string, refreshToken?: string } }>(
+                        '/auth/login',
+                        {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                email: credentials.email,
+                                password: credentials.password,
+                            }),
+                        }
+                    );
 
-                    const { user: rawUser, token } = res.data;
-                    const { firstName, lastName } = splitName(rawUser.name);
+                    const { user, accessToken, refreshToken } = loginRes.data;
 
-                    localStorage.setItem('mock_token', token);
+                    // Persist tokens so fetchClient can attach them to future requests
+                    localStorage.setItem('mock_token', accessToken);
+                    if (refreshToken) localStorage.setItem('refresh_token', refreshToken);
 
-                    set({
-                        user: {
-                            id: rawUser.id,
-                            email: rawUser.email,
-                            name: rawUser.name,
-                            firstName,
-                            lastName,
-                            role: rawUser.role,
-                        },
-                        isAuthenticated: true,
-                        accessToken: token,
-                        isLoading: false,
-                    });
-                } catch (err) {
-                    set({
-                        error: err instanceof Error ? err.message : 'Login failed',
-                        isLoading: false,
-                    });
-                }
-            },
-
-            register: async (credentials: RegisterCredentials) => {
-                set({ isLoading: true, error: null });
-                try {
-                    const res = await callAuthApi('/auth/register', {
-                        name: `${credentials.firstName} ${credentials.lastName}`.trim(),
-                        email: credentials.email,
-                        password: credentials.password,
-                    });
-
-                    const { user: rawUser, token } = res.data;
-                    const { firstName, lastName } = splitName(rawUser.name);
-
-                    localStorage.setItem('mock_token', token);
+                    // Backend returns `name` as single field; split for firstName/lastName
+                    const rawUser = user as AuthUser & { name?: string; affiliation?: string };
+                    const firstName = rawUser.firstName || rawUser.name?.split(' ')[0] || '';
+                    const lastName = rawUser.lastName || rawUser.name?.split(' ').slice(1).join(' ') || '';
 
                     set({
                         user: {
-                            id: rawUser.id,
-                            email: rawUser.email,
-                            name: rawUser.name,
+                            id: user.id,
+                            email: user.email,
                             firstName,
                             lastName,
-                            role: rawUser.role,
+                            institution: rawUser.affiliation,
+                            orcid: user.orcid,
+                            role: (user.role?.toLowerCase() as UserRole) ?? 'reader',
                         },
                         isAuthenticated: true,
-                        accessToken: token,
+                        accessToken,
                         isLoading: false,
                     });
                 } catch (err) {
+                    const message = err instanceof ApiError
+                        ? err.message
+                        : err instanceof Error
+                        ? err.message
+                        : 'Login failed. Please try again.';
                     set({
-                        error: err instanceof Error ? err.message : 'Registration failed',
+                        error: message,
                         isLoading: false,
                     });
                 }
             },
 
             logout: () => {
+                // Fire-and-forget backend logout to revoke refresh token
+                const token = localStorage.getItem('mock_token');
+                if (token) {
+                    fetch('/api/auth/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }).catch(() => { /* ignore — clearing local state is enough */ });
+                }
                 localStorage.removeItem('mock_token');
+                localStorage.removeItem('refresh_token');
                 set({
                     user: null,
                     isAuthenticated: false,
                     accessToken: null,
-                    error: null,
                 });
+            },
+
+            verifyAuth: async () => {
+                const token = localStorage.getItem('mock_token');
+                if (!token) return;
+
+                try {
+                    const res = await fetchClient<{ data: AuthUser & { name?: string; affiliation?: string; role?: UserRole; accessToken?: string } }>(
+                        '/auth/me'
+                    );
+                    const u = res.data;
+                    
+                    let currentToken = token;
+                    if (u.accessToken) {
+                        localStorage.setItem('mock_token', u.accessToken);
+                        currentToken = u.accessToken;
+                    }
+                    
+                    const firstName = u.firstName || u.name?.split(' ')[0] || '';
+                    const lastName = u.lastName || u.name?.split(' ').slice(1).join(' ') || '';
+
+                    set({
+                        user: {
+                            id: u.id,
+                            email: u.email,
+                            firstName,
+                            lastName,
+                            institution: u.affiliation,
+                            orcid: u.orcid,
+                            role: (u.role?.toLowerCase() as UserRole) ?? 'reader',
+                        },
+                        isAuthenticated: true,
+                        accessToken: currentToken,
+                    });
+                } catch {
+                    // Token is invalid or expired — clear auth state
+                    localStorage.removeItem('mock_token');
+                    set({ user: null, isAuthenticated: false, accessToken: null });
+                }
             },
 
             checkInstitutionalAccess: async () => {
                 set({ isCheckingAccess: true });
                 try {
-                    const token = localStorage.getItem('mock_token');
-                    const res = await fetch(`${API_BASE_URL}/auth/ip-check`, {
-                        headers: token ? { Authorization: `Bearer ${token}` } : {},
-                    });
-                    if (res.ok) {
-                        const data = await res.json() as { data?: { institution?: InstitutionalAccess } };
-                        const inst = data?.data?.institution;
-                        if (inst) set({ institution: inst });
+                    // In a real app, this pings the backend which checks the user's IP
+                    // against a database of institutional networks.
+                    const data = await fetchWithFallback<{ institution: InstitutionalAccess }>(
+                        '/auth/ip-check',
+                        '/mock-data/auth-ip-check.json'
+                    );
+                    
+                    const inst = 'institution' in data ? data.institution : (data as unknown as { institution: InstitutionalAccess }).institution;
+                    if (inst) {
+                        set({ institution: inst });
                     }
-                } catch {
-                    // non-critical — silently ignore
+                } catch (error) {
+                    console.error('Failed to check institutional access', error);
                 } finally {
                     set({ isCheckingAccess: false });
                 }
@@ -201,11 +195,14 @@ export const useAuthStore = create<AuthState>()(
             clearError: () => set({ error: null }),
         }),
         {
-            name: 'prism-auth',
+            name: 'lumex-auth',
             partialize: state => ({
                 user: state.user,
                 isAuthenticated: state.isAuthenticated,
                 accessToken: state.accessToken,
+                // We generally DO NOT persist institutional access because IP can change,
+                // but for mockup purposes or temporary VPN leases, we could.
+                // We'll leave it out of persistence so it checks freshly on reload or is handled by interceptors.
             }),
         }
     )

@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { PageLayout } from '../layouts';
 import { ProtectedRoute } from './ProtectedRoute';
 import { GuestRoute } from './GuestRoute';
+import { EDITOR_ROLES, REVIEWER_ROLES, JOURNAL_ADMIN_ROLES, ADMIN_ROLES } from '../../shared/lib/roles';
 import { Container, Skeleton } from '../../shared/ui';
 import { ErrorPage, NotFoundPage } from '../../pages/error';
 
@@ -44,8 +45,17 @@ const AccountDashboard = lazy(() =>
 const JournalListPage = lazy(() =>
     import('../../pages/journal-list').then(m => ({ default: m.JournalListPage }))
 );
+const BookListPage = lazy(() =>
+    import('../../pages/book-list').then(m => ({ default: m.BookListPage }))
+);
 const ForgotPasswordPage = lazy(() =>
     import('../../pages/forgot-password').then(m => ({ default: m.ForgotPasswordPage }))
+);
+const ResetPasswordPage = lazy(() =>
+    import('../../pages/forgot-password').then(m => ({ default: m.ResetPasswordPage }))
+);
+const VerifyEmailPage = lazy(() =>
+    import('../../pages/verify-email').then(m => ({ default: m.VerifyEmailPage }))
 );
 const StaticContentPage = lazy(() =>
     import('../../pages/static').then(m => ({ default: m.StaticContentPage }))
@@ -63,7 +73,7 @@ const SubmissionPage = lazy(() =>
 const RevisionForm = lazy(() => import('../../pages/submission').then(m => ({ default: m.RevisionForm })));
 const ProofingPage = lazy(() => import('../../pages/submission').then(m => ({ default: m.ProofingPage })));
 const CheckoutPage = lazy(() => import('../../pages/checkout').then(m => ({ default: m.CheckoutPage })));
-const APCCheckoutPage = lazy(() => import('../../pages/checkout').then(m => ({ default: m.APCCheckoutPage })));
+const APCCheckoutPage = lazy(() => import('../../pages/checkout/ui/APCCheckoutPage').then(m => ({ default: m.APCCheckoutPage })));
 const ConferencePage = lazy(() =>
     import('../../pages/conference').then(m => ({ default: m.ConferencePage }))
 );
@@ -77,11 +87,42 @@ const CollectionsPage = lazy(() => import('../../pages/collections').then(m => (
 const CollectionDetailPage = lazy(() => import('../../pages/collections/ui/CollectionDetailPage').then(m => ({ default: m.CollectionDetailPage })));
 const NewsPage = lazy(() => import('../../pages/news').then(m => ({ default: m.NewsPage })));
 const NewsDetailPage = lazy(() => import('../../pages/news').then(m => ({ default: m.NewsDetailPage })));
-const CareersPage = lazy(() => import('../../pages/careers').then(m => ({ default: m.CareersPage })));
+
 const ContactPage = lazy(() => import('../../pages/contact').then(m => ({ default: m.ContactPage })));
+const CareersPage = lazy(() => import('../../pages/careers').then(m => ({ default: m.CareersPage })));
+const CareerDetailPage = lazy(() => import('../../pages/careers').then(m => ({ default: m.CareerDetailPage })));
 const AuthorGuidelinesPage = lazy(() => import('../../pages/authors').then(m => ({ default: m.AuthorGuidelinesPage })));
+const PdfTestPage = lazy(() => import('../../pages/pdf-test').then(m => ({ default: m.PdfTestPage })));
+const AdminLayout = lazy(() => import('../../pages/admin').then(m => ({ default: m.AdminLayout })));
+const AdminDashboard = lazy(() => import('../../pages/admin').then(m => ({ default: m.AdminDashboard })));
+const UserManagement = lazy(() => import('../../pages/admin').then(m => ({ default: m.UserManagement })));
+const SubmissionsAdmin = lazy(() => import('../../pages/admin').then(m => ({ default: m.SubmissionsAdmin })));
+const ContentManagement = lazy(() => import('../../pages/admin').then(m => ({ default: m.ContentManagement })));
+const ContactMessages = lazy(() => import('../../pages/admin').then(m => ({ default: m.ContactMessages })));
+const SiteSettings = lazy(() => import('../../pages/admin').then(m => ({ default: m.SiteSettings })));
 const EditorDashboard = lazy(() => import('../../pages/editor/ui/EditorDashboard').then(m => ({ default: m.EditorDashboard })));
 const DecisionForm = lazy(() => import('../../pages/editor/ui/DecisionForm').then(m => ({ default: m.DecisionForm })));
+const SubmissionDetailPage = lazy(() => import('../../pages/editor/ui/SubmissionDetailPage').then(m => ({ default: m.SubmissionDetailPage })));
+
+// ── Journal Admin pages (lazy) ─────────────────────────────────────────────
+const JournalAdminPage = lazy(() =>
+    import('../../pages/journal-admin').then(m => ({ default: m.JournalAdminPage }))
+);
+const JournalCreatePage = lazy(() =>
+    import('../../pages/journal-admin').then(m => ({ default: m.JournalCreatePage }))
+);
+const JournalEditPage = lazy(() =>
+    import('../../pages/journal-admin').then(m => ({ default: m.JournalEditPage }))
+);
+const SpecialIssuePage = lazy(() =>
+    import('../../pages/journal-admin').then(m => ({ default: m.SpecialIssuePage }))
+);
+const SpecialIssueCreatePage = lazy(() =>
+    import('../../pages/journal-admin').then(m => ({ default: m.SpecialIssueCreatePage }))
+);
+const SpecialIssueLandingPage = lazy(() =>
+    import('../../pages/journal-admin').then(m => ({ default: m.SpecialIssueLandingPage }))
+);
 
 // ── Page-level loading skeleton ──────────────────────────────────────────
 // eslint-disable-next-line react-refresh/only-export-components
@@ -124,14 +165,6 @@ export const router = createBrowserRouter([
                 ),
             },
             {
-                path: 'article/:slug/read',
-                element: (
-                    <Suspense fallback={<PageFallback />}>
-                        <ArticleReadingPage />
-                    </Suspense>
-                ),
-            },
-            {
                 path: 'book/:isbn',
                 element: (
                     <Suspense fallback={<PageFallback />}>
@@ -152,6 +185,14 @@ export const router = createBrowserRouter([
                 element: (
                     <Suspense fallback={<PageFallback />}>
                         <JournalListPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: 'books',
+                element: (
+                    <Suspense fallback={<PageFallback />}>
+                        <BookListPage />
                     </Suspense>
                 ),
             },
@@ -237,6 +278,24 @@ export const router = createBrowserRouter([
                     </GuestRoute>
                 ),
             },
+            {
+                path: 'reset-password',
+                element: (
+                    <GuestRoute>
+                        <Suspense fallback={<PageFallback />}>
+                            <ResetPasswordPage />
+                        </Suspense>
+                    </GuestRoute>
+                ),
+            },
+            {
+                path: 'verify-email',
+                element: (
+                    <Suspense fallback={<PageFallback />}>
+                        <VerifyEmailPage />
+                    </Suspense>
+                ),
+            },
             // Protected routes
             {
                 path: 'account',
@@ -299,7 +358,7 @@ export const router = createBrowserRouter([
             {
                 path: 'reviewer',
                 element: (
-                    <ProtectedRoute>
+                    <ProtectedRoute allowedRoles={REVIEWER_ROLES}>
                         <Suspense fallback={<PageFallback />}>
                             <ReviewerDashboard />
                         </Suspense>
@@ -309,7 +368,7 @@ export const router = createBrowserRouter([
             {
                 path: 'reviewer/review/:id',
                 element: (
-                    <ProtectedRoute>
+                    <ProtectedRoute allowedRoles={REVIEWER_ROLES}>
                         <Suspense fallback={<PageFallback />}>
                             <ReviewForm />
                         </Suspense>
@@ -319,7 +378,7 @@ export const router = createBrowserRouter([
             {
                 path: 'editor',
                 element: (
-                    <ProtectedRoute>
+                    <ProtectedRoute allowedRoles={EDITOR_ROLES}>
                         <Suspense fallback={<PageFallback />}>
                             <EditorDashboard />
                         </Suspense>
@@ -329,11 +388,81 @@ export const router = createBrowserRouter([
             {
                 path: 'editor/decision/:id',
                 element: (
-                    <ProtectedRoute>
+                    <ProtectedRoute allowedRoles={EDITOR_ROLES}>
                         <Suspense fallback={<PageFallback />}>
                             <DecisionForm />
                         </Suspense>
                     </ProtectedRoute>
+                ),
+            },
+            {
+                path: 'editor/submission/:id',
+                element: (
+                    <ProtectedRoute allowedRoles={EDITOR_ROLES}>
+                        <Suspense fallback={<PageFallback />}>
+                            <SubmissionDetailPage />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            // Journal Admin routes (chief-editor, admin only)
+            {
+                path: 'editor/journals',
+                element: (
+                    <ProtectedRoute allowedRoles={JOURNAL_ADMIN_ROLES}>
+                        <Suspense fallback={<PageFallback />}>
+                            <JournalAdminPage />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: 'editor/journals/create',
+                element: (
+                    <ProtectedRoute allowedRoles={JOURNAL_ADMIN_ROLES}>
+                        <Suspense fallback={<PageFallback />}>
+                            <JournalCreatePage />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: 'editor/journals/:slug/edit',
+                element: (
+                    <ProtectedRoute allowedRoles={JOURNAL_ADMIN_ROLES}>
+                        <Suspense fallback={<PageFallback />}>
+                            <JournalEditPage />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: 'editor/journals/:slug/special-issues',
+                element: (
+                    <ProtectedRoute allowedRoles={JOURNAL_ADMIN_ROLES}>
+                        <Suspense fallback={<PageFallback />}>
+                            <SpecialIssuePage />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            {
+                path: 'editor/journals/:slug/special-issues/create',
+                element: (
+                    <ProtectedRoute allowedRoles={JOURNAL_ADMIN_ROLES}>
+                        <Suspense fallback={<PageFallback />}>
+                            <SpecialIssueCreatePage />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+            },
+            // Public special issue landing page
+            {
+                path: 'journal/:slug/special-issue/:issueId',
+                element: (
+                    <Suspense fallback={<PageFallback />}>
+                        <SpecialIssueLandingPage />
+                    </Suspense>
                 ),
             },
             // Static pages
@@ -393,14 +522,7 @@ export const router = createBrowserRouter([
                     </Suspense>
                 ),
             },
-            {
-                path: 'careers',
-                element: (
-                    <Suspense fallback={<PageFallback />}>
-                        <CareersPage />
-                    </Suspense>
-                ),
-            },
+
             {
                 path: 'contact',
                 element: (
@@ -414,6 +536,22 @@ export const router = createBrowserRouter([
                 element: (
                     <Suspense fallback={<PageFallback />}>
                         <AuthorGuidelinesPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: 'careers',
+                element: (
+                    <Suspense fallback={<PageFallback />}>
+                        <CareersPage />
+                    </Suspense>
+                ),
+            },
+            {
+                path: 'careers/:id',
+                element: (
+                    <Suspense fallback={<PageFallback />}>
+                        <CareerDetailPage />
                     </Suspense>
                 ),
             },
@@ -438,9 +576,44 @@ export const router = createBrowserRouter([
                     </Suspense>
                 ),
             })),
-            // Wildcard
+            // Admin panel (ADMIN role only)
+            {
+                path: 'admin',
+                element: (
+                    <ProtectedRoute allowedRoles={ADMIN_ROLES}>
+                        <Suspense fallback={<PageFallback />}>
+                            <AdminLayout />
+                        </Suspense>
+                    </ProtectedRoute>
+                ),
+                children: [
+                    { index: true, element: <Suspense fallback={<PageFallback />}><AdminDashboard /></Suspense> },
+                    { path: 'users', element: <Suspense fallback={<PageFallback />}><UserManagement /></Suspense> },
+                    { path: 'submissions', element: <Suspense fallback={<PageFallback />}><SubmissionsAdmin /></Suspense> },
+                    { path: 'content', element: <Suspense fallback={<PageFallback />}><ContentManagement /></Suspense> },
+                    { path: 'messages', element: <Suspense fallback={<PageFallback />}><ContactMessages /></Suspense> },
+                    { path: 'settings', element: <Suspense fallback={<PageFallback />}><SiteSettings /></Suspense> },
+                ],
+            },
+            // PDF viewer test page
+            {
+                path: 'pdf-test',
+                element: (
+                    <Suspense fallback={<PageFallback />}>
+                        <PdfTestPage />
+                    </Suspense>
+                ),
+            },
             { path: '*', element: <NotFoundPage /> },
         ],
+    },
+    {
+        path: '/article/:slug/read',
+        element: (
+            <Suspense fallback={<PageFallback />}>
+                <ArticleReadingPage />
+            </Suspense>
+        ),
     },
 ]);
 
