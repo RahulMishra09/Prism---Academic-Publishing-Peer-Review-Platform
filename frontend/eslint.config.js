@@ -12,7 +12,6 @@ export default defineConfig([
     'dist/**',
     'node_modules/**',
     'storybook-static/**',
-    'public/mockServiceWorker.js',
     '*.config.{js,ts,cjs,mjs}',
     'postcss.config.js',
     'tailwind.config.js',

@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss';
+﻿import type { Config } from 'tailwindcss';
 
 const config: Config = {
     darkMode: 'class',
@@ -6,24 +6,25 @@ const config: Config = {
     theme: {
         extend: {
             colors: {
-                /* --- Legacy lumex tokens (values updated, names kept for compatibility) --- */
                 lumex: {
+                    /* Primary accent */
                     blue: 'var(--lumex-accent)',
                     'blue-dark': 'var(--lumex-accent-dark)',
                     'blue-soft': 'var(--lumex-accent-soft)',
-                    'accent-soft': 'var(--lumex-accent-soft)',
 
+                    /* Legacy reds kept for error states */
                     red: 'var(--lumex-red)',
                     'red-dark': 'var(--lumex-red-dark)',
                     'oa-gold': 'var(--lumex-oa-gold)',
 
+                    /* Neutrals */
                     text: 'var(--lumex-text)',
-                    'text-secondary': 'var(--lumex-text-muted)',
                     muted: 'var(--lumex-text-muted)',
                     sub: 'var(--lumex-text-sub)',
                     border: 'var(--lumex-border)',
                     'border-hover': 'var(--lumex-border-hover)',
 
+                    /* Backgrounds */
                     bg: 'var(--lumex-bg)',
                     'bg-deep': 'var(--lumex-bg-deep)',
                     'bg-light': 'var(--lumex-bg)',
@@ -31,37 +32,22 @@ const config: Config = {
                     'bg-white': 'var(--lumex-bg-white)',
                     'card-hover': 'var(--lumex-card-hover)',
 
+                    /* Chips & tags */
                     'tag-bg': 'var(--lumex-tag-bg)',
                     'tag-text': 'var(--lumex-tag-text)',
 
-                    'open-bg': 'var(--lumex-open-bg)',
-                    'open-text': 'var(--lumex-open-text)',
-                    'sub-bg': 'var(--lumex-sub-bg)',
-                    'sub-text': 'var(--lumex-sub-text)',
-                },
-
-                /* --- New Prism tokens --- */
-                prism: {
-                    violet: 'var(--prism-violet)',
-                    'violet-dark': 'var(--prism-violet-dark)',
-                    'violet-soft': 'var(--prism-violet-soft)',
-                    teal: 'var(--prism-teal)',
-                    'teal-soft': 'var(--prism-teal-soft)',
-                    'glass-bg': 'var(--prism-glass-bg)',
-                    'glass-border': 'var(--prism-glass-border)',
-                    'reading-bg': 'var(--prism-reading-bg)',
-                    'reading-text': 'var(--prism-reading-text)',
-                    'reading-muted': 'var(--prism-reading-muted)',
+                    /* Access badges */
+                    'open-bg': 'rgba(20,184,166,0.09)',
+                    'open-text': '#0d9488',
+                    'sub-bg': 'rgba(59,91,219,0.08)',
+                    'sub-text': '#3b5bdb',
                 },
             },
-
             fontFamily: {
-                sans: ['Atkinson Hyperlegible', 'Inter', 'system-ui', 'sans-serif'],
-                serif: ['EB Garamond', 'Georgia', 'serif'],
-                reading: ['Crimson Text', 'Georgia', 'serif'],
-                mono: ['Source Code Pro', 'ui-monospace', 'monospace'],
+                sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                serif: ['Fraunces', 'Georgia', 'serif'],
+                mono: ['Source Code Pro', 'monospace'],
             },
-
             screens: {
                 sm: '576px',
                 md: '768px',
@@ -69,92 +55,25 @@ const config: Config = {
                 xl: '1200px',
                 '2xl': '1400px',
             },
-
             maxWidth: {
                 container: '1240px',
-                reading: '680px',
             },
-
             keyframes: {
                 fadeUp: {
-                    from: { opacity: '0', transform: 'translateY(16px)' },
+                    from: { opacity: '0', transform: 'translateY(18px)' },
                     to: { opacity: '1', transform: 'translateY(0)' },
-                },
-                fadeIn: {
-                    from: { opacity: '0' },
-                    to: { opacity: '1' },
                 },
                 float: {
                     '0%, 100%': { transform: 'translateY(0)' },
-                    '50%': { transform: 'translateY(-10px)' },
-                },
-                shimmer: {
-                    '0%': { backgroundPosition: '-200% 0' },
-                    '100%': { backgroundPosition: '200% 0' },
-                },
-                slideDown: {
-                    from: { opacity: '0', transform: 'translateY(-8px)' },
-                    to: { opacity: '1', transform: 'translateY(0)' },
-                },
-                scaleIn: {
-                    from: { opacity: '0', transform: 'scale(0.96)' },
-                    to: { opacity: '1', transform: 'scale(1)' },
-                },
-                marquee: {
-                    from: { transform: 'translateX(0)' },
-                    to: { transform: 'translateX(-50%)' },
+                    '50%': { transform: 'translateY(-12px)' },
                 },
             },
-
             animation: {
-                'fade-up': 'fadeUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both',
-                'fade-in': 'fadeIn 0.3s ease both',
-                float: 'float 8s ease-in-out infinite',
-                shimmer: 'shimmer 2s linear infinite',
-                'slide-down': 'slideDown 0.2s ease both',
-                'scale-in': 'scaleIn 0.2s ease both',
-                marquee: 'marquee 28s linear infinite',
+                'fade-up': 'fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both',
+                float: 'float 10s ease-in-out infinite',
             },
-
             borderRadius: {
-                card: '0.75rem',
-                sm: '0.25rem',
-                md: '0.375rem',
-                lg: '0.625rem',
-            },
-
-            boxShadow: {
-                sm: 'var(--shadow-sm)',
-                md: 'var(--shadow-md)',
-                dropdown: 'var(--shadow-dropdown)',
-                'card-hover': 'var(--shadow-card-hover)',
-                glass: 'var(--shadow-glass)',
-            },
-
-            backdropBlur: {
-                glass: '12px',
-            },
-
-            transitionDuration: {
-                fast: '150ms',
-                base: '200ms',
-                slow: '300ms',
-            },
-
-            typography: {
-                DEFAULT: {
-                    css: {
-                        fontFamily: 'Crimson Pro, Georgia, serif',
-                        fontSize: '1.125rem',
-                        lineHeight: '1.85',
-                        color: 'var(--prism-reading-text)',
-                        a: {
-                            color: 'var(--lumex-accent)',
-                            textDecoration: 'none',
-                            '&:hover': { textDecoration: 'underline' },
-                        },
-                    },
-                },
+                card: '11px',
             },
         },
     },
