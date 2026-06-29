@@ -14,31 +14,20 @@ import { env } from "../config/env.js";
  */
 export class AppError extends Error {
   readonly statusCode: number;
+  readonly code: string;
   readonly isOperational: boolean = true;
 
-  constructor(message: string, statusCode: number) {
+  constructor(message: string, statusCode: number, code?: string) {
     super(message);
     this.statusCode = statusCode;
+    this.code = code ?? httpCodeToErrorCode(statusCode);
     this.name = "AppError";
-    // Maintain proper prototype chain for instanceof checks
     Object.setPrototypeOf(this, new.target.prototype);
     Error.captureStackTrace(this, this.constructor);
   }
 }
 
-/**
- * errorHandler
- * ------------
- * Global Express error-handling middleware.
- * Must be registered as the LAST middleware in app.ts via:
- *   app.use(errorHandler)
- *
- * Behaviour:
- *  - AppError (operational) � returns the error message with its status code
- *  - Unknown errors          � logs full stack, returns 500
- *    - In development: exposes the raw error message for easier debugging
- *    - In production:  hides internals, returns a generic safe message
- */
+// ── Global error handler ──────────────────────────────────────
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const errorHandler = (
   err: Error,
@@ -46,17 +35,15 @@ export const errorHandler = (
   res: Response,
   _next: NextFunction
 ): void => {
-  // --- Operational error (thrown intentionally) ---
   if (err instanceof AppError) {
     res.status(err.statusCode).json({
-      success: false,
+      code:    err.code,
       message: err.message,
-      data: null,
+      details: null,
     });
     return;
   }
 
-  // --- Unexpected / programming error ---
   console.error(`[Unhandled Error] ${err.name}: ${err.message}`, err.stack);
 
   const message =
@@ -65,8 +52,23 @@ export const errorHandler = (
       : err.message;
 
   res.status(500).json({
-    success: false,
+    code:    "INTERNAL_SERVER_ERROR",
     message,
-    data: null,
+    details: null,
   });
 };
+
+// ── helpers ───────────────────────────────────────────────────
+function httpCodeToErrorCode(status: number): string {
+  const map: Record<number, string> = {
+    400: "BAD_REQUEST",
+    401: "UNAUTHENTICATED",
+    403: "FORBIDDEN",
+    404: "NOT_FOUND",
+    409: "CONFLICT",
+    422: "UNPROCESSABLE_ENTITY",
+    429: "TOO_MANY_REQUESTS",
+    500: "INTERNAL_SERVER_ERROR",
+  };
+  return map[status] ?? "ERROR";
+}
