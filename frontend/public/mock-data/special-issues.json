@@ -1,0 +1,202 @@
+{
+    "specialIssues": [
+        {
+            "id": "si-001",
+            "journalSlug": "nature-machine-intelligence",
+            "title": "Large Language Models in Scientific Discovery",
+            "description": "<p>This special issue invites original research and review articles exploring the transformative role of large language models (LLMs) in scientific discovery, from drug design to materials science and beyond. We welcome computational studies, benchmark datasets, novel architectures, and empirical evaluations demonstrating real-world scientific impact.</p><p>Topics include but are not limited to protein language models, chemical foundation models, LLM-assisted hypothesis generation, automated literature review, and explainability in AI-driven science.</p>",
+            "guestEditors": [
+                { "name": "Prof. Yoshua Bengio", "affiliation": "Université de Montréal", "email": "bengio@iro.umontreal.ca" },
+                { "name": "Dr. Sara Hooker", "affiliation": "Cohere for AI", "email": "sara@cohere.com" }
+            ],
+            "status": "call-for-papers",
+            "callForPapersDeadline": "2026-08-31",
+            "expectedPublicationDate": "2026-12-01",
+            "volume": 8,
+            "issueNumber": "S1",
+            "coverImageUrl": "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Large Language Models", "Scientific AI", "Drug Discovery", "Materials Science", "Foundation Models"],
+            "articleCount": 0,
+            "createdAt": "2026-01-15T09:00:00Z",
+            "updatedAt": "2026-01-15T09:00:00Z"
+        },
+        {
+            "id": "si-002",
+            "journalSlug": "nature-machine-intelligence",
+            "title": "Trustworthy AI: Fairness, Accountability, and Transparency",
+            "description": "<p>As AI systems become embedded in high-stakes decisions across healthcare, criminal justice, hiring, and finance, ensuring they are fair, accountable, and transparent has never been more critical. This special issue brings together interdisciplinary research at the intersection of machine learning, ethics, law, and social science.</p><p>We seek submissions covering bias detection and mitigation, interpretability methods, regulatory compliance, auditing frameworks, and participatory design.</p>",
+            "guestEditors": [
+                { "name": "Prof. Kate Crawford", "affiliation": "USC Annenberg", "email": "k.crawford@usc.edu" },
+                { "name": "Dr. Timnit Gebru", "affiliation": "DAIR Institute" }
+            ],
+            "status": "submissions-closed",
+            "callForPapersDeadline": "2026-03-31",
+            "expectedPublicationDate": "2026-09-01",
+            "volume": 8,
+            "issueNumber": "S2",
+            "coverImageUrl": "https://images.unsplash.com/photo-1589994965851-a8f479c573a9?w=800&auto=format&fit=crop&q=80",
+            "topics": ["AI Ethics", "Fairness", "Interpretability", "Bias Mitigation", "Regulatory AI"],
+            "articleCount": 14,
+            "createdAt": "2025-10-01T09:00:00Z",
+            "updatedAt": "2026-04-01T09:00:00Z"
+        },
+        {
+            "id": "si-003",
+            "journalSlug": "journal-of-clinical-oncology",
+            "title": "Immunotherapy Combinations in Solid Tumors",
+            "description": "<p>Combination immunotherapy approaches — pairing checkpoint inhibitors with targeted therapies, cellular therapies, or novel immuno-oncology agents — have reshaped the treatment landscape for solid tumors. This special issue presents the latest clinical trial data, translational studies, and mechanistic insights driving this rapidly evolving field.</p>",
+            "guestEditors": [
+                { "name": "Prof. Drew Pardoll", "affiliation": "Johns Hopkins Medicine", "email": "dpardoll@jhmi.edu" },
+                { "name": "Dr. Padmanee Sharma", "affiliation": "MD Anderson Cancer Center" }
+            ],
+            "status": "under-review",
+            "callForPapersDeadline": "2026-02-28",
+            "expectedPublicationDate": "2026-07-15",
+            "volume": 44,
+            "issueNumber": "S3",
+            "coverImageUrl": "https://images.unsplash.com/photo-1576086213369-97a306d36557?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Immunotherapy", "Checkpoint Inhibitors", "Oncology", "CAR-T", "Solid Tumors"],
+            "articleCount": 22,
+            "createdAt": "2025-09-01T09:00:00Z",
+            "updatedAt": "2026-03-01T09:00:00Z"
+        },
+        {
+            "id": "si-004",
+            "journalSlug": "journal-of-clinical-oncology",
+            "title": "Liquid Biopsy and Circulating Tumor DNA",
+            "description": "<p>Liquid biopsy has emerged as a transformative diagnostic tool enabling non-invasive cancer detection, minimal residual disease monitoring, and real-time tracking of tumor evolution. This special issue focuses on the clinical validation, analytical standards, and emerging applications of circulating tumor DNA (ctDNA) and other liquid biopsy analytes.</p>",
+            "guestEditors": [
+                { "name": "Prof. Victor Velculescu", "affiliation": "Johns Hopkins School of Medicine" }
+            ],
+            "status": "published",
+            "callForPapersDeadline": "2025-06-30",
+            "publishedDate": "2025-12-01",
+            "volume": 43,
+            "issueNumber": "S1",
+            "coverImageUrl": "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Liquid Biopsy", "ctDNA", "Cancer Diagnostics", "MRD", "Biomarkers"],
+            "articleCount": 31,
+            "createdAt": "2025-02-01T09:00:00Z",
+            "updatedAt": "2025-12-01T09:00:00Z"
+        },
+        {
+            "id": "si-005",
+            "journalSlug": "cell",
+            "title": "Single-Cell Multiomics: Integrating Transcriptomics, Epigenomics, and Proteomics",
+            "description": "<p>Single-cell technologies have revolutionized our ability to dissect cellular heterogeneity. This landmark special issue compiles pioneering work integrating transcriptomic, epigenomic, and proteomic measurements at single-cell resolution, enabling unprecedented insights into cell identity, developmental trajectories, and disease mechanisms.</p>",
+            "guestEditors": [
+                { "name": "Prof. Aviv Regev", "affiliation": "Genentech / MIT Broad Institute" },
+                { "name": "Dr. Bing Ren", "affiliation": "UC San Diego School of Medicine" }
+            ],
+            "status": "published",
+            "callForPapersDeadline": "2025-04-30",
+            "publishedDate": "2025-09-12",
+            "volume": 187,
+            "issueNumber": "S2",
+            "coverImageUrl": "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Single-Cell Sequencing", "Epigenomics", "Proteomics", "Multiomics", "Cell Atlas"],
+            "articleCount": 48,
+            "createdAt": "2024-12-01T09:00:00Z",
+            "updatedAt": "2025-09-12T09:00:00Z"
+        },
+        {
+            "id": "si-006",
+            "journalSlug": "advanced-materials",
+            "title": "Next-Generation Battery Materials for Energy Transition",
+            "description": "<p>The global energy transition demands breakthroughs in energy storage. This special issue focuses on advanced materials for next-generation batteries — solid-state electrolytes, lithium-metal anodes, sodium-ion cathodes, and beyond-lithium chemistries — with emphasis on both fundamental science and scale-up to manufacturing.</p>",
+            "guestEditors": [
+                { "name": "Prof. Yet-Ming Chiang", "affiliation": "MIT Department of Materials Science", "email": "ychiang@mit.edu" },
+                { "name": "Dr. Linda Nazar", "affiliation": "University of Waterloo" }
+            ],
+            "status": "call-for-papers",
+            "callForPapersDeadline": "2026-09-30",
+            "expectedPublicationDate": "2027-02-01",
+            "volume": 38,
+            "issueNumber": "S1",
+            "coverImageUrl": "https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Battery Materials", "Solid-State Electrolytes", "Energy Storage", "Sodium-Ion", "Lithium-Metal"],
+            "articleCount": 0,
+            "createdAt": "2026-03-01T09:00:00Z",
+            "updatedAt": "2026-03-01T09:00:00Z"
+        },
+        {
+            "id": "si-007",
+            "journalSlug": "the-lancet",
+            "title": "Climate Change and Human Health: A Global Burden",
+            "description": "<p>Climate change represents one of the greatest threats to human health in the 21st century. This Lancet special issue presents a comprehensive analysis of direct and indirect health impacts — from extreme heat and vector-borne disease expansion to food insecurity and mental health — alongside health system adaptation strategies and mitigation co-benefits.</p>",
+            "guestEditors": [
+                { "name": "Prof. Anthony Costello", "affiliation": "UCL Institute for Global Health" },
+                { "name": "Dr. Kristie Ebi", "affiliation": "University of Washington" }
+            ],
+            "status": "under-review",
+            "callForPapersDeadline": "2026-03-15",
+            "expectedPublicationDate": "2026-08-01",
+            "volume": 407,
+            "issueNumber": "S1",
+            "coverImageUrl": "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Climate Health", "Heat Stress", "Vector-Borne Disease", "Food Security", "Health Systems"],
+            "articleCount": 18,
+            "createdAt": "2025-11-01T09:00:00Z",
+            "updatedAt": "2026-03-20T09:00:00Z"
+        },
+        {
+            "id": "si-008",
+            "journalSlug": "the-lancet",
+            "title": "Universal Health Coverage: Progress, Gaps, and Pathways",
+            "description": "<p>With 2030 SDG targets approaching, this special issue critically evaluates global progress toward universal health coverage. Drawing on health systems research, economic modelling, and country case studies, we examine financing mechanisms, workforce challenges, primary care strengthening, and the role of digital health in closing coverage gaps.</p>",
+            "guestEditors": [
+                { "name": "Prof. David Stuckler", "affiliation": "Bocconi University" },
+                { "name": "Dr. Margaret Chan", "affiliation": "Former WHO Director-General" }
+            ],
+            "status": "published",
+            "callForPapersDeadline": "2025-05-31",
+            "publishedDate": "2025-11-15",
+            "volume": 406,
+            "issueNumber": "S2",
+            "coverImageUrl": "https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Universal Health Coverage", "Health Systems", "SDGs", "Primary Care", "Health Financing"],
+            "articleCount": 26,
+            "createdAt": "2025-01-15T09:00:00Z",
+            "updatedAt": "2025-11-15T09:00:00Z"
+        },
+        {
+            "id": "si-009",
+            "journalSlug": "chemical-science",
+            "title": "Catalysis for a Sustainable Future",
+            "description": "<p>Catalysis is central to sustainable chemistry — enabling green synthesis, CO2 utilisation, hydrogen production, and waste valorisation. This special issue highlights cutting-edge catalytic systems, from enzyme-inspired organocatalysts and earth-abundant metal complexes to photocatalytic and electrocatalytic approaches addressing global sustainability challenges.</p>",
+            "guestEditors": [
+                { "name": "Prof. Melanie Sanford", "affiliation": "University of Michigan", "email": "mssanford@umich.edu" }
+            ],
+            "status": "submissions-closed",
+            "callForPapersDeadline": "2026-04-15",
+            "expectedPublicationDate": "2026-10-01",
+            "volume": 17,
+            "issueNumber": "S1",
+            "coverImageUrl": "https://images.unsplash.com/photo-1532187863486-abf9dbad1b69?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Green Catalysis", "Photocatalysis", "CO2 Utilisation", "Electrocatalysis", "Sustainable Chemistry"],
+            "articleCount": 9,
+            "createdAt": "2025-12-01T09:00:00Z",
+            "updatedAt": "2026-04-16T09:00:00Z"
+        },
+        {
+            "id": "si-010",
+            "journalSlug": "nature-reviews-neuroscience",
+            "title": "The Neuroscience of Consciousness: From Mechanisms to Disorders",
+            "description": "<p>Consciousness remains one of the most profound mysteries in science. This special issue surveys the current state of consciousness research — from neural correlates and theoretical frameworks (IIT, GWT, Predictive Coding) to disorders of consciousness such as coma, vegetative state, and anaesthetic mechanisms, with emerging applications in neuroprosthetics and AI.</p>",
+            "guestEditors": [
+                { "name": "Prof. Stanislas Dehaene", "affiliation": "Collège de France" },
+                { "name": "Dr. Giulio Tononi", "affiliation": "University of Wisconsin-Madison" }
+            ],
+            "status": "published",
+            "callForPapersDeadline": "2025-03-31",
+            "publishedDate": "2025-08-20",
+            "volume": 26,
+            "issueNumber": "S1",
+            "coverImageUrl": "https://images.unsplash.com/photo-1559757175-5700dde675bc?w=800&auto=format&fit=crop&q=80",
+            "topics": ["Consciousness", "Neural Correlates", "Integrated Information Theory", "Disorders of Consciousness", "Neuroprosthetics"],
+            "articleCount": 19,
+            "createdAt": "2024-10-01T09:00:00Z",
+            "updatedAt": "2025-08-20T09:00:00Z"
+        }
+    ]
+}

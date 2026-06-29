@@ -86,7 +86,7 @@ export const SearchResultsList: React.FC<SearchResultsListProps> = ({ className 
             {/* Top Bar: Sort only since count is in header */}
             <div className="flex justify-end items-center mb-6 pb-4 border-b border-lumex-border">
                 <div className="flex items-center gap-3">
-                    <span className="text-[0.82rem] font-bold text-lumex-muted uppercase tracking-wider whitespace-nowrap">
+                    <span className="text-[0.82rem] font-bold text-lumex-muted-more uppercase tracking-wider whitespace-nowrap">
                         Sort by:
                     </span>
                     <Select
@@ -117,10 +117,11 @@ export const SearchResultsList: React.FC<SearchResultsListProps> = ({ className 
                 gap="none"
                 className="divide-y divide-lumex-border border rounded-md border-lumex-border"
             >
-                {response.results.map((result) => {
+                {response.results.map((result, idx) => {
+                    if (!result.item) return null;
                     const stableKey = result.type === 'article' || result.type === 'conference-paper'
-                        ? `${result.type}-${(result.item as Article).doi}`
-                        : `${result.type}-${(result.item as Book).isbn}`;
+                        ? `${result.type}-${(result.item as Article).doi || idx}`
+                        : `${result.type}-${(result.item as Book).isbn || idx}`;
 
                     if (result.type === 'article' || result.type === 'conference-paper') {
                         // TS cast required due to generic item union returned by generic search API mock

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, AnimateIn } from '../../../shared/ui';
-import { DISCIPLINES, DISCIPLINE_ICONS } from '../../../shared/constants/disciplines';
+import { Container } from '../../../shared/ui';
+import { DISCIPLINES } from '../../../shared/constants/disciplines';
 import { useHomepageData } from '../../../features/homepage/api/homepageQueries';
 import { useThemeStore } from '../../../entities/theme/model/useThemeStore';
 
@@ -35,7 +35,7 @@ export const DisciplineGrid: React.FC<DisciplineGridProps> = ({ className }) => 
         >
             <Container>
                 {/* Section header */}
-                <AnimateIn className="mb-7 flex items-end justify-between">
+                <div className="mb-7 flex items-end justify-between">
                     <div>
                         <p className="mb-1.5 text-[0.69rem] font-semibold uppercase tracking-[0.1em] text-lumex-blue">
                             Browse
@@ -53,25 +53,21 @@ export const DisciplineGrid: React.FC<DisciplineGridProps> = ({ className }) => 
                     >
                         All Fields →
                     </Link>
-                </AnimateIn>
+                </div>
 
                 {/* Card grid — 6 columns on desktop */}
                 <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
-                    {DISCIPLINES.map((discipline, i) => {
+                    {DISCIPLINES.map(discipline => {
                         const color = COLORS[discipline.slug] || '#3b5bdb';
                         const count = counts[discipline.slug] || '—';
 
                         return (
-                            <AnimateIn key={discipline.slug} delay={i * 40}>
                             <Link
+                                key={discipline.slug}
                                 to={`/subject/${discipline.slug}`}
-                                className="group block cursor-pointer rounded-[9px] border border-lumex-border bg-lumex-card p-3.5 text-center transition-all hover:-translate-y-0.5 hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
+                                className="group cursor-pointer rounded-[9px] border border-lumex-border bg-lumex-card p-3.5 text-center transition-all hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
                             >
-                                <div className="mb-2 flex justify-center">
-                                    <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5} style={{ color: theme === 'dark' ? '#60a5fa' : color }}>
-                                        <path strokeLinecap="round" strokeLinejoin="round" d={DISCIPLINE_ICONS[discipline.slug] ?? ''} />
-                                    </svg>
-                                </div>
+                                <div className="mb-2 text-2xl">{discipline.icon}</div>
                                 <div className="text-xs font-semibold text-lumex-text">
                                     {discipline.label}
                                 </div>
@@ -82,7 +78,6 @@ export const DisciplineGrid: React.FC<DisciplineGridProps> = ({ className }) => 
                                     {count}
                                 </div>
                             </Link>
-                            </AnimateIn>
                         );
                     })}
                 </div>

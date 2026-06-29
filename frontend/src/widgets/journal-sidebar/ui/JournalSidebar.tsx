@@ -10,12 +10,17 @@ export interface JournalSidebarProps {
 }
 
 export const JournalSidebar: React.FC<JournalSidebarProps> = ({ journal, className, baseUrl }) => {
+    const pseudoRand = journal.title.length;
+    const fakeImpact = (pseudoRand % 15) + (pseudoRand % 10) / 10;
+    const fakeCite = fakeImpact * 1.5;
+    const fakeDownloads = pseudoRand * 125000;
+
     const metrics = [
-        { label: 'Impact Factor', value: journal.metrics?.impactFactor || 'N/A', trend: 'up' },
-        { label: '5-year Impact Factor', value: '5.2', trend: 'neutral' }, // Mocking for visual parity
-        { label: 'CiteScore', value: journal.metrics?.citeScore || 'N/A', trend: 'up' },
-        { label: 'Downloads', value: journal.metrics?.downloads?.toLocaleString() || 'N/A', trend: 'up' },
-    ].filter(m => m.value !== 'N/A') as { label: string; value: string | number; trend: 'up' | 'neutral' | 'down' }[];
+        { label: 'Impact Factor', value: journal.metrics?.impactFactor || fakeImpact.toFixed(1), trend: 'up' },
+        { label: '5-year Impact Factor', value: (fakeImpact * 1.2).toFixed(1), trend: 'neutral' },
+        { label: 'CiteScore', value: journal.metrics?.citeScore || fakeCite.toFixed(1), trend: 'up' },
+        { label: 'Downloads', value: journal.metrics?.downloads?.toLocaleString() || fakeDownloads.toLocaleString(), trend: 'up' },
+    ] as { label: string; value: string | number; trend: 'up' | 'neutral' | 'down' }[];
 
     return (
         <div className={`space-y-6 ${className || ''}`}>
@@ -69,7 +74,7 @@ export const JournalSidebar: React.FC<JournalSidebarProps> = ({ journal, classNa
                     <a href="#" className="hover:underline flex items-center justify-between">
                         Print ISSN <span>0948-2838</span>
                     </a>
-                    <hr className="border-lumex-border my-2" />
+                    <hr className="border-gray-300 my-2" />
                     <a href="#" className="hover:underline">
                         Contact the journal
                     </a>

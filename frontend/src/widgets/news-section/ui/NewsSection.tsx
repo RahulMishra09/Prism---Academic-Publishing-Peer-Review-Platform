@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Container, Skeleton, AnimateIn } from '../../../shared/ui';
+import { Container, Skeleton } from '../../../shared/ui';
 import { useTrendingArticles } from '../../../entities/article/api/articleQueries';
 import { useThemeStore } from '../../../entities/theme/model/useThemeStore';
 import type { Article } from '../../../entities/article/model/types';
@@ -28,7 +28,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
         <section className={`py-16 ${className || ''}`}>
             <Container>
                 {/* Section header */}
-                <AnimateIn className="mb-7 flex items-end justify-between">
+                <div className="mb-7 flex items-end justify-between">
                     <div>
                         <p className="mb-1.5 text-[0.69rem] font-semibold uppercase tracking-[0.1em] text-lumex-blue">
                             Trending
@@ -46,7 +46,7 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                     >
                         All articles →
                     </Link>
-                </AnimateIn>
+                </div>
 
                 {/* Article cards — 2-column grid */}
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -80,10 +80,10 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                                 fallbackAccentColors[index % fallbackAccentColors.length];
 
                             return (
-                                <AnimateIn key={item.id} delay={index * 80}>
                                 <Link
+                                    key={item.id}
                                     to={`/article/${encodeURIComponent(item.doi)}`}
-                                    className="group flex gap-4 rounded-card border border-lumex-border bg-lumex-card p-5 transition-all hover:-translate-y-0.5 hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
+                                    className="group flex gap-4 rounded-card border border-lumex-border bg-lumex-card p-5 transition-all hover:border-lumex-border-hover hover:bg-lumex-card-hover hover:shadow-md hover:no-underline"
                                 >
                                     {/* Accent bar */}
                                     <div
@@ -110,22 +110,14 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                                                 ))}
 
                                             <span
-                                                className={`ml-auto inline-flex items-center gap-1 rounded px-2 py-0.5 text-[0.69rem] font-semibold ${item.accessLevel === 'open_access'
+                                                className={`ml-auto rounded px-2 py-0.5 text-[0.69rem] font-semibold ${item.accessLevel === 'open_access'
                                                     ? 'bg-lumex-open-bg text-lumex-open-text'
                                                     : 'bg-lumex-sub-bg text-lumex-sub-text'
                                                     }`}
                                             >
-                                                {item.accessLevel === 'open_access' ? (
-                                                    <>
-                                                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="3" y="11" width="18" height="11" rx="2" /><path strokeLinecap="round" strokeLinejoin="round" d="M7 11V7a5 5 0 019.9-1" /></svg>
-                                                        Open
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><rect x="3" y="11" width="18" height="11" rx="2" /><path strokeLinecap="round" strokeLinejoin="round" d="M7 11V7a5 5 0 0110 0v4" /></svg>
-                                                        Sub
-                                                    </>
-                                                )}
+                                                {item.accessLevel === 'open_access'
+                                                    ? '🔓 Open'
+                                                    : '🔒 Sub'}
                                             </span>
                                         </div>
 
@@ -152,15 +144,13 @@ export const NewsSection: React.FC<NewsSectionProps> = ({ className }) => {
                                             <span>{item.journalTitle || ''}</span>
                                             <span>{item.publishedDate || ''}</span>
                                             {item.citationCount != null && (
-                                                <span className="ml-auto inline-flex items-center gap-1">
-                                                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
-                                                    {item.citationCount}
+                                                <span className="ml-auto">
+                                                    🔗 {item.citationCount}
                                                 </span>
                                             )}
                                         </div>
                                     </div>
                                 </Link>
-                                </AnimateIn>
                             );
                         })}
                 </div>

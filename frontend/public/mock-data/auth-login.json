@@ -6,7 +6,8 @@
             "firstName": "Sarah",
             "lastName": "Chen",
             "affiliation": "Mock University",
-            "orcid": "0000-0001-2345-6789"
+            "orcid": "0000-0001-2345-6789",
+            "role": "admin"
         },
         "accessToken": "mock-jwt-token-xyz"
     }

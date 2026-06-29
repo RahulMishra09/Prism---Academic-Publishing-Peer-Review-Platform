@@ -1,72 +1,64 @@
+import { useState } from 'react';
 import { Link } from '@shared/ui';
+import { FaChevronRight } from 'react-icons/fa';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface MegaMenuCategory {
     title: string;
-    links: { label: string; href: string }[];
+    icon: string;
+    color: string;
+    articleCount: string;
+    links: { label: string; href: string; icon: string }[];
 }
 
 const MEGA_MENU_DATA: MegaMenuCategory[] = [
     {
         title: 'Biomedical Sciences',
+        icon: '🧬',
+        color: '#0ea5e9',
+        articleCount: '130k+',
         links: [
-            { label: 'Cancer Research', href: '/subject/cancer' },
-            { label: 'Genetics & Genomics', href: '/subject/genetics' },
-            { label: 'Neuroscience', href: '/subject/neuroscience' },
-            { label: 'Pharmacology', href: '/subject/pharmacology' },
+            { label: 'Cancer Research', href: '/subject/cancer', icon: '🔬' },
+            { label: 'Genetics', href: '/subject/genetics', icon: '🧬' },
+            { label: 'Neuroscience', href: '/subject/neuroscience', icon: '🧠' },
+            { label: 'Pharmacology', href: '/subject/pharmacology', icon: '💊' },
         ],
     },
     {
         title: 'Computer Science',
+        icon: '💻',
+        color: '#6366f1',
+        articleCount: '71.4k+',
         links: [
-            { label: 'Artificial Intelligence', href: '/subject/ai' },
-            { label: 'Software Engineering', href: '/subject/software' },
-            { label: 'Data Science', href: '/subject/data' },
-            { label: 'Cybersecurity', href: '/subject/cybersecurity' },
+            { label: 'Artificial Intelligence', href: '/subject/ai', icon: '🤖' },
+            { label: 'Software Engineering', href: '/subject/software', icon: '💻' },
+            { label: 'Data Structures', href: '/subject/data', icon: '🗄️' },
+            { label: 'Cybersecurity', href: '/subject/cybersecurity', icon: '🔒' },
         ],
     },
     {
         title: 'Earth Sciences',
+        icon: '🌍',
+        color: '#14b8a6',
+        articleCount: '43.8k+',
         links: [
-            { label: 'Climate Studies', href: '/subject/climate' },
-            { label: 'Geology', href: '/subject/geology' },
-            { label: 'Oceanography', href: '/subject/oceanography' },
-            { label: 'Atmospheric Science', href: '/subject/atmospheric' },
+            { label: 'Climate Studies', href: '/subject/climate', icon: '🌡️' },
+            { label: 'Geology', href: '/subject/geology', icon: '🌋' },
+            { label: 'Oceanography', href: '/subject/oceanography', icon: '🌊' },
         ],
     },
     {
-        title: 'Social Sciences',
+        title: 'Physics & Astronomy',
+        icon: '⚛️',
+        color: '#5b7cf6',
+        articleCount: '62.1k+',
         links: [
-            { label: 'Economics', href: '/subject/economics' },
-            { label: 'Psychology', href: '/subject/psychology' },
-            { label: 'Political Science', href: '/subject/politics' },
-            { label: 'Sociology', href: '/subject/sociology' },
-        ],
-    },
-    {
-        title: 'Physical Sciences',
-        links: [
-            { label: 'Physics', href: '/subject/physics' },
-            { label: 'Chemistry', href: '/subject/chemistry' },
-            { label: 'Mathematics', href: '/subject/mathematics' },
-            { label: 'Materials Science', href: '/subject/materials' },
-        ],
-    },
-    {
-        title: 'Humanities',
-        links: [
-            { label: 'History', href: '/subject/history' },
-            { label: 'Philosophy', href: '/subject/philosophy' },
-            { label: 'Linguistics', href: '/subject/linguistics' },
-            { label: 'Literature', href: '/subject/literature' },
+            { label: 'Quantum Mechanics', href: '/subject/physics-astronomy', icon: '🔮' },
+            { label: 'Astrophysics', href: '/subject/physics-astronomy', icon: '🔭' },
+            { label: 'Particle Physics', href: '/subject/physics-astronomy', icon: '⚛️' },
         ],
     },
 ];
-
-const ChevronRightIcon = () => (
-    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-    </svg>
-);
 
 export interface MegaMenuProps {
     isOpen: boolean;
@@ -74,117 +66,183 @@ export interface MegaMenuProps {
 }
 
 export function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
-    if (!isOpen) return null;
+    const [activeCategory, setActiveCategory] = useState(0);
+    const activeData = MEGA_MENU_DATA[activeCategory];
 
     return (
-        <div className="absolute left-0 top-full z-50 w-full animate-slide-down">
-            {/* Backdrop */}
-            <div
-                className="fixed inset-0 bg-lumex-text/25 backdrop-blur-[2px]"
-                style={{ top: 'var(--header-height, 112px)' }}
-                aria-hidden="true"
-                onClick={onClose}
-            />
+        <AnimatePresence>
+            {isOpen && (
+                <div className="absolute left-0 top-full z-50 w-full">
+                    {/* Backdrop */}
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="fixed inset-0 top-[88px] bg-lumex-text/20 backdrop-blur-sm"
+                        aria-hidden="true"
+                        onClick={onClose}
+                    />
 
-            {/* Panel */}
-            <div className="relative border-t border-lumex-border bg-lumex-bg-white shadow-2xl">
-                <div className="mx-auto w-full max-w-container">
-                    <div className="flex flex-col xl:flex-row">
+                    {/* Dropdown Panel */}
+                    <motion.div
+                        initial={{ opacity: 0, y: -8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
+                        className="relative border-t border-lumex-border bg-lumex-card shadow-2xl origin-top"
+                    >
+                        <div className="mx-auto w-full max-w-container xl:px-8">
+                            <div className="flex flex-col xl:flex-row">
+                                {/* ─── Left Sidebar ─── */}
+                                <div className="w-full py-5 xl:w-72 xl:min-h-[380px] xl:border-r border-lumex-border">
+                                    {/* Mobile Main Nav */}
+                                    <nav className="mb-5 border-b border-lumex-border pb-4 xl:hidden" aria-label="Mobile main navigation">
+                                        <ul className="flex flex-col">
+                                            <li><Link to="/" onClick={onClose} className="block px-6 py-3 text-lg font-bold text-lumex-text hover:bg-lumex-card-hover hover:text-lumex-blue transition-colors">Home</Link></li>
+                                            <li><Link to="/journals" onClick={onClose} className="block px-6 py-3 text-lg font-bold text-lumex-text hover:bg-lumex-card-hover hover:text-lumex-blue transition-colors">Journals</Link></li>
+                                            <li><Link to="/about" onClick={onClose} className="block px-6 py-3 text-lg font-bold text-lumex-text hover:bg-lumex-card-hover hover:text-lumex-blue transition-colors">About</Link></li>
+                                        </ul>
+                                    </nav>
 
-                        {/* Left sidebar — discipline list */}
-                        <div className="w-full border-b border-lumex-border bg-lumex-bg-deep/40 py-5 xl:w-72 xl:min-h-[400px] xl:border-b-0 xl:border-r xl:py-6">
-                            {/* Mobile main nav links */}
-                            <nav className="mb-4 border-b border-lumex-border pb-4 xl:hidden" aria-label="Mobile navigation">
-                                {['/', '/journals', '/about'].map((href, i) => {
-                                    const labels = ['Home', 'Journals', 'About'];
-                                    return (
+                                    <h3 className="px-5 pb-3 text-[10px] font-bold uppercase tracking-[0.14em] text-lumex-sub">
+                                        Browse by Discipline
+                                    </h3>
+                                    <ul className="flex flex-col gap-0.5 px-2">
+                                        {MEGA_MENU_DATA.map((category, idx) => (
+                                            <li key={category.title}>
+                                                <button
+                                                    onMouseEnter={() => setActiveCategory(idx)}
+                                                    onClick={() => setActiveCategory(idx)}
+                                                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-150 group ${
+                                                        activeCategory === idx
+                                                            ? 'bg-lumex-blue/10 text-lumex-blue'
+                                                            : 'text-lumex-text hover:bg-lumex-card-hover'
+                                                    }`}
+                                                >
+                                                    <span className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm transition-all ${
+                                                        activeCategory === idx
+                                                            ? 'bg-lumex-blue/20 scale-110'
+                                                            : 'bg-lumex-bg-deep group-hover:bg-lumex-bg-deep'
+                                                    }`}>
+                                                        {category.icon}
+                                                    </span>
+                                                    <div className="flex-1 min-w-0">
+                                                        <span className={`block text-sm font-semibold leading-tight ${
+                                                            activeCategory === idx ? 'text-lumex-blue' : ''
+                                                        }`}>
+                                                            {category.title}
+                                                        </span>
+                                                        <span className={`text-[10px] font-bold ${
+                                                            activeCategory === idx ? 'text-lumex-blue/70' : 'text-lumex-sub'
+                                                        }`}>
+                                                            {category.articleCount} articles
+                                                        </span>
+                                                    </div>
+                                                    <FaChevronRight className={`h-2.5 w-2.5 transition-all duration-150 ${
+                                                        activeCategory === idx
+                                                            ? 'text-lumex-blue translate-x-0.5'
+                                                            : 'text-lumex-sub/40 group-hover:text-lumex-sub'
+                                                    }`} />
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    <div className="mt-4 px-5 pt-3 border-t border-lumex-border">
                                         <Link
-                                            key={href}
-                                            to={href}
+                                            to="/disciplines"
                                             onClick={onClose}
-                                            className="flex items-center px-6 py-2.5 text-[0.95rem] font-semibold text-lumex-text transition-colors hover:bg-lumex-bg-white hover:text-lumex-blue"
+                                            className="inline-flex items-center gap-1.5 text-xs font-bold text-lumex-blue hover:text-lumex-blue-dark transition-colors"
                                         >
-                                            {labels[i]}
+                                            View all disciplines
+                                            <FaChevronRight className="h-2 w-2" />
                                         </Link>
-                                    );
-                                })}
-                            </nav>
+                                    </div>
+                                </div>
 
-                            <p className="px-6 pb-3 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-lumex-sub">
-                                Browse by discipline
-                            </p>
-                            <ul role="list">
-                                {MEGA_MENU_DATA.map(cat => (
-                                    <li key={cat.title}>
-                                        <button className="group flex w-full items-center justify-between px-6 py-2.5 text-left text-[0.88rem] font-medium text-lumex-text transition-colors hover:bg-lumex-bg-white hover:text-lumex-blue focus:outline-none focus-visible:bg-lumex-bg-white">
-                                            <span>{cat.title}</span>
-                                            <span className="text-lumex-muted/40 transition-transform group-hover:translate-x-0.5 group-hover:text-lumex-blue">
-                                                <ChevronRightIcon />
-                                            </span>
-                                        </button>
-                                    </li>
-                                ))}
-                            </ul>
-                            <div className="mt-4 px-6">
-                                <Link
-                                    to="/disciplines"
-                                    onClick={onClose}
-                                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-lumex-blue transition-colors hover:text-lumex-blue-dark"
-                                >
-                                    All disciplines <ChevronRightIcon />
-                                </Link>
-                            </div>
-                        </div>
+                                {/* ─── Right Content Panel ─── */}
+                                <div className="hidden flex-1 xl:block">
+                                    <AnimatePresence mode="wait">
+                                        <motion.div
+                                            key={activeCategory}
+                                            initial={{ opacity: 0, x: 8 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, x: -8 }}
+                                            transition={{ duration: 0.15 }}
+                                            className="p-7"
+                                        >
+                                            {/* Category Header */}
+                                            <div className="mb-6 flex items-center gap-3">
+                                                <div
+                                                    className="flex h-10 w-10 items-center justify-center rounded-xl text-lg"
+                                                    style={{ background: `${activeData.color}18` }}
+                                                >
+                                                    {activeData.icon}
+                                                </div>
+                                                <div>
+                                                    <h3 className="text-base font-bold text-lumex-text">{activeData.title}</h3>
+                                                    <p className="text-[11px] font-semibold" style={{ color: activeData.color }}>
+                                                        {activeData.articleCount} articles · Peer-reviewed
+                                                    </p>
+                                                </div>
+                                                <Link
+                                                    to={`/subject/${activeData.title.toLowerCase().replace(/\s+/g, '-').replace(/&/g, '')}`}
+                                                    onClick={onClose}
+                                                    className="ml-auto rounded-lg border border-lumex-border px-3.5 py-1.5 text-xs font-semibold text-lumex-muted hover:border-lumex-blue hover:text-lumex-blue transition-all hover:no-underline"
+                                                >
+                                                    Browse All →
+                                                </Link>
+                                            </div>
 
-                        {/* Right — 3-column subcategory grid (desktop only) */}
-                        <div className="hidden flex-1 bg-lumex-bg-white p-8 xl:block">
-                            <p className="mb-6 text-[0.65rem] font-bold uppercase tracking-[0.14em] text-lumex-sub">
-                                Featured subjects
-                            </p>
-                            <div className="grid grid-cols-3 gap-x-10 gap-y-8">
-                                {MEGA_MENU_DATA.map(cat => (
-                                    <div key={cat.title}>
-                                        <h4 className="mb-3 border-b border-lumex-border pb-2 text-[0.82rem] font-bold text-lumex-text">
-                                            {cat.title}
-                                        </h4>
-                                        <ul className="space-y-2" role="list">
-                                            {cat.links.map(link => (
-                                                <li key={link.label}>
+                                            {/* Subcategory Grid */}
+                                            <h4 className="mb-3 text-[10px] font-bold uppercase tracking-[0.12em] text-lumex-sub">
+                                                Featured Subcategories
+                                            </h4>
+                                            <div className="grid grid-cols-2 gap-2">
+                                                {activeData.links.map((link) => (
                                                     <Link
+                                                        key={link.label}
                                                         to={link.href}
                                                         onClick={onClose}
-                                                        className="block text-[0.85rem] text-lumex-muted transition-colors hover:text-lumex-blue"
+                                                        className="group flex items-center gap-3 rounded-lg border border-lumex-border bg-lumex-bg-white p-3.5 transition-all hover:border-lumex-blue/30 hover:bg-lumex-blue/5 hover:shadow-sm hover:no-underline"
                                                     >
-                                                        {link.label}
+                                                        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-lumex-bg-deep text-base transition-transform group-hover:scale-110">
+                                                            {link.icon}
+                                                        </span>
+                                                        <div className="flex-1 min-w-0">
+                                                            <span className="block text-sm font-semibold text-lumex-text group-hover:text-lumex-blue transition-colors">
+                                                                {link.label}
+                                                            </span>
+                                                            <span className="text-[10px] text-lumex-sub">Browse articles →</span>
+                                                        </div>
+                                                        <FaChevronRight className="h-2.5 w-2.5 text-lumex-sub/30 transition-all group-hover:text-lumex-blue group-hover:translate-x-0.5" />
                                                     </Link>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                ))}
-                            </div>
+                                                ))}
+                                            </div>
 
-                            {/* Footer strip */}
-                            <div className="mt-8 flex items-center justify-between border-t border-lumex-border pt-5">
-                                <Link
-                                    to="/disciplines"
-                                    onClick={onClose}
-                                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-lumex-blue transition-colors hover:text-lumex-blue-dark"
-                                >
-                                    Browse all publications <ChevronRightIcon />
-                                </Link>
-                                <Link
-                                    to="/search"
-                                    onClick={onClose}
-                                    className="inline-flex items-center gap-1.5 text-sm font-semibold text-lumex-muted transition-colors hover:text-lumex-blue"
-                                >
-                                    Advanced search <ChevronRightIcon />
-                                </Link>
+                                            {/* Quick Actions Footer */}
+                                            <div className="mt-6 flex items-center gap-4 rounded-lg bg-lumex-bg-deep p-4">
+                                                <div className="flex-1">
+                                                    <p className="text-xs font-bold text-lumex-text mb-0.5">Ready to contribute?</p>
+                                                    <p className="text-[11px] text-lumex-muted">Submit your research to a peer-reviewed journal in {activeData.title}.</p>
+                                                </div>
+                                                <Link
+                                                    to="/publish"
+                                                    onClick={onClose}
+                                                    className="shrink-0 rounded-lg bg-lumex-blue px-4 py-2 text-xs font-bold text-white hover:bg-lumex-blue-dark transition-colors hover:no-underline"
+                                                >
+                                                    Submit Paper
+                                                </Link>
+                                            </div>
+                                        </motion.div>
+                                    </AnimatePresence>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
-            </div>
-        </div>
+            )}
+        </AnimatePresence>
     );
 }
