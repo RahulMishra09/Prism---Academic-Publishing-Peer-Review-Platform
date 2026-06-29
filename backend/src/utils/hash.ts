@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
-
-const SALT_ROUNDS = 10;
+// helper function to hash a password
+const SALT_ROUNDS = 10; // controls how expensive the hashing algorithm is.
+// Higher value → slower but more secure.
 
 // Hash a plain text password
 export const hashPassword = async (password: string): Promise<string> => {

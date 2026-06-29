@@ -49,7 +49,8 @@ export const sendSuccess = (
     data: data ?? null,
   });
 };
-
+//  It does not decide when an error occurs; 
+// it only formats the response and status code you tell it to use.
 // Standard error response
 export const sendError = (
   res: Response,

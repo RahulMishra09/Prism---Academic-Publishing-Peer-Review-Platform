@@ -1,6 +1,5 @@
 import { Role } from "../../generated/prisma/index.js";
 
-// Extend Express Request globally so req.user is typed everywhere
 declare global {
   namespace Express {
     interface Request {
@@ -9,6 +8,13 @@ declare global {
         role: Role;
       };
     }
+  }
+}
+
+// Ensure route params are always plain strings (overrides Express 5 `string | string[]`)
+declare module "express-serve-static-core" {
+  interface ParamsDictionary {
+    [key: string]: string;
   }
 }
 
