@@ -1,0 +1,1 @@
+const { PrismaClient } = require('./generated/prisma'); const prisma = new PrismaClient(); async function main() { console.log('Count:', await prisma.article.count()); console.log(await prisma.article.findMany({take: 5, select: {id: true, title: true, isPublished: true, viewCount: true}})); } main().catch(console.error).finally(() => prisma.$disconnect());

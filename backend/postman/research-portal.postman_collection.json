@@ -1,0 +1,1042 @@
+{
+  "info": {
+    "name": "Research Portal API",
+    "description": "Complete API collection for the Lumex Research Portal backend. Import this into Postman, then set the `baseUrl` and `adminEmail`/`adminPassword` variables in your environment.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl",        "value": "http://localhost:5000" },
+    { "key": "authToken",      "value": "" },
+    { "key": "refreshToken",   "value": "" },
+    { "key": "adminToken",     "value": "" },
+    { "key": "articleDoi",     "value": "10.1234/test-article" },
+    { "key": "articleId",      "value": "" },
+    { "key": "submissionId",   "value": "" },
+    { "key": "journalId",      "value": "" },
+    { "key": "bookId",         "value": "" },
+    { "key": "newsId",         "value": "" },
+    { "key": "contactId",      "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Auth",
+      "item": [
+        {
+          "name": "Register",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 201) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('authToken', json.data?.accessToken ?? '');",
+            "  pm.collectionVariables.set('refreshToken', json.data?.refreshToken ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/register",
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"TestPass123!\",\n  \"firstName\": \"Test\",\n  \"lastName\": \"User\"\n}" }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 200) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('authToken', json.data?.accessToken ?? '');",
+            "  pm.collectionVariables.set('refreshToken', json.data?.refreshToken ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\",\n  \"password\": \"TestPass123!\"\n}" }
+          }
+        },
+        {
+          "name": "Admin Login",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 200) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('adminToken', json.data?.accessToken ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/login",
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"AdminPass123!\"\n}" }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 200) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('authToken', json.data?.accessToken ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/refresh",
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" }
+          }
+        },
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/auth/me"
+          }
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/auth/forgot-password",
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"testuser@example.com\"\n}" }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/auth/logout",
+            "body": { "mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Users / Profile",
+      "item": [
+        {
+          "name": "Get My Profile",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/users/me"
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/users/me",
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"Updated\",\n  \"lastName\": \"Name\",\n  \"bio\": \"Researcher at XYZ University\",\n  \"affiliation\": \"XYZ University\"\n}" }
+          }
+        },
+        {
+          "name": "My Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/users/me/dashboard"
+          }
+        },
+        {
+          "name": "Change Password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/users/me/change-password",
+            "body": { "mode": "raw", "raw": "{\n  \"currentPassword\": \"TestPass123!\",\n  \"newPassword\": \"NewPass456!\"\n}" }
+          }
+        },
+        {
+          "name": "Admin - List Users",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/users?page=1&pageSize=20",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "20" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Bookmarks",
+      "item": [
+        {
+          "name": "List My Bookmarks",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/users/me/bookmarks"
+          }
+        },
+        {
+          "name": "Add Bookmark",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/users/me/bookmarks/{{articleId}}"
+          }
+        },
+        {
+          "name": "Remove Bookmark",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/users/me/bookmarks/{{articleId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. Subscriptions",
+      "item": [
+        {
+          "name": "Get My Subscription",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/users/me/subscription"
+          }
+        },
+        {
+          "name": "Subscribe",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/users/me/subscription",
+            "body": { "mode": "raw", "raw": "{\n  \"plan\": \"MONTHLY\"\n}" }
+          }
+        },
+        {
+          "name": "Cancel Subscription",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/users/me/subscription"
+          }
+        }
+      ]
+    },
+    {
+      "name": "6. Articles (Public)",
+      "item": [
+        {
+          "name": "List Articles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/articles?page=1&pageSize=10",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Article by DOI",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/articles/{{articleDoi}}"
+          }
+        },
+        {
+          "name": "Trending Articles (week)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/articles/trending?period=week",
+              "query": [{ "key": "period", "value": "week" }]
+            }
+          }
+        },
+        {
+          "name": "Cite Article (APA)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/articles/{{articleDoi}}/cite?format=apa",
+              "query": [{ "key": "format", "value": "apa" }]
+            }
+          }
+        },
+        {
+          "name": "Cite Article (BibTeX)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/articles/{{articleDoi}}/cite?format=bibtex",
+              "query": [{ "key": "format", "value": "bibtex" }]
+            }
+          }
+        },
+        {
+          "name": "Cite Article (RIS)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/articles/{{articleDoi}}/cite?format=ris",
+              "query": [{ "key": "format", "value": "ris" }]
+            }
+          }
+        },
+        {
+          "name": "Download Article (open access)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/articles/{{articleDoi}}/download"
+          }
+        },
+        {
+          "name": "Download Article (paid - with token)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/articles/{{articleDoi}}/download"
+          }
+        },
+        {
+          "name": "Get Article Figures",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/articles/{{articleId}}/figures"
+          }
+        },
+        {
+          "name": "Get Article Supplementary",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/articles/{{articleId}}/supplementary"
+          }
+        }
+      ]
+    },
+    {
+      "name": "7. Articles (Admin)",
+      "item": [
+        {
+          "name": "Admin List All Articles",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/articles/admin/all?page=1&pageSize=20",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "20" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Admin Create Article",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 201) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('articleId', json.data?.id ?? '');",
+            "  pm.collectionVariables.set('articleDoi', json.data?.doi ?? '10.1234/test');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/articles",
+            "body": { "mode": "raw", "raw": "{\n  \"doi\": \"10.1234/test-article-001\",\n  \"title\": \"Test Article for API Testing\",\n  \"abstract\": \"This is a test abstract with enough content to validate the endpoint.\",\n  \"keywords\": [\"test\", \"api\", \"research\"],\n  \"discipline\": \"Computer Science\",\n  \"accessType\": \"OPEN_ACCESS\",\n  \"isPublished\": false\n}" }
+          }
+        },
+        {
+          "name": "Admin Update Article",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/articles/{{articleId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Updated Test Article Title\",\n  \"isPublished\": true\n}" }
+          }
+        },
+        {
+          "name": "Admin Add Figure",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/articles/{{articleId}}/figures",
+            "body": { "mode": "raw", "raw": "{\n  \"caption\": \"Figure 1: Results overview\",\n  \"url\": \"https://example.com/figures/fig1.png\",\n  \"type\": \"IMAGE\"\n}" }
+          }
+        },
+        {
+          "name": "Admin Delete Article",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/articles/{{articleId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "8. Journals",
+      "item": [
+        {
+          "name": "List Journals",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/journals"
+          }
+        },
+        {
+          "name": "Get Journal by Slug",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/journals/test-journal"
+          }
+        },
+        {
+          "name": "Admin Create Journal",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 201) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('journalId', json.data?.id ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/journals",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test Journal of Science\",\n  \"slug\": \"test-journal-of-science\",\n  \"description\": \"A test journal for API testing.\",\n  \"discipline\": \"Computer Science\",\n  \"issn\": \"1234-5678\",\n  \"isActive\": true\n}" }
+          }
+        },
+        {
+          "name": "Admin Update Journal",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/journals/{{journalId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"description\": \"Updated journal description.\"\n}" }
+          }
+        },
+        {
+          "name": "Admin Delete Journal",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/journals/{{journalId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "9. Collections",
+      "item": [
+        {
+          "name": "List Collections",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/collections"
+          }
+        },
+        {
+          "name": "Admin Create Collection",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/collections",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test Collection\",\n  \"slug\": \"test-collection\",\n  \"description\": \"Test collection description.\",\n  \"isActive\": true\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "10. Books & Chapters",
+      "item": [
+        {
+          "name": "List Books",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/books?page=1&pageSize=10",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Admin List All Books",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/books/admin/all"
+          }
+        },
+        {
+          "name": "Admin Create Book",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 201) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('bookId', json.data?.id ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/books",
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Test Book\",\n  \"isbn\": \"978-3-16-148410-0\",\n  \"description\": \"A test book for API testing.\",\n  \"publisher\": \"Test Press\",\n  \"publishedYear\": 2024,\n  \"isActive\": true\n}" }
+          }
+        },
+        {
+          "name": "Admin Create Chapter",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/books/{{bookId}}/chapters",
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Chapter 1: Introduction\",\n  \"chapterNumber\": 1,\n  \"abstract\": \"Introduction chapter abstract.\",\n  \"pageStart\": 1,\n  \"pageEnd\": 25\n}" }
+          }
+        },
+        {
+          "name": "Admin Delete Book",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/books/{{bookId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "11. News",
+      "item": [
+        {
+          "name": "List News",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/news?page=1&pageSize=10",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Admin Create News",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 201) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('newsId', json.data?.id ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/news",
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Test News Article\",\n  \"slug\": \"test-news-article\",\n  \"content\": \"This is the content of the test news article with sufficient length.\",\n  \"excerpt\": \"Short excerpt.\",\n  \"isPublished\": false\n}" }
+          }
+        },
+        {
+          "name": "Admin Publish News",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/news/{{newsId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"isPublished\": true\n}" }
+          }
+        },
+        {
+          "name": "Admin Delete News",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/news/{{newsId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "12. Careers",
+      "item": [
+        {
+          "name": "List Careers",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/careers"
+          }
+        },
+        {
+          "name": "Admin Create Career",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/careers",
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"Research Associate\",\n  \"slug\": \"research-associate-2024\",\n  \"description\": \"Full job description here.\",\n  \"location\": \"Remote\",\n  \"type\": \"FULL_TIME\",\n  \"isActive\": true\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "13. Conferences",
+      "item": [
+        {
+          "name": "List Conferences",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/conferences"
+          }
+        },
+        {
+          "name": "Get Conference by Slug",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/conferences/test-conference"
+          }
+        },
+        {
+          "name": "Admin Create Conference",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/conferences",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Test Conference 2025\",\n  \"slug\": \"test-conference-2025\",\n  \"description\": \"Annual conference on research.\",\n  \"location\": \"New York, USA\",\n  \"startDate\": \"2025-09-01T00:00:00.000Z\",\n  \"endDate\": \"2025-09-03T00:00:00.000Z\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "14. Submissions",
+      "item": [
+        {
+          "name": "Submit Paper",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 201) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('submissionId', json.data?.id ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/submissions",
+            "body": { "mode": "raw", "raw": "{\n  \"title\": \"My Research Paper\",\n  \"abstract\": \"Abstract of the paper with sufficient detail about methodology and results.\",\n  \"keywords\": [\"machine learning\", \"neural networks\"],\n  \"discipline\": \"Computer Science\",\n  \"fileUrl\": \"https://example.com/papers/my-paper.pdf\"\n}" }
+          }
+        },
+        {
+          "name": "My Submissions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/submissions/my"
+          }
+        },
+        {
+          "name": "Get Submission",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/submissions/{{submissionId}}"
+          }
+        },
+        {
+          "name": "Admin List Submissions",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/submissions?page=1&pageSize=20",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "20" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Editor Assign Reviewer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/submissions/{{submissionId}}/assign-reviewer",
+            "body": { "mode": "raw", "raw": "{\n  \"reviewerId\": \"REVIEWER_USER_ID_HERE\"\n}" }
+          }
+        },
+        {
+          "name": "Submit Structured Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/submissions/{{submissionId}}/review",
+            "body": { "mode": "raw", "raw": "{\n  \"recommendation\": \"MINOR_REVISION\",\n  \"summary\": \"Good paper, needs minor revisions.\",\n  \"strengths\": \"Clear methodology and strong results.\",\n  \"weaknesses\": \"Related work section needs expansion.\",\n  \"detailedComments\": \"See inline comments for specific suggestions.\"\n}" }
+          }
+        },
+        {
+          "name": "Editor Get Reviews",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/submissions/{{submissionId}}/reviews"
+          }
+        },
+        {
+          "name": "Editor Make Decision",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/submissions/{{submissionId}}/decision",
+            "body": { "mode": "raw", "raw": "{\n  \"decision\": \"REVISION_REQUIRED\",\n  \"feedback\": \"Please address reviewer comments and resubmit.\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "15. Search",
+      "item": [
+        {
+          "name": "Search (GET)",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/search?q=machine+learning&page=1&pageSize=10",
+              "query": [
+                { "key": "q", "value": "machine learning" },
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "10" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search (POST with filters)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/search",
+            "body": { "mode": "raw", "raw": "{\n  \"q\": \"neural networks\",\n  \"disciplines\": [\"Computer Science\"],\n  \"keywords\": [\"deep learning\"],\n  \"accessTypes\": [\"OPEN_ACCESS\"],\n  \"page\": 1,\n  \"pageSize\": 10\n}" }
+          }
+        },
+        {
+          "name": "Search by Author",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/search?q=john+doe&authorSearch=true",
+              "query": [
+                { "key": "q", "value": "john doe" },
+                { "key": "authorSearch", "value": "true" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Related Articles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/search/related/{{articleDoi}}?limit=6",
+              "query": [{ "key": "limit", "value": "6" }]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "16. Checkout / Payments",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{authToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/checkout/order",
+            "body": { "mode": "raw", "raw": "{\n  \"itemType\": \"ARTICLE\",\n  \"itemRef\": \"{{articleDoi}}\",\n  \"amount\": 999,\n  \"currency\": \"USD\"\n}" }
+          }
+        },
+        {
+          "name": "Get Order History",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/checkout/orders"
+          }
+        },
+        {
+          "name": "Admin List Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/checkout/admin/orders"
+          }
+        },
+        {
+          "name": "Webhook (Stripe-style)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "stripe-signature", "value": "t=1234567890,v1=fake_signature_for_testing" }
+            ],
+            "url": "{{baseUrl}}/api/checkout/webhook",
+            "body": { "mode": "raw", "raw": "{\"type\":\"payment_intent.succeeded\",\"data\":{\"object\":{\"id\":\"pi_test\",\"metadata\":{\"orderId\":\"ORDER_ID_HERE\"}}}}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "17. Homepage",
+      "item": [
+        {
+          "name": "Get Homepage",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/homepage"
+          }
+        },
+        {
+          "name": "Admin List Sections",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/homepage/admin/sections"
+          }
+        },
+        {
+          "name": "Admin Create Section",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/homepage/sections",
+            "body": { "mode": "raw", "raw": "{\n  \"type\": \"HERO\",\n  \"title\": \"Welcome to Lumex\",\n  \"subtitle\": \"Open Access Research Platform\",\n  \"isActive\": true,\n  \"order\": 1\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "18. Site Config",
+      "item": [
+        {
+          "name": "Get Public Config",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/site-config"
+          }
+        },
+        {
+          "name": "Admin Get Full Config",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": "{{baseUrl}}/api/site-config/admin"
+          }
+        },
+        {
+          "name": "Admin Update Config",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/site-config",
+            "body": { "mode": "raw", "raw": "{\n  \"siteName\": \"Lumex Research Portal\",\n  \"tagline\": \"Advancing Global Knowledge\",\n  \"contactEmail\": \"support@lumex.io\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "19. Contact",
+      "item": [
+        {
+          "name": "Send Contact Message",
+          "event": [{ "listen": "test", "script": { "exec": [
+            "if (pm.response.code === 202) {",
+            "  const json = pm.response.json();",
+            "  pm.collectionVariables.set('contactId', json.data?.ticketId ?? '');",
+            "}"
+          ] } }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/contact",
+            "body": { "mode": "raw", "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"subject\": \"API Testing Inquiry\",\n  \"message\": \"This is a test message sent via the API testing collection. Please ignore.\"\n}" }
+          }
+        },
+        {
+          "name": "Admin List Messages",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{adminToken}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/api/contact?page=1&pageSize=20",
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "pageSize", "value": "20" }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Admin Update Contact Status",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{baseUrl}}/api/contact/{{contactId}}",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"IN_PROGRESS\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "20. Feeds & SEO",
+      "item": [
+        {
+          "name": "RSS - Latest Articles",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/feeds/latest.xml"
+          }
+        },
+        {
+          "name": "RSS - Journal Feed",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/feeds/journal/test-journal"
+          }
+        },
+        {
+          "name": "RSS - Discipline Feed",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/feeds/discipline/Computer%20Science"
+          }
+        },
+        {
+          "name": "Sitemap",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/sitemap.xml"
+          }
+        },
+        {
+          "name": "Robots.txt",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/robots.txt"
+          }
+        }
+      ]
+    },
+    {
+      "name": "21. Guard Tests",
+      "item": [
+        {
+          "name": "Unauthorized - No Token",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/users/me"
+          }
+        },
+        {
+          "name": "Forbidden - User Hits Admin Route",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{authToken}}" }],
+            "url": "{{baseUrl}}/api/users?page=1"
+          }
+        },
+        {
+          "name": "Invalid Token",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer invalid.token.here" }],
+            "url": "{{baseUrl}}/api/users/me"
+          }
+        }
+      ]
+    }
+  ]
+}

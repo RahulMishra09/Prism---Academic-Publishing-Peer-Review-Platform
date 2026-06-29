@@ -1,0 +1,1 @@
+const { PrismaClient } = require('./generated/prisma'); const prisma = new PrismaClient(); async function main() { const tables = await prisma.$queryRaw\SELECT tablename FROM pg_tables WHERE schemaname = 'public';\; console.log(tables); } main().catch(e => console.error(e)).finally(() => process.exit(0));
