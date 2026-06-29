@@ -1,228 +1,226 @@
+import { Role, Prisma } from "../../../generated/prisma/index.js";
 import { prisma } from "../../config/prisma.js";
 import { AppError } from "../../middleware/error.middleware.js";
-import { Prisma, Role, AuditAction } from "../../../generated/prisma/index.js";
+import type { ChangeRoleInput, ListUsersQuery } from "./admin.schema.js";
 
-// ─── Audit Logging ──────────────────────────────────────────────────────────
+// Shared user select -- never return password
+const userSelect = {
+  id:        true,
+  name:      true,
+  email:     true,
+  role:      true,
+  isBanned:  true,
+  createdAt: true,
+  updatedAt: true,
+  _count: {
+    select: { papers: true, reviews: true, comments: true },
+  },
+} as const;
 
-interface AuditLogInput {
-  action: AuditAction;
-  actorId?: string;
-  targetId?: string;
-  targetType?: string;
-  meta?: Record<string, unknown>;
-  ip?: string;
-}
-
-export const createAuditLog = async (input: AuditLogInput): Promise<void> => {
-  try {
-    await prisma.auditLog.create({
-      data: {
-        id:         Math.random().toString(36).slice(2),
-        action:     input.action,
-        targetId:   input.targetId,
-        targetType: input.targetType,
-        meta:       (input.meta ?? undefined) as Prisma.InputJsonValue | undefined,
-        ip:         input.ip,
-        ...(input.actorId ? { actor: { connect: { id: input.actorId } } } : {}),
-      },
-    });
-  } catch {
-    // Never let audit logging crash the main flow
-    console.error("[AuditLog] Failed to write log:", input.action);
-  }
-};
-
-// ─── User Management ────────────────────────────────────────────────────────
-
-export interface ListUsersQuery {
-  page?: number;
-  pageSize?: number;
-  search?: string;
-  role?: Role;
-}
-
+// listUsers
+// Returns a paginated list of all users.
+// Supports optional filtering by role, banned status, and name/email search.
 export const listUsers = async (query: ListUsersQuery) => {
-  const page     = Math.max(1, query.page ?? 1);
-  const pageSize = Math.min(100, Math.max(1, query.pageSize ?? 20));
-  const skip     = (page - 1) * pageSize;
+  const { role, isBanned, search, page, limit } = query;
+  const skip = (page - 1) * limit;
 
-  const where = {
-    ...(query.search && {
-      OR: [
-        { name:  { contains: query.search, mode: "insensitive" as const } },
-        { email: { contains: query.search, mode: "insensitive" as const } },
-      ],
-    }),
-    ...(query.role && { role: query.role }),
-  };
+  const where: Prisma.UserWhereInput = {};
 
-  const [total, users] = await Promise.all([
-    prisma.user.count({ where }),
+  if (role)                 where.role     = role as Role;
+  if (isBanned !== undefined) where.isBanned = isBanned;
+  if (search) {
+    where.OR = [
+      { name:  { contains: search, mode: "insensitive" } },
+      { email: { contains: search, mode: "insensitive" } },
+    ];
+  }
+
+  const [users, total] = await Promise.all([
     prisma.user.findMany({
       where,
-      skip,
-      take: pageSize,
+      select:  userSelect,
       orderBy: { createdAt: "desc" },
-      select: {
-        id:        true,
-        name:      true,
-        email:     true,
-        role:      true,
-        isBanned:  true,
-        createdAt: true,
-        _count: {
-          select: { papers: true, reviews: true },
-        },
-      },
+      skip,
+      take: limit,
     }),
+    prisma.user.count({ where }),
   ]);
 
-  return { users, total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
+  return {
+    users,
+    pagination: {
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+    },
+  };
 };
 
+// getUserById
+// Returns full detail for a single user including activity counts.
 export const getUserById = async (userId: string) => {
   const user = await prisma.user.findUnique({
-    where: { id: userId },
-    select: {
-      id:        true,
-      name:      true,
-      email:     true,
-      role:      true,
-      isBanned:  true,
-      createdAt: true,
-      updatedAt: true,
-      _count: {
-        select: { papers: true, reviews: true, comments: true },
-      },
-    },
+    where:  { id: userId },
+    select: userSelect,
   });
+
   if (!user) throw new AppError("User not found", 404);
+
   return user;
 };
 
-export const changeUserRole = async (
+// changeRole
+// Changes the role of a user.
+// Guards:
+//   - User must exist
+//   - Cannot change own role (prevents accidental self-lockout)
+//   - Cannot demote the last ADMIN in the system
+export const changeRole = async (
   targetUserId: string,
-  newRole: Role,
-  actorId: string,
-  ip?: string,
+  requesterId:  string,
+  input: ChangeRoleInput
 ) => {
-  const user = await prisma.user.findUnique({ where: { id: targetUserId } });
+  if (targetUserId === requesterId) {
+    throw new AppError("You cannot change your own role", 422);
+  }
+
+  const user = await prisma.user.findUnique({
+    where:  { id: targetUserId },
+    select: { id: true, role: true, name: true },
+  });
+
   if (!user) throw new AppError("User not found", 404);
 
-  const oldRole = user.role;
-  const updated = await prisma.user.update({
-    where: { id: targetUserId },
-    data:  { role: newRole },
-    select: { id: true, name: true, email: true, role: true },
-  });
+  // Prevent removing the last ADMIN
+  if (user.role === Role.ADMIN && input.role !== "ADMIN") {
+    const adminCount = await prisma.user.count({ where: { role: Role.ADMIN } });
+    if (adminCount <= 1) {
+      throw new AppError("Cannot demote the last ADMIN in the system", 422);
+    }
+  }
 
-  await createAuditLog({
-    action:     AuditAction.ROLE_CHANGED,
-    actorId,
-    targetId:   targetUserId,
-    targetType: "user",
-    meta:       { oldRole, newRole },
-    ip,
+  return prisma.user.update({
+    where:  { id: targetUserId },
+    data:   { role: input.role as Role },
+    select: userSelect,
   });
-
-  return updated;
 };
 
-export const banUser = async (targetUserId: string, actorId: string, ip?: string) => {
-  const user = await prisma.user.findUnique({ where: { id: targetUserId } });
-  if (!user) throw new AppError("User not found", 404);
-  if (user.id === actorId) throw new AppError("Cannot ban yourself", 400);
+// banUser
+// Bans a user, preventing them from logging in.
+// Guards:
+//   - User must exist
+//   - Cannot ban yourself
+//   - Cannot ban another ADMIN
+//   - User must not already be banned
+export const banUser = async (targetUserId: string, requesterId: string) => {
+  if (targetUserId === requesterId) {
+    throw new AppError("You cannot ban yourself", 422);
+  }
 
-  const updated = await prisma.user.update({
-    where: { id: targetUserId },
-    data:  { isBanned: true },
-    select: { id: true, name: true, email: true, isBanned: true },
+  const user = await prisma.user.findUnique({
+    where:  { id: targetUserId },
+    select: { id: true, role: true, isBanned: true, name: true },
   });
 
-  await createAuditLog({
-    action: AuditAction.USER_BANNED,
-    actorId,
-    targetId: targetUserId,
-    targetType: "user",
-    ip,
-  });
-
-  return updated;
-};
-
-export const unbanUser = async (targetUserId: string, actorId: string, ip?: string) => {
-  const user = await prisma.user.findUnique({ where: { id: targetUserId } });
   if (!user) throw new AppError("User not found", 404);
 
-  const updated = await prisma.user.update({
-    where: { id: targetUserId },
-    data:  { isBanned: false },
-    select: { id: true, name: true, email: true, isBanned: true },
-  });
+  if (user.role === Role.ADMIN) {
+    throw new AppError("Cannot ban an ADMIN user", 422);
+  }
 
-  await createAuditLog({
-    action: AuditAction.USER_UNBANNED,
-    actorId,
-    targetId: targetUserId,
-    targetType: "user",
-    ip,
-  });
+  if (user.isBanned) {
+    throw new AppError("User is already banned", 409);
+  }
 
-  return updated;
+  return prisma.user.update({
+    where:  { id: targetUserId },
+    data:   { isBanned: true },
+    select: userSelect,
+  });
 };
 
-// ─── Audit Logs ─────────────────────────────────────────────────────────────
+// unbanUser
+// Lifts the ban on a user.
+// Guards:
+//   - User must exist
+//   - User must currently be banned
+export const unbanUser = async (targetUserId: string) => {
+  const user = await prisma.user.findUnique({
+    where:  { id: targetUserId },
+    select: { id: true, isBanned: true },
+  });
 
-export interface ListAuditLogsQuery {
-  page?: number;
-  pageSize?: number;
-  actorId?: string;
-  action?: AuditAction;
-  targetId?: string;
-}
+  if (!user) throw new AppError("User not found", 404);
 
-export const listAuditLogs = async (query: ListAuditLogsQuery) => {
-  const page     = Math.max(1, query.page ?? 1);
-  const pageSize = Math.min(100, Math.max(1, query.pageSize ?? 30));
-  const skip     = (page - 1) * pageSize;
+  if (!user.isBanned) {
+    throw new AppError("User is not banned", 409);
+  }
 
-  const where = {
-    ...(query.actorId  && { actorId:  query.actorId }),
-    ...(query.action   && { action:   query.action }),
-    ...(query.targetId && { targetId: query.targetId }),
-  };
+  return prisma.user.update({
+    where:  { id: targetUserId },
+    data:   { isBanned: false },
+    select: userSelect,
+  });
+};
 
-  const [total, logs] = await Promise.all([
-    prisma.auditLog.count({ where }),
-    prisma.auditLog.findMany({
-      where,
-      skip,
-      take: pageSize,
-      orderBy: { createdAt: "desc" },
-      include: {
-        actor: { select: { id: true, name: true, email: true, role: true } },
-      },
-    }),
+// getSubmissionAnalytics
+// Returns editorial pipeline stats for editors/admins.
+export const getSubmissionAnalytics = async () => {
+  const [byStatus, total, last30, last7, avgReviewersPerSubmission] = await Promise.all([
+    prisma.submission.groupBy({ by: ["status"], _count: { _all: true } }),
+    prisma.submission.count(),
+    prisma.submission.count({ where: { createdAt: { gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) } } }),
+    prisma.submission.count({ where: { createdAt: { gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) } } }),
+    prisma.submissionReviewer.groupBy({ by: ["submissionId"], _count: { _all: true } })
+      .then(rows => rows.length ? rows.reduce((s, r) => s + r._count._all, 0) / rows.length : 0),
   ]);
 
-  return { logs, total, page, pageSize, totalPages: Math.ceil(total / pageSize) };
+  const acceptedCount = byStatus.find(r => r.status === "ACCEPTED")?._count._all ?? 0;
+  const rejectedCount = byStatus.find(r => r.status === "REJECTED")?._count._all ?? 0;
+  const decided = acceptedCount + rejectedCount;
+
+  return {
+    total,
+    last30Days: last30,
+    last7Days: last7,
+    byStatus: byStatus.reduce((acc: Record<string, number>, r) => ({ ...acc, [r.status]: r._count._all }), {}),
+    acceptanceRate: decided > 0 ? Math.round((acceptedCount / decided) * 100) : null,
+    avgReviewersPerSubmission: Math.round(avgReviewersPerSubmission * 10) / 10,
+  };
 };
 
-// ─── Platform Stats ──────────────────────────────────────────────────────────
+// getStats
+// Returns platform-wide statistics for the admin dashboard.
+export const getStats = async () => {
+  const [
+    totalUsers,
+    totalPapers,
+    totalReviews,
+    totalComments,
+    usersByRole,
+    papersByStatus,
+    bannedUsers,
+  ] = await Promise.all([
+    prisma.user.count(),
+    prisma.paper.count(),
+    prisma.review.count(),
+    prisma.comment.count(),
+    prisma.user.groupBy({ by: ["role"],    _count: { _all: true } }),
+    prisma.paper.groupBy({ by: ["status"], _count: { _all: true } }),
+    prisma.user.count({ where: { isBanned: true } }),
+  ]);
 
-export const getPlatformStats = async () => {
-  const [totalUsers, totalPapers, totalReviews, pendingReviews, papersByStatus] =
-    await Promise.all([
-      prisma.user.count(),
-      prisma.paper.count(),
-      prisma.review.count(),
-      prisma.reviewerAssignment.count({ where: { status: "PENDING" } }),
-      prisma.paper.groupBy({ by: ["status"], _count: { id: true } }),
-    ]);
-
-  const byStatus = Object.fromEntries(
-    papersByStatus.map((r) => [r.status, r._count.id]),
-  );
-
-  return { totalUsers, totalPapers, totalReviews, pendingReviews, papersByStatus: byStatus };
+  return {
+    totals: {
+      users:    totalUsers,
+      papers:   totalPapers,
+      reviews:  totalReviews,
+      comments: totalComments,
+      banned:   bannedUsers,
+    },
+    usersByRole:    usersByRole.reduce((acc, r) => ({ ...acc, [r.role]: r._count._all }), {}),
+    papersByStatus: papersByStatus.reduce((acc, r) => ({ ...acc, [r.status]: r._count._all }), {}),
+  };
 };

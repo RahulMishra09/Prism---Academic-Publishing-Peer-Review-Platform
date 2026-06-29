@@ -1,79 +1,150 @@
 import { Request, Response, NextFunction } from "express";
-import { sendSuccess } from "../../utils/apiResponse.js";
+import { sendSuccess, fieldErrors } from "../../utils/apiResponse.js";
+import { changeRoleSchema, listUsersSchema } from "./admin.schema.js";
 import {
   listUsers,
   getUserById,
-  changeUserRole,
+  changeRole,
   banUser,
   unbanUser,
-  listAuditLogs,
-  getPlatformStats,
+  getStats,
+  getSubmissionAnalytics,
 } from "./admin.service.js";
-import {
-  changeRoleSchema,
-  listUsersSchema,
-  listAuditLogsSchema,
-} from "./admin.schema.js";
-import { Role, AuditAction } from "../../../generated/prisma/index.js";
 
-/** GET /admin/users */
-export const getUsers = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// Express 5 types req.params values as string | string[].
+// Route params are always a single string at runtime -- this cast is safe.
+const param = (value: string | string[]): string =>
+  Array.isArray(value) ? value[0]! : value;
+
+// GET /admin/stats
+// Platform-wide statistics for the admin dashboard.
+// Role: ADMIN
+export const stats = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const data = await getStats();
+    sendSuccess(res, { statusCode: 200, message: "Stats retrieved successfully", data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /admin/users
+// Paginated list of all users with optional filters.
+// Role: ADMIN
+export const listAllUsers = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const parsed = listUsersSchema.safeParse(req.query);
-    if (!parsed.success) { res.status(400).json({ success: false, message: "Invalid query", data: null }); return; }
-    const result = await listUsers({ ...parsed.data, role: parsed.data.role as Role | undefined });
-    sendSuccess(res, { statusCode: 200, message: "Users retrieved", data: result });
-  } catch (err) { next(err); }
+    if (!parsed.success) {
+      res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors:  fieldErrors(parsed.error),
+        data:    null,
+      });
+      return;
+    }
+
+    const result = await listUsers(parsed.data);
+    sendSuccess(res, { statusCode: 200, message: "Users retrieved successfully", data: result });
+  } catch (err) {
+    next(err);
+  }
 };
 
-/** GET /admin/users/:userId */
-export const getUser = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// GET /admin/users/:userId
+// Single user detail with activity counts.
+// Role: ADMIN
+export const getUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    const user = await getUserById(String(req.params["userId"]));
-    sendSuccess(res, { statusCode: 200, message: "User retrieved", data: user });
-  } catch (err) { next(err); }
+    const user = await getUserById(param(req.params.userId));
+    sendSuccess(res, { statusCode: 200, message: "User retrieved successfully", data: user });
+  } catch (err) {
+    next(err);
+  }
 };
 
-/** PATCH /admin/users/:userId/role */
-export const updateRole = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// PATCH /admin/users/:userId/role
+// Change a user's role.
+// Role: ADMIN
+export const updateRole = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const parsed = changeRoleSchema.safeParse(req.body);
-    if (!parsed.success) { res.status(400).json({ success: false, message: "Invalid role", data: null }); return; }
-    const result = await changeUserRole(String(req.params["userId"]), parsed.data.role as Role, req.user!.userId, req.ip);
-    sendSuccess(res, { statusCode: 200, message: "Role updated", data: result });
+    if (!parsed.success) {
+      res.status(400).json({
+        success: false,
+        message: "Validation failed",
+        errors:  fieldErrors(parsed.error),
+        data:    null,
+      });
+      return;
+    }
+
+    const user = await changeRole(
+      param(req.params.userId),
+      req.user!.userId,
+      parsed.data
+    );
+
+    sendSuccess(res, { statusCode: 200, message: "User role updated successfully", data: user });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// PATCH /admin/users/:userId/ban
+// Ban a user from the platform.
+// Role: ADMIN
+export const ban = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const user = await banUser(param(req.params.userId), req.user!.userId);
+    sendSuccess(res, { statusCode: 200, message: "User banned successfully", data: user });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /admin/analytics/submissions
+export const submissionAnalytics = async (
+  req: Request, res: Response, next: NextFunction
+): Promise<void> => {
+  try {
+    const data = await getSubmissionAnalytics();
+    sendSuccess(res, { statusCode: 200, message: "Submission analytics", data });
   } catch (err) { next(err); }
 };
 
-/** POST /admin/users/:userId/ban */
-export const ban = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+// PATCH /admin/users/:userId/unban
+// Lift the ban on a user.
+// Role: ADMIN
+export const unban = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    const result = await banUser(String(req.params["userId"]), req.user!.userId, req.ip);
-    sendSuccess(res, { statusCode: 200, message: "User banned", data: result });
-  } catch (err) { next(err); }
-};
-
-/** POST /admin/users/:userId/unban */
-export const unban = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    const result = await unbanUser(String(req.params["userId"]), req.user!.userId, req.ip);
-    sendSuccess(res, { statusCode: 200, message: "User unbanned", data: result });
-  } catch (err) { next(err); }
-};
-
-/** GET /admin/audit-logs */
-export const getAuditLogs = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    const parsed = listAuditLogsSchema.safeParse(req.query);
-    if (!parsed.success) { res.status(400).json({ success: false, message: "Invalid query", data: null }); return; }
-    const result = await listAuditLogs({ ...parsed.data, action: parsed.data.action as AuditAction | undefined });
-    sendSuccess(res, { statusCode: 200, message: "Audit logs retrieved", data: result });
-  } catch (err) { next(err); }
-};
-
-/** GET /admin/stats */
-export const getStats = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-  try {
-    const stats = await getPlatformStats();
-    sendSuccess(res, { statusCode: 200, message: "Stats retrieved", data: stats });
-  } catch (err) { next(err); }
+    const user = await unbanUser(param(req.params.userId));
+    sendSuccess(res, { statusCode: 200, message: "User unbanned successfully", data: user });
+  } catch (err) {
+    next(err);
+  }
 };

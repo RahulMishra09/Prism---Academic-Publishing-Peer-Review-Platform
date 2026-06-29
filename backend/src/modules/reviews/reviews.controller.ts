@@ -6,6 +6,7 @@ import {
   submitReview,
   getReviewsForPaper,
   getMyReviews,
+  getReviewerDashboard,
 } from "./reviews.service.js";
 
 //Helper 
@@ -110,7 +111,25 @@ export const listMyReviews = async (
   }
 };
 
-// GET /reviews/papers/:paperId 
+// GET /reviews/dashboard
+/**
+ * Reviewer workload summary: stats + pending assignments + recent reviews.
+ * Role: REVIEWER
+ */
+export const reviewerDashboard = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const data = await getReviewerDashboard(req.user!.userId);
+    sendSuccess(res, { statusCode: 200, message: "Reviewer dashboard", data });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /reviews/papers/:paperId
 /**
  * Returns all reviews for a specific paper.
  * Reviewer identity is hidden from the paper's author.

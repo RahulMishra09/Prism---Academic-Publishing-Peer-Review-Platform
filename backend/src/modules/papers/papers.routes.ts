@@ -2,6 +2,8 @@ import { Router } from "express";
 import { Role } from "../../../generated/prisma/index.js";
 import { authenticate } from "../../middleware/auth.middleware.js";
 import { requireRole } from "../../middleware/role.middleware.js";
+import { upload } from "../../middleware/upload.middleware.js";
+import { uploadLimiter } from "../../middleware/ratelimit.middleware.js";
 import {
   create,
   getMine,
@@ -11,6 +13,8 @@ import {
   submit,
   approve,
   reject,
+  uploadFile,
+  deleteFile,
 } from "./papers.controller.js";
 
 const router = Router();
@@ -49,7 +53,23 @@ router.post(
   submit
 );
 
-//  Editor routes 
+// POST   /papers/:id/upload upload a file to a draft paper
+router.post(
+  "/:id/upload",
+  requireRole(Role.AUTHOR),
+  uploadLimiter,
+  upload.single("file"),
+  uploadFile
+);
+
+// DELETE /papers/:id/file   delete file from a draft paper
+router.delete(
+  "/:id/file",
+  requireRole(Role.AUTHOR),
+  deleteFile
+);
+
+//  Editor routes
 
 // POST   /papers/:id/approve approve a submitted paper
 router.post(

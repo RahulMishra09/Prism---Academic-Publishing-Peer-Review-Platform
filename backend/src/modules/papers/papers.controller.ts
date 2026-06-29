@@ -15,6 +15,8 @@ import {
   submitPaper,
   approvePaper,
   rejectPaper,
+  uploadPaperFile,
+  deletePaperFile,
 } from "./papers.service.js";
 
 //  Helpers 
@@ -251,6 +253,65 @@ export const reject = async (
       statusCode: 200,
       message:    "Paper rejected",
       data:       paper,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// POST /papers/:id/upload
+/**
+ * Upload a file to a paper (PDF/DOCX only).
+ * Role: AUTHOR (own papers only, DRAFT status only)
+ */
+export const uploadFile = async (
+  req: Request & { file?: { buffer: Buffer; originalname: string } },
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    if (!req.file) {
+      res.status(400).json({
+        success: false,
+        message: "No file uploaded",
+        data: null,
+      });
+      return;
+    }
+
+    const paper = await uploadPaperFile(
+      param(req.params.id),
+      req.user!.userId,
+      req.file
+    );
+
+    sendSuccess(res, {
+      statusCode: 200,
+      message: "File uploaded successfully",
+      data: paper,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// DELETE /papers/:id/file
+/**
+ * Delete the file associated with a paper.
+ * Role: AUTHOR (own papers only, DRAFT status only)
+ */
+export const deleteFile = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  try {
+    const paper = await deletePaperFile(param(req.params.id), req.user!.userId);
+
+    sendSuccess(res, {
+      statusCode: 200,
+      message: "File deleted successfully",
+      data: paper,
     });
   } catch (err) {
     next(err);

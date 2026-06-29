@@ -1,25 +1,48 @@
 import { z } from "zod";
-import { Role } from "../../../generated/prisma/index.js";
 
+// Change Role
+// Body for PATCH /admin/users/:id/role
 export const changeRoleSchema = z.object({
-  role: z.enum(Object.values(Role) as [string, ...string[]]),
+  role: z.enum(["READER", "AUTHOR", "REVIEWER", "EDITOR", "ADMIN"], {
+    error: "role must be one of: READER, AUTHOR, REVIEWER, EDITOR, ADMIN",
+  }),
 });
 
+// List Users Query
+// Query params for GET /admin/users
 export const listUsersSchema = z.object({
-  page:     z.coerce.number().int().positive().optional(),
-  pageSize: z.coerce.number().int().positive().optional(),
-  search:   z.string().optional(),
-  role:     z.enum(Object.values(Role) as [string, ...string[]]).optional(),
+  role: z
+    .enum(["READER", "AUTHOR", "REVIEWER", "EDITOR", "ADMIN"])
+    .optional(),
+
+  isBanned: z
+    .enum(["true", "false"])
+    .transform((v) => v === "true")
+    .optional(),
+
+  search: z
+    .string()
+    .max(100)
+    .trim()
+    .optional(),
+
+  page: z
+    .string()
+    .regex(/^\d+$/, "page must be a positive integer")
+    .transform(Number)
+    .pipe(z.number().int().min(1))
+    .optional()
+    .default(1),
+
+  limit: z
+    .string()
+    .regex(/^\d+$/, "limit must be a positive integer")
+    .transform(Number)
+    .pipe(z.number().int().min(1).max(100))
+    .optional()
+    .default(20),
 });
 
-export const listAuditLogsSchema = z.object({
-  page:     z.coerce.number().int().positive().optional(),
-  pageSize: z.coerce.number().int().positive().optional(),
-  actorId:  z.string().optional(),
-  action:   z.string().optional(),
-  targetId: z.string().optional(),
-});
-
-export type ChangeRoleInput    = z.infer<typeof changeRoleSchema>;
-export type ListUsersInput     = z.infer<typeof listUsersSchema>;
-export type ListAuditLogsInput = z.infer<typeof listAuditLogsSchema>;
+// Inferred TypeScript types
+export type ChangeRoleInput = z.infer<typeof changeRoleSchema>;
+export type ListUsersQuery  = z.infer<typeof listUsersSchema>;

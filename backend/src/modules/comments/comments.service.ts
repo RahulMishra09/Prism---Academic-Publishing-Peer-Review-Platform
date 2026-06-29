@@ -1,6 +1,8 @@
 import { PaperStatus, Role } from "../../../generated/prisma/index.js";
 import { prisma } from "../../config/prisma.js";
 import { AppError } from "../../middleware/error.middleware.js";
+import { sendNewCommentEmail } from "../../utils/email.js";
+import { env } from "../../config/env.js";
 import type { CreateCommentInput, ListCommentsQuery } from "./comments.schema.js";
 
 // Shared select for a comment with author and nested replies
@@ -90,7 +92,13 @@ export const createComment = async (
   // Fetch the paper
   const paper = await prisma.paper.findUnique({
     where:  { id: paperId },
-    select: { id: true, status: true, submittedBy: true },
+    select: {
+      id: true,
+      status: true,
+      submittedBy: true,
+      title: true,
+      author: { select: { name: true, email: true } },
+    },
   });
 
   if (!paper) throw new AppError("Paper not found", 404);
@@ -104,11 +112,17 @@ export const createComment = async (
     throw new AppError("You can only comment on your own papers", 403);
   }
 
-  // If replying, validate the parent comment
+  // If replying, validate the parent comment and get author info for email
+  let parentAuthor: { id: string; name: string; email: string } | null = null;
   if (input.parentId) {
     const parent = await prisma.comment.findUnique({
       where:  { id: input.parentId },
-      select: { id: true, paperId: true, parentId: true },
+      select: {
+        id: true,
+        paperId: true,
+        parentId: true,
+        author: { select: { id: true, name: true, email: true } },
+      },
     });
 
     if (!parent) {
@@ -123,6 +137,8 @@ export const createComment = async (
     if (parent.parentId !== null) {
       throw new AppError("Replies to replies are not supported", 422);
     }
+
+    parentAuthor = parent.author;
   }
 
   const comment = await prisma.comment.create({
@@ -143,6 +159,30 @@ export const createComment = async (
       },
     },
   });
+
+  // Send email notification
+  // If it's a reply, notify the parent comment author
+  // Otherwise, notify the paper author (unless they're commenting on their own paper)
+  if (parentAuthor && parentAuthor.id !== comment.author.id) {
+    await sendNewCommentEmail({
+      to: parentAuthor.email,
+      recipientName: parentAuthor.name,
+      commenterName: comment.author.name,
+      paperTitle: paper.title,
+      commentBody: input.body,
+      paperUrl: `${env.APP_URL}/papers/${paperId}`,
+    });
+  } else if (!input.parentId && paper.submittedBy !== authorId) {
+    // Top-level comment on someone else's paper - notify paper author
+    await sendNewCommentEmail({
+      to: paper.author.email,
+      recipientName: paper.author.name,
+      commenterName: comment.author.name,
+      paperTitle: paper.title,
+      commentBody: input.body,
+      paperUrl: `${env.APP_URL}/papers/${paperId}`,
+    });
+  }
 
   return comment;
 };
@@ -176,7 +216,7 @@ export const deleteComment = async (
   }
 
   // Delete replies first, then the comment itself
-  await prisma.$transaction([
+  await Promise.all([
     prisma.comment.deleteMany({ where: { parentId: commentId } }),
     prisma.comment.delete({ where: { id: commentId } }),
   ]);

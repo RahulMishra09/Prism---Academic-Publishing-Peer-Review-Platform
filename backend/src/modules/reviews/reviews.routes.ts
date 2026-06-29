@@ -6,6 +6,7 @@ import {
   listMyAssignments,
   submit,
   listMyReviews,
+  reviewerDashboard,
   listForPaper,
 } from "./reviews.controller.js";
 
@@ -16,7 +17,14 @@ router.use(authenticate);
 
 // Reviewer routes 
 
-// GET  /reviews/my-assignments list assigned papers
+// GET  /reviews/dashboard — workload summary (stats + pending + recent)
+router.get(
+  "/dashboard",
+  requireRole(Role.REVIEWER),
+  reviewerDashboard
+);
+
+// GET  /reviews/my-assignments — list assigned papers
 router.get(
   "/my-assignments",
   requireRole(Role.REVIEWER),

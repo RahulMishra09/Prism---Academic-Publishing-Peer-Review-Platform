@@ -1,8 +1,13 @@
 import { PaperStatus, Role, Prisma } from "../../../generated/prisma/index.js";
 import { prisma } from "../../config/prisma.js";
 import { AppError } from "../../middleware/error.middleware.js";
-import { sendSubmissionConfirmation, sendDecisionEmail } from "../emails/email.service.js";
-import { createAuditLog } from "../admin/admin.service.js";
+import { uploadPaperFile as storeFile, deleteFile } from "../../utils/storage.js";
+import {
+  sendPaperSubmittedEmail,
+  sendPaperApprovedEmail,
+  sendPaperRejectedEmail,
+} from "../../utils/email.js";
+import { env } from "../../config/env.js";
 import type {
   CreatePaperInput,
   UpdatePaperInput,
@@ -10,7 +15,7 @@ import type {
   ListPapersQuery,
 } from "./papers.schema.js";
 
-//  Shared select avoids over-fetching across all queries 
+//  Shared select avoids over-fetching across all queries
 const paperSelect = {
   id:             true,
   title:          true,
@@ -19,6 +24,7 @@ const paperSelect = {
   keywords:       true,
   status:         true,
   rejectionReason: true,
+  fileUrl:        true,
   createdAt:      true,
   updatedAt:      true,
   approvedAt:     true,
@@ -292,7 +298,13 @@ export const updatePaper = async (
 export const submitPaper = async (paperId: string, authorId: string) => {
   const paper = await prisma.paper.findUnique({
     where:  { id: paperId },
-    select: { id: true, submittedBy: true, status: true },
+    select: {
+      id: true,
+      submittedBy: true,
+      status: true,
+      title: true,
+      author: { select: { name: true, email: true } },
+    },
   });
 
   if (!paper) {
@@ -310,17 +322,21 @@ export const submitPaper = async (paperId: string, authorId: string) => {
     );
   }
 
-  const updated = await prisma.paper.update({
+  const updatedPaper = await prisma.paper.update({
     where:  { id: paperId },
     data:   { status: PaperStatus.SUBMITTED },
-    select: { ...paperSelect, author: { select: { id: true, name: true, email: true } } },
+    select: paperSelect,
   });
 
-  // Fire-and-forget email + audit log
-  sendSubmissionConfirmation(updated.author.email, updated.author.name, updated.title);
-  createAuditLog({ action: "PAPER_SUBMITTED", actorId: authorId, targetId: paperId, targetType: "paper" });
+  // Send email notification to author
+  await sendPaperSubmittedEmail({
+    to: paper.author.email,
+    authorName: paper.author.name,
+    paperTitle: paper.title,
+    paperUrl: `${env.APP_URL}/papers/${paperId}`,
+  });
 
-  return updated;
+  return updatedPaper;
 };
 
 //  approvePaper 
@@ -332,7 +348,12 @@ export const submitPaper = async (paperId: string, authorId: string) => {
 export const approvePaper = async (paperId: string) => {
   const paper = await prisma.paper.findUnique({
     where:  { id: paperId },
-    select: { id: true, status: true },
+    select: {
+      id: true,
+      status: true,
+      title: true,
+      author: { select: { name: true, email: true } },
+    },
   });
 
   if (!paper) {
@@ -356,16 +377,26 @@ export const approvePaper = async (paperId: string) => {
     );
   }
 
-  const approved = await prisma.paper.update({
+  const approvedAt = new Date();
+  const updatedPaper = await prisma.paper.update({
     where:  { id: paperId },
-    data: { status: PaperStatus.APPROVED, approvedAt: new Date() },
-    select: { ...paperSelect, author: { select: { id: true, name: true, email: true } } },
+    data: {
+      status:     PaperStatus.APPROVED,
+      approvedAt,
+    },
+    select: paperSelect,
   });
 
-  sendDecisionEmail(approved.author.email, approved.author.name, approved.title, "APPROVED");
-  createAuditLog({ action: "PAPER_APPROVED", targetId: paperId, targetType: "paper" });
+  // Send email notification to author
+  await sendPaperApprovedEmail({
+    to: paper.author.email,
+    authorName: paper.author.name,
+    paperTitle: paper.title,
+    paperUrl: `${env.APP_URL}/papers/${paperId}`,
+    approvedAt,
+  });
 
-  return approved;
+  return updatedPaper;
 };
 
 //  rejectPaper 
@@ -380,7 +411,12 @@ export const rejectPaper = async (
 ) => {
   const paper = await prisma.paper.findUnique({
     where:  { id: paperId },
-    select: { id: true, status: true },
+    select: {
+      id: true,
+      status: true,
+      title: true,
+      author: { select: { name: true, email: true } },
+    },
   });
 
   if (!paper) {
@@ -397,14 +433,115 @@ export const rejectPaper = async (
   // Editors may reject a paper at any point (e.g. out-of-scope, plagiarism)
   // without requiring peer review first — no review count guard here.
 
-  const rejected = await prisma.paper.update({
+  const updatedPaper = await prisma.paper.update({
     where:  { id: paperId },
-    data: { status: PaperStatus.REJECTED, rejectionReason: input.rejectionReason },
-    select: { ...paperSelect, author: { select: { id: true, name: true, email: true } } },
+    data: {
+      status:          PaperStatus.REJECTED,
+      rejectionReason: input.rejectionReason,
+    },
+    select: paperSelect,
   });
 
-  sendDecisionEmail(rejected.author.email, rejected.author.name, rejected.title, "REJECTED", input.rejectionReason);
-  createAuditLog({ action: "PAPER_REJECTED", targetId: paperId, targetType: "paper", meta: { reason: input.rejectionReason } });
+  // Send email notification to author
+  await sendPaperRejectedEmail({
+    to: paper.author.email,
+    authorName: paper.author.name,
+    paperTitle: paper.title,
+    rejectionReason: input.rejectionReason,
+  });
 
-  return rejected;
+  return updatedPaper;
+};
+
+// uploadPaperFile
+/**
+ * Upload a file for a paper.
+ * Only the owning author may upload, and only while the paper is in DRAFT status.
+ * If a file already exists, it will be replaced.
+ */
+export const uploadPaperFile = async (
+  paperId: string,
+  authorId: string,
+  file: { buffer: Buffer; originalname: string }
+) => {
+  const paper = await prisma.paper.findUnique({
+    where: { id: paperId },
+    select: { id: true, submittedBy: true, status: true, fileUrl: true },
+  });
+
+  if (!paper) {
+    throw new AppError("Paper not found", 404);
+  }
+
+  if (paper.submittedBy !== authorId) {
+    throw new AppError("You do not have permission to upload files for this paper", 403);
+  }
+
+  if (paper.status !== PaperStatus.DRAFT) {
+    throw new AppError(
+      "Files can only be uploaded to papers in DRAFT status",
+      400
+    );
+  }
+
+  // Delete old file if it exists
+  if (paper.fileUrl) {
+    try {
+      await deleteFile(paper.fileUrl);
+    } catch (error) {
+      // Log error but don't fail the upload if old file deletion fails
+      console.error("Failed to delete old file:", error);
+    }
+  }
+
+  // Upload new file
+  const fileUrl = await storeFile(file.buffer, file.originalname, paperId);
+
+  // Update paper with new file URL
+  return prisma.paper.update({
+    where: { id: paperId },
+    data: { fileUrl },
+    select: paperSelect,
+  });
+};
+
+// deletePaperFile
+/**
+ * Delete the file associated with a paper.
+ * Only the owning author may delete, and only while the paper is in DRAFT status.
+ */
+export const deletePaperFile = async (paperId: string, authorId: string) => {
+  const paper = await prisma.paper.findUnique({
+    where: { id: paperId },
+    select: { id: true, submittedBy: true, status: true, fileUrl: true },
+  });
+
+  if (!paper) {
+    throw new AppError("Paper not found", 404);
+  }
+
+  if (paper.submittedBy !== authorId) {
+    throw new AppError("You do not have permission to delete files for this paper", 403);
+  }
+
+  if (paper.status !== PaperStatus.DRAFT) {
+    throw new AppError(
+      "Files can only be deleted from papers in DRAFT status",
+      400
+    );
+  }
+
+  if (!paper.fileUrl) {
+    throw new AppError("Paper has no file to delete", 404);
+  }
+
+  // Delete file from storage
+  await deleteFile(paper.fileUrl);
+
+  // Update paper to remove file URL
+  return prisma.paper.update({
+    where: { id: paperId },
+    data: { fileUrl: null },
+    select: paperSelect,
+  });
 };

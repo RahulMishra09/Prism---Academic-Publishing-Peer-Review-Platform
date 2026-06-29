@@ -1,6 +1,8 @@
 import { AssignmentStatus, PaperStatus, Role } from "../../../generated/prisma/index.js";
 import { prisma } from "../../config/prisma.js";
 import { AppError } from "../../middleware/error.middleware.js";
+import { sendReviewSubmittedEmail } from "../../utils/email.js";
+import { env } from "../../config/env.js";
 import type { CreateReviewInput } from "./reviews.schema.js";
 
 // Shared select 
@@ -78,7 +80,12 @@ export const submitReview = async (
       reviewerId: true,
       paperId:   true,
       paper: {
-        select: { id: true, status: true },
+        select: {
+          id: true,
+          status: true,
+          title: true,
+          author: { select: { name: true, email: true } },
+        },
       },
       review: { select: { id: true } },
     },
@@ -109,7 +116,7 @@ export const submitReview = async (
   }
 
   // Create review and mark assignment COMPLETED in a single transaction
-  const [review] = await prisma.$transaction([
+  const [review] = await Promise.all([
     prisma.review.create({
       data: {
         strengths:      input.strengths,
@@ -127,6 +134,16 @@ export const submitReview = async (
       data:  { status: AssignmentStatus.COMPLETED },
     }),
   ]);
+
+  // Send email notification to paper author
+  await sendReviewSubmittedEmail({
+    to: assignment.paper.author.email,
+    authorName: assignment.paper.author.name,
+    paperTitle: assignment.paper.title,
+    score: input.score,
+    recommendation: input.recommendation,
+    reviewsUrl: `${env.APP_URL}/papers/${assignment.paperId}`,
+  });
 
   return review;
 };
@@ -214,4 +231,63 @@ export const getMyReviews = async (reviewerId: string) => {
     select:  reviewSelect,
     orderBy: { createdAt: "desc" },
   });
+};
+
+// getReviewerDashboard
+/**
+ * Returns a summary of the reviewer's current workload:
+ * - Counts: total assigned, pending, completed
+ * - Pending assignments (papers awaiting review)
+ * - Recently submitted reviews
+ */
+export const getReviewerDashboard = async (reviewerId: string) => {
+  const [totalAssigned, pendingCount, completedCount, pendingAssignments, recentReviews] =
+    await Promise.all([
+      prisma.reviewerAssignment.count({ where: { reviewerId } }),
+      prisma.reviewerAssignment.count({ where: { reviewerId, status: "PENDING" } }),
+      prisma.reviewerAssignment.count({ where: { reviewerId, status: "COMPLETED" } }),
+      prisma.reviewerAssignment.findMany({
+        where:   { reviewerId, status: "PENDING" },
+        orderBy: { assignedAt: "desc" },
+        take:    10,
+        select: {
+          id:         true,
+          status:     true,
+          assignedAt: true,
+          paper: {
+            select: {
+              id:       true,
+              title:    true,
+              abstract: true,
+              domain:   true,
+              keywords: true,
+              status:   true,
+              createdAt: true,
+            },
+          },
+        },
+      }),
+      prisma.review.findMany({
+        where:   { reviewerId },
+        orderBy: { createdAt: "desc" },
+        take:    5,
+        select: {
+          id:             true,
+          score:          true,
+          recommendation: true,
+          createdAt:      true,
+          paper: { select: { id: true, title: true, status: true } },
+        },
+      }),
+    ]);
+
+  return {
+    stats: {
+      totalAssigned,
+      pending:   pendingCount,
+      completed: completedCount,
+    },
+    pendingAssignments,
+    recentReviews,
+  };
 };
