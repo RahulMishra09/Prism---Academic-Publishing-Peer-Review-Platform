@@ -1,432 +1,153 @@
-# Research Portal — Backend Architecture
+# Lumex Research Portal — Backend Architecture
 
 ## Table of Contents
 
-1. [Tech Stack](#tech-stack)
-2. [How the Server Starts](#how-the-server-starts)
+1. [System Overview](#system-overview)
+2. [Tech Stack](#tech-stack)
 3. [Request Lifecycle](#request-lifecycle)
-4. [Where Data Is Stored](#where-data-is-stored)
-5. [Database Tables](#database-tables)
-6. [Modules & Routes](#modules--routes)
-   - [Auth](#auth-module)
-   - [Papers](#papers-module)
-   - [Reviews](#reviews-module)
-7. [Middleware Stack](#middleware-stack)
-8. [Authentication & Authorization Flow](#authentication--authorization-flow)
-9. [Paper Lifecycle](#paper-lifecycle)
-10. [Review Flow](#review-flow)
-11. [Role Permissions Matrix](#role-permissions-matrix)
-12. [Folder Structure](#folder-structure)
-13. [Environment Variables](#environment-variables)
-14. [What Is Not Yet Built](#what-is-not-yet-built)
+4. [Middleware Stack](#middleware-stack)
+5. [Module Architecture](#module-architecture)
+6. [Database Design](#database-design)
+7. [Authentication & Session Management](#authentication--session-management)
+8. [Role Permissions Matrix](#role-permissions-matrix)
+9. [Workflow State Machines](#workflow-state-machines)
+10. [Notification System](#notification-system)
+11. [Caching Strategy](#caching-strategy)
+12. [Rate Limiting](#rate-limiting)
+13. [File Storage](#file-storage)
+14. [Alert Digest System](#alert-digest-system)
+15. [Folder Structure](#folder-structure)
+16. [Environment Variables](#environment-variables)
+
+---
+
+## System Overview
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         CLIENT (Frontend)                        │
+│              Web App / Mobile App / API Consumer                 │
+└─────────────────────────┬───────────────────────────────────────┘
+                          │  HTTPS
+                          ▼
+┌─────────────────────────────────────────────────────────────────┐
+│                    EXPRESS.JS API SERVER                         │
+│                                                                  │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────┐   │
+│  │ Helmet   │  │  CORS    │  │ Morgan   │  │ Rate Limiter │   │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────────┘   │
+│                                                                  │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │                    Route Modules (17)                    │   │
+│  │  auth · users · articles · journals · collections       │   │
+│  │  books · news · careers · conferences · search          │   │
+│  │  submissions · checkout · contact · homepage            │   │
+│  │  papers · reviews · editor · admin                      │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│                                                                  │
+│  ┌──────────────────────┐   ┌──────────────────────────────┐   │
+│  │    In-Process Cache  │   │   Token Blacklist (in-mem)   │   │
+│  │    (TTL Cache)       │   │                              │   │
+│  └──────────────────────┘   └──────────────────────────────┘   │
+└──────────┬──────────────────────────┬───────────────────────────┘
+           │                          │
+           ▼                          ▼
+┌──────────────────────┐   ┌──────────────────────────────────────┐
+│   PostgreSQL (Neon)  │   │          External Services           │
+│                      │   │                                      │
+│   24 tables          │   │  ┌─────────────┐  ┌─────────────┐  │
+│   Prisma v7 ORM      │   │  │   Supabase  │  │   Resend    │  │
+│   pg adapter (local) │   │  │   Storage   │  │   (Email)   │  │
+│   Neon adapter (prod)│   │  │  PDF/DOCX   │  │  15 templates│  │
+└──────────────────────┘   │  └─────────────┘  └─────────────┘  │
+                           └──────────────────────────────────────┘
+```
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Runtime | Node.js (ESM) |
-| Language | TypeScript (strict mode) |
-| Framework | Express.js v5 |
-| Database | PostgreSQL (hosted on Neon) |
-| ORM | Prisma v7 |
-| Auth | JWT (jsonwebtoken) |
-| Passwords | bcrypt (10 salt rounds) |
-| Validation | Zod |
-| Security headers | Helmet |
-| CORS | cors |
-| Logging | Morgan (dev mode) |
-| File Storage | Supabase Storage **or** AWS S3 (decision pending) |
-| File Upload (server) | multer (multipart/form-data parsing) — not yet installed |
-
----
-
-## How the Server Starts
-
-```
-src/server.ts          ← Entry point. Reads PORT from env, calls app.listen()
-    └── src/app.ts     ← Creates Express app, registers middleware and routes
-         ├── cors()
-         ├── helmet()
-         ├── morgan()
-         ├── express.json()
-         ├── GET /health
-         ├── /auth    → auth.routes.ts
-         ├── /papers  → papers.routes.ts
-         ├── /reviews → reviews.routes.ts
-         └── errorHandler (must be last)
-```
-
-At startup, `src/config/env.ts` is imported. It validates that `DATABASE_URL`
-and `JWT_SECRET` exist in the environment — the process crashes immediately
-if either is missing.
+| Layer | Technology | Notes |
+|-------|-----------|-------|
+| Runtime | Node.js (ESM) | `"type": "module"` — all imports use `.js` extension |
+| Language | TypeScript 5.9 | Strict mode; `noEmit` typecheck in CI |
+| Framework | Express v5 | Async error propagation, `req.params` typed as `string\|string[]` |
+| Database | PostgreSQL 14+ | Neon (cloud) or local |
+| ORM | Prisma v7.4 | Driver adapter required; no library engine |
+| DB Adapter | `@prisma/adapter-pg` / `@prisma/adapter-neon` | Switched at runtime based on `DATABASE_URL` |
+| Auth | JWT (`jsonwebtoken`) | Access token 15 min; refresh token 30 days (DB-stored, rotated) |
+| Passwords | bcrypt | 10 salt rounds |
+| Validation | Zod v4 | `.safeParse()` on every request body/query |
+| File Storage | Supabase Storage | PDF/DOCX files; DB stores URL only |
+| File Upload | multer | Memory storage; `@types/multer` |
+| Email | Resend | Fire-and-forget; 15 named templates |
+| Security | Helmet + cors + express-rate-limit | 5 limiter profiles |
+| Logging | Morgan | `dev` format in development |
 
 ---
 
 ## Request Lifecycle
 
-Every HTTP request goes through the following pipeline:
-
 ```
-Client Request
-     │
-     ▼
-cors() + helmet() + morgan()       ← Security headers, CORS, logging
-     │
-     ▼
-express.json()                     ← Parse JSON body
-     │
-     ▼
-Route match (e.g. POST /papers)
-     │
-     ▼
-authenticate middleware            ← Verify JWT, set req.user = { userId, role }
-     │
-     ▼
-requireRole(...) middleware        ← Check role is allowed for this route
-     │
-     ▼
-Controller function                ← Validate input with Zod
-     │
-     ▼
-Service function                   ← Business logic + Prisma DB queries
-     │
-     ▼
-sendSuccess(res, {...})            ← Standardised JSON response
-     │
-     ▼
-Client Response
+Incoming HTTP Request
+        │
+        ▼
+┌─────────────────────────────────────────────────┐
+│  Global middleware (applies to every request)    │
+│  1. cors()           — CORS headers              │
+│  2. helmet()         — Security headers          │
+│  3. morgan()         — Request logging           │
+│  4. express.json()   — Parse JSON body           │
+│  5. globalLimiter    — 200 req/15 min/IP         │
+└────────────────────────┬────────────────────────┘
+                         │
+                         ▼
+               Route-specific limiters
+               (authLimiter / searchLimiter / contactLimiter)
+                         │
+                         ▼
+               authenticate middleware
+               ┌──────────────────────┐
+               │ Read Authorization   │
+               │ Verify JWT           │
+               │ Set req.user         │
+               └──────────┬───────────┘
+                          │  (skipped for public routes)
+                          ▼
+               requireRole(...roles)
+               ┌──────────────────────┐
+               │ Check req.user.role  │
+               │ 403 if not allowed   │
+               └──────────┬───────────┘
+                          │
+                          ▼
+               Controller function
+               ┌──────────────────────┐
+               │ Zod.safeParse(body)  │
+               │ 400 on failure       │
+               │ Call service fn      │
+               └──────────┬───────────┘
+                          │
+                          ▼
+               Service function
+               ┌──────────────────────┐
+               │ Business logic       │
+               │ Prisma queries       │
+               │ Cache read/write     │
+               │ Fire-and-forget      │
+               │  emails / digests    │
+               └──────────┬───────────┘
+                          │
+                          ▼
+               sendSuccess(res, {...})
+               Standard JSON envelope
+                          │
+                          ▼
+                    Client Response
 
-If anything throws → errorHandler middleware catches it and sends sendError()
-```
-
----
-
-## Where Data Is Stored
-
-Data is split across **two storage systems**:
-
-### 1. PostgreSQL (Neon) — structured data
-
-All relational data lives here. No files, no binary blobs.
-
-| Data | Table | Notes |
-|------|-------|-------|
-| User accounts | `users` | Passwords are bcrypt hashed, never plaintext |
-| JWT tokens | Nowhere | JWTs are stateless; only secret key is stored in env |
-| Paper metadata | `papers` | Title, abstract, domain, keywords, status, `fileUrl` |
-| Paper file location | `papers.fileUrl` | URL pointing to the file in Supabase/S3 — not the file itself |
-| Paper status | `papers.status` | DRAFT / SUBMITTED / APPROVED / REJECTED |
-| Reviewer assignments | `reviewer_assignments` | Which reviewer is assigned to which paper |
-| Reviews | `reviews` | Strengths, weaknesses, score (1-10), recommendation |
-
-### 2. Supabase Storage or AWS S3 — file storage (planned)
-
-Actual PDF/DOCX files uploaded by authors will be stored in object storage,
-**not** in the database. The database only stores the resulting public/signed URL.
-
-| Provider | How it works |
-|----------|-------------|
-| **Supabase Storage** | Files uploaded to a Supabase bucket. Public or signed URLs returned and saved to `papers.fileUrl` |
-| **AWS S3** | Files uploaded to an S3 bucket. Presigned URLs used for both upload and download. URL saved to `papers.fileUrl` |
-
-**Upload flow (planned):**
-```
-AUTHOR sends multipart/form-data request
-    │
-    ▼
-multer middleware receives the file buffer in memory
-    │
-    ▼
-Service uploads buffer to Supabase Storage / S3
-    │
-    ▼
-Storage returns public/signed URL
-    │
-    ▼
-URL saved to papers.fileUrl in PostgreSQL
-    │
-    ▼
-Client uses the URL to download or preview the file directly from storage
-    (server is not involved in file downloads — client hits storage directly)
-```
-
-> **Current state:** `fileUrl` field does not yet exist in the schema.
-> `multer`, Supabase SDK / AWS SDK are not yet installed.
-> The specific provider (Supabase vs AWS S3) has not been finalised.
-
-### Database Connection
-
-```
-src/config/prisma.ts
-    └── Creates a single PrismaClient instance (singleton pattern)
-         └── Reads DATABASE_URL from environment
-              └── Connects to PostgreSQL on Neon (serverless)
-```
-
-The Prisma client is generated into `/generated/prisma/` from the schema at
-`/prisma/schema.prisma`.
-
----
-
-## Database Tables
-
-### `users`
-```
-id          String   (cuid, primary key)
-name        String
-email       String   (unique)
-password    String   (bcrypt hash)
-role        Role     (READER | AUTHOR | REVIEWER | EDITOR | ADMIN)
-isBanned    Boolean  (default false)
-createdAt   DateTime
-updatedAt   DateTime
-```
-
-### `papers`
-```
-id              String       (cuid, primary key)
-title           String       (5–300 chars)
-abstract        String       (50–5000 chars)
-domain          String
-keywords        String[]     (array of strings)
-status          PaperStatus  (DRAFT | SUBMITTED | APPROVED | REJECTED)
-rejectionReason String?      (set when status = REJECTED)
-fileUrl         String?      (PLANNED — URL of uploaded PDF/DOCX stored in Supabase/S3)
-aiSummary       String?      (reserved for future AI feature)
-embedding       Float[]      (reserved for future vector search)
-reviewAISuggestion String?   (reserved for future AI feature)
-createdAt       DateTime
-updatedAt       DateTime
-approvedAt      DateTime?    (set when status = APPROVED)
-submittedBy     String       (FK → users.id)
-```
-Indexes: `status`, `domain`, `createdAt`, `submittedBy`
-
-> `fileUrl` is planned but not yet added to the Prisma schema. A migration
-> will be required once the storage provider (Supabase vs AWS S3) is finalised.
-
-### `reviewer_assignments`
-```
-id          String           (cuid, primary key)
-status      AssignmentStatus (PENDING | COMPLETED)
-assignedAt  DateTime
-paperId     String           (FK → papers.id)
-reviewerId  String           (FK → users.id)
-
-Unique constraint: (paperId, reviewerId) — same reviewer can't be assigned twice
-```
-
-### `reviews`
-```
-id             String   (cuid, primary key)
-strengths      String
-weaknesses     String
-score          Int      (1–10)
-recommendation String   (ACCEPT | MINOR_REVISION | MAJOR_REVISION | REJECT)
-createdAt      DateTime
-paperId        String   (FK → papers.id)
-reviewerId     String   (FK → users.id)
-assignmentId   String   (FK → reviewer_assignments.id, unique 1-to-1)
-
-Unique constraint: (paperId, reviewerId) — one review per reviewer per paper
-```
-
-### `comments`
-```
-id        String   (cuid, primary key)
-body      String   (max 2000 chars)
-createdAt DateTime
-updatedAt DateTime
-paperId   String   (FK -> papers.id)
-authorId  String   (FK -> users.id)
-parentId  String?  (FK -> comments.id, nullable — for threaded replies)
-```
-Indexes: `paperId`, `authorId`, `parentId`
-
----
-
-## Modules & Routes
-
-### Auth Module
-**Base path:** `/auth`
-**Files:** `src/modules/auth/`
-
-| Method | Path | Role | What it does |
-|--------|------|------|-------------|
-| POST | `/auth/register` | Public | Create account (READER role by default). Returns user + JWT |
-| POST | `/auth/login` | Public | Validate credentials. Returns user + JWT |
-
-**Flow:**
-```
-POST /auth/register
-  Body: { name, email, password }
-    → Zod validation
-    → Check email not already used (409 if duplicate)
-    → bcrypt.hash(password, 10)
-    → prisma.user.create()
-    → signToken({ userId, role })
-    → Return { user, token }
-
-POST /auth/login
-  Body: { email, password }
-    → Zod validation
-    → prisma.user.findUnique({ where: { email } })
-    → Generic "Invalid email or password" if not found (prevents enumeration)
-    → Check isBanned (403 if banned)
-    → bcrypt.compare(password, hash)
-    → signToken({ userId, role })
-    → Return { user, token }
-```
-
----
-
-### Papers Module
-**Base path:** `/papers`
-**Files:** `src/modules/papers/`
-
-| Method | Path | Role | What it does |
-|--------|------|------|-------------|
-| POST | `/papers` | AUTHOR | Create new paper in DRAFT status |
-| GET | `/papers/my` | AUTHOR | List own papers |
-| GET | `/papers` | All authenticated | Paginated list (role-filtered visibility) |
-| GET | `/papers/:id` | All authenticated | Single paper detail (role-filtered) |
-| PATCH | `/papers/:id` | AUTHOR | Update draft paper (DRAFT status only) |
-| POST | `/papers/:id/submit` | AUTHOR | Move paper DRAFT → SUBMITTED |
-| POST | `/papers/:id/approve` | EDITOR, ADMIN | Move paper SUBMITTED → APPROVED |
-| POST | `/papers/:id/reject` | EDITOR, ADMIN | Move paper SUBMITTED → REJECTED (reason required) |
-
-**Visibility rules for `GET /papers`:**
-
-| Role | Sees |
-|------|------|
-| AUTHOR | Own papers only (any status) |
-| REVIEWER | Only SUBMITTED papers assigned to them |
-| READER | Only APPROVED papers |
-| EDITOR | All papers (filterable by status/domain) |
-| ADMIN | All papers (filterable by status/domain) |
-
-**Approve/Reject guard:** A paper cannot be approved or rejected unless it has
-**at least one completed review**. Attempting to do so returns 422.
-
----
-
-### Reviews Module
-**Base path:** `/reviews`
-**Files:** `src/modules/reviews/`
-
-| Method | Path | Role | What it does |
-|--------|------|------|-------------|
-| GET | `/reviews/my-assignments` | REVIEWER | List papers assigned to this reviewer |
-| POST | `/reviews/assignments/:assignmentId` | REVIEWER | Submit a review for an assignment |
-| GET | `/reviews/my-reviews` | REVIEWER | List reviews this reviewer has submitted |
-| GET | `/reviews/papers/:paperId` | AUTHOR, REVIEWER, EDITOR, ADMIN | Get all reviews for a paper |
-
-**Double-blind enforcement:**
-
-| Who reads reviews | What they see |
-|-------------------|---------------|
-| AUTHOR | Review content (strengths, weaknesses, score) — reviewer identity hidden |
-| REVIEWER | Only their own review for that paper |
-| EDITOR / ADMIN | Full details including reviewer identity |
-| READER | Access denied (403) |
-
-**Submit review flow:**
-```
-POST /reviews/assignments/:assignmentId
-  Body: { strengths, weaknesses, score, recommendation }
-    → Verify assignment exists and belongs to this reviewer
-    → Verify assignment status is PENDING (not already reviewed)
-    → Verify paper is in SUBMITTED status
-    → prisma.$transaction([
-        prisma.review.create(...),
-        prisma.reviewerAssignment.update({ status: COMPLETED })
-      ])
-    → Return created review
-```
-
-Using a **database transaction** ensures the review creation and assignment
-status update happen atomically — either both succeed or neither does.
-
----
-
-### Editor Module
-**Base path:** `/editor`
-**Files:** `src/modules/editor/`
-**Access:** EDITOR and ADMIN only on all routes
-
-| Method | Path | What it does |
-|--------|------|-------------|
-| GET | `/editor/papers` | Paginated list of all papers (filterable by status/domain) |
-| GET | `/editor/papers/:paperId` | Full paper detail with all assignments and reviews |
-| POST | `/editor/papers/:paperId/assign-reviewer` | Assign a reviewer to a submitted paper |
-| GET | `/editor/papers/:paperId/assignments` | List all reviewer assignments for a paper |
-| DELETE | `/editor/papers/:paperId/assignments/:reviewerId` | Remove a PENDING assignment |
-
-**Assign reviewer guards:**
-- Paper must be in **SUBMITTED** status
-- User must exist and have the **REVIEWER** role
-- User must not be banned
-- Same reviewer cannot be assigned to the same paper twice (409)
-
-**Remove assignment guard:**
-- Assignment must be **PENDING** — cannot remove a reviewer who already submitted a review (422)
-
-**Assign reviewer flow:**
-```
-POST /editor/papers/:paperId/assign-reviewer
-  Body: { reviewerId }
-    → Verify paper exists and is SUBMITTED
-    → Verify user exists and role === REVIEWER and not banned
-    → Check no duplicate assignment (409 if already assigned)
-    → prisma.reviewerAssignment.create({ paperId, reviewerId })
-    → Return assignment with paper + reviewer details
-```
-
----
-
-### Comments Module
-**Base path:** `/comments`
-**Files:** `src/modules/comments/`
-
-| Method | Path | Role | What it does |
-|--------|------|------|-------------|
-| GET | `/comments/papers/:paperId` | All authenticated | Paginated top-level comments + nested replies for an APPROVED paper |
-| POST | `/comments/papers/:paperId` | READER, AUTHOR, EDITOR, ADMIN | Post a comment or reply on an APPROVED paper |
-| DELETE | `/comments/:commentId` | Owner, EDITOR, ADMIN | Delete a comment (cascades to its replies) |
-
-**Access rules:**
-- Comments only allowed on **APPROVED** papers — 403 on any other status
-- **REVIEWER** role cannot post comments (they use the Review model)
-- **AUTHOR** can only comment on their own papers
-- **READER / AUTHOR** can only delete their own comments
-- **EDITOR / ADMIN** can delete any comment
-- Replies supported via `parentId` — one level of nesting only (cannot reply to a reply)
-
-**Create comment flow:**
-```
-POST /comments/papers/:paperId
-  Body: { body, parentId? }
-    → Reject if role === REVIEWER (403)
-    → Verify paper exists and status === APPROVED
-    → If AUTHOR, verify paper.submittedBy === req.user.userId
-    → If parentId provided:
-        - Verify parent comment exists and belongs to same paper
-        - Verify parent has no parentId (enforce one level of nesting)
-    → prisma.comment.create({ body, paperId, authorId, parentId })
-    → Return comment with author details
-```
-
-**Delete comment flow:**
-```
-DELETE /comments/:commentId
-    → Verify comment exists
-    → Verify requester is owner OR role === EDITOR/ADMIN
-    → prisma.$transaction([
-        prisma.comment.deleteMany({ where: { parentId: commentId } }),
-        prisma.comment.delete({ where: { id: commentId } })
-      ])
+  Any thrown error → errorHandler middleware
+  AppError    → err.statusCode + err.message
+  Unexpected  → 500 + safe generic message
 ```
 
 ---
@@ -434,134 +155,207 @@ DELETE /comments/:commentId
 ## Middleware Stack
 
 ### `authenticate` — `src/middleware/auth.middleware.ts`
-Runs on every protected route.
 
 ```
-1. Read Authorization header
-2. Check format: "Bearer <token>"
-3. jwt.verify(token, JWT_SECRET)
-4. Decode payload: { userId, role }
-5. Set req.user = { userId, role }
-6. Call next()
-
-Errors:
-  - No header → 401 "No token provided"
-  - Bad format → 401 "Malformed authorization header"
-  - Expired    → 401 "Token has expired"
-  - Invalid    → 401 "Invalid token"
+Authorization: Bearer <access_token>
+       │
+       ├─ Missing / malformed → 401
+       ├─ Token in blacklist  → 401 (logged out)
+       ├─ jwt.verify fails    → 401
+       └─ Valid               → req.user = { userId, role }
 ```
 
 ### `requireRole(...roles)` — `src/middleware/role.middleware.ts`
-Always runs AFTER `authenticate`. Factory function that creates a middleware:
 
-```
-requireRole(Role.AUTHOR, Role.EDITOR)
-  → Returns middleware that:
-      If req.user is missing → 401
-      If req.user.role not in [AUTHOR, EDITOR] → 403
-      Otherwise → next()
-```
+Factory: `requireRole("EDITOR", "ADMIN")` returns middleware that checks `req.user.role`.
 
 ### `errorHandler` — `src/middleware/error.middleware.ts`
-Registered last in `app.ts`. Catches all errors passed via `next(err)`.
 
-```
-If err is AppError (operational):
-  → res.status(err.statusCode).json({ success: false, message: err.message })
+```typescript
+class AppError extends Error {
+  readonly statusCode: number;  // HTTP status
+  readonly code: string;        // Machine-readable code e.g. "NOT_FOUND"
+}
 
-If unexpected error:
-  → Log full stack trace
-  → Development: return err.message
-  → Production: return "Internal server error" (safe generic message)
+// Response shape
+{ code: string, message: string, details: null | FieldErrors }
 ```
+
+### `ratelimit` — `src/middleware/ratelimit.middleware.ts`
+
+| Limiter | Window | Max | Applied to |
+|---------|--------|-----|-----------|
+| `globalLimiter` | 15 min | 200 | All routes (app-level) |
+| `authLimiter` | 15 min | 10 | `/api/auth/*` |
+| `searchLimiter` | 1 min | 60 | `/api/search/*` |
+| `contactLimiter` | 60 min | 5 | `/api/contact` |
+| `uploadLimiter` | 15 min | 20 | File upload routes |
+
+All return `{ code: "RATE_LIMIT_EXCEEDED", message: "..." }` on hit.
+
+### `upload` — `src/middleware/upload.middleware.ts`
+
+multer memory storage; file in `req.file.buffer`. Used on submission file upload routes.
 
 ---
 
-## Authentication & Authorization Flow
+## Module Architecture
+
+Each feature module follows a strict 4-layer structure:
 
 ```
-User registers/logs in
-    │
-    ▼
-Server returns JWT token (signed with JWT_SECRET, expires in 7 days)
-    │
-    ▼
-Client stores token (localStorage / cookie — client's responsibility)
-    │
-    ▼
-Client sends token on every request:
-    Authorization: Bearer <token>
-    │
-    ▼
-authenticate middleware verifies token
-    │
-    ▼
-req.user = { userId: "cuid...", role: "AUTHOR" }
-    │
-    ▼
-requireRole checks the role → allow or 403
+modules/<feature>/
+  ├── <feature>.routes.ts      Route definitions + middleware chaining
+  ├── <feature>.controller.ts  Parse request → call service → sendSuccess()
+  ├── <feature>.service.ts     Business logic + Prisma + cache + email
+  └── <feature>.schema.ts      Zod schemas for body/query validation
 ```
 
-JWTs are **stateless** — the server does not store tokens anywhere.
-If a token is stolen, there is currently no revocation mechanism (this is a known gap).
+### Module inventory
+
+| Module | Base Path | Key Responsibilities |
+|--------|-----------|---------------------|
+| `auth` | `/api/auth` | Register, login, logout, refresh, forgot/reset password |
+| `users` | `/api/users` | Profile, dashboard, alerts, orders |
+| `articles` | `/api/articles` | List, top, detail, metrics, download tracking, publish |
+| `journals` | `/api/journals` | Journal list, detail, articles by journal |
+| `collections` | `/api/collections` | Collection list + article members |
+| `books` | `/api/books` | Book list, detail, chapters |
+| `news` | `/api/news` | Published news items |
+| `careers` | `/api/careers` | Active job listings |
+| `conferences` | `/api/conferences` | Conferences by status/discipline |
+| `search` | `/api/search` | Full-text + faceted search, suggestions |
+| `homepage` | `/api/homepage` | Aggregated homepage payload (cached) |
+| `site-config` | `/api/site-config` | Key-value config store (cached) |
+| `contact` | `/api/contact` | Contact form + dual confirmation emails |
+| `submissions` | `/api/submissions` | Full submission lifecycle (8 status transitions) |
+| `checkout` | `/api/checkout` | Article purchase, APC payment, order completion |
+| `papers` | `/papers` | Legacy internal paper workflow (CRUD + review) |
+| `reviews` | `/reviews` | Reviewer dashboard, assignments, submit review |
+| `editor` | `/editor` | Editor paper management, reviewer assignment |
+| `admin` | `/admin` | User list, ban/unban, role change, platform stats |
 
 ---
 
-## Paper Lifecycle
+## Database Design
 
-```
-                    AUTHOR creates
-                         │
-                         ▼
-                      DRAFT ──── AUTHOR can edit (title, abstract, domain, keywords)
-                         │
-                    AUTHOR submits
-                         │
-                         ▼
-                    SUBMITTED ──── EDITOR assigns reviewers
-                         │            │
-                         │        REVIEWER submits review(s)
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-         EDITOR approves       EDITOR rejects
-              │                     │
-              ▼                     ▼
-          APPROVED              REJECTED
-     (visible to READERs)  (rejectionReason stored)
+### Adapter selection (`src/config/prisma.ts`)
+
+```typescript
+if (DATABASE_URL.includes("neon.tech")) {
+  // Cloud: WebSocket adapter for Neon serverless
+  adapter = new PrismaNeon({ connectionString: DATABASE_URL });
+} else {
+  // Local / other: standard pg adapter
+  adapter = new PrismaPg({ connectionString: DATABASE_URL });
+}
+return new PrismaClient({ adapter, log });
 ```
 
-Rules:
-- Paper can only be edited while in **DRAFT** status
-- Paper can only be approved/rejected from **SUBMITTED** status
-- At least **one completed review** is required before approve/reject
-- Once APPROVED or REJECTED, status cannot be changed (no endpoint for it)
+### Schema at a glance (24 models)
+
+```
+USERS & AUTH
+  users                  id, name, email, password, role, isBanned
+  refresh_tokens         id, token, expiresAt, isRevoked, userId
+  password_reset_tokens  id, token, expiresAt, used, userId
+
+LEGACY PAPER WORKFLOW
+  papers                 id, title, abstract, domain, keywords, status, fileUrl, aiSummary, embedding
+  reviewer_assignments   id, paperId, reviewerId, status
+  reviews                id, paperId, reviewerId, assignmentId, strengths, weaknesses, score, recommendation
+  comments               id, paperId, authorId, parentId, body
+
+PUBLISHING CONTENT
+  journals               id, slug, title, discipline, issn, impactFactor, isOpenAccess
+  journal_issues         id, journalId, volume, issue, year, publishedAt
+  journal_editorial_board id, journalId, name, title, institution
+  affiliations           id, name, department, country
+  articles               id, doi, title, abstract, keywords, discipline, articleType, accessType
+                         pdfUrl, isPublished, viewCount, downloadCount, citationCount, isTrending
+  article_authors        id, articleId, affiliationId, firstName, lastName, orcid, isCorresponding
+  article_references     id, articleId, text, doi, order
+  article_metrics        id, articleId, viewCount, downloadCount, citationCount, shareCount
+  collections            id, slug, title, discipline, isActive
+  collection_articles    id, collectionId, articleId, order
+  books                  id, isbn, title, discipline, isOpenAccess
+  book_chapters          id, bookId, doi, title, abstract, pdfUrl
+
+PLATFORM
+  news                   id, slug, title, summary, content, category, isPublished
+  careers                id, title, department, type, isActive, closingDate
+  conferences            id, slug, title, status, startDate, endDate, discipline
+  site_config            id, key, value
+  homepage_content       id, section, content (JSON)
+  contact_messages       id, firstName, lastName, email, subject, message, ticketId
+
+SUBMISSION WORKFLOW
+  submissions            id, title, abstract, keywords, status, journalSlug, coverLetter
+  submission_files       id, submissionId, fileName, fileUrl, mimeType, fileSize, fileType
+  submission_authors     id, submissionId, firstName, lastName, email, affiliation
+
+USER ACTIVITY
+  alerts                 id, userId, type, query, journalId, discipline
+  orders                 id, userId, amount, currency, status, itemType, itemRef, receiptUrl
+```
+
+### Key enums
+
+| Enum | Values |
+|------|--------|
+| `Role` | READER, AUTHOR, REVIEWER, EDITOR, ADMIN |
+| `PaperStatus` | DRAFT, SUBMITTED, APPROVED, REJECTED |
+| `SubmissionStatus` | DRAFT, SUBMITTED, UNDER_REVIEW, REVISION_REQUIRED, ACCEPTED, REJECTED, WITHDRAWN |
+| `AssignmentStatus` | PENDING, COMPLETED |
+| `AccessType` | OPEN_ACCESS, SUBSCRIPTION, FREE |
+| `ArticleType` | RESEARCH_ARTICLE, REVIEW, EDITORIAL, LETTER, CASE_STUDY, BOOK_REVIEW, CORRECTION |
+| `ConferenceStatus` | UPCOMING, ONGOING, PAST, CANCELLED |
+| `OrderStatus` | PENDING, COMPLETED, FAILED, REFUNDED |
 
 ---
 
-## Review Flow
+## Authentication & Session Management
+
+### Token strategy
 
 ```
-1. EDITOR calls POST /editor/papers/:paperId/assign-reviewer  { reviewerId }
-   → Creates ReviewerAssignment { status: PENDING }
+Login / Register
+       │
+       ▼
+┌─────────────────────────────────────────────────┐
+│  Access Token (JWT, 15 min)                      │
+│  Payload: { userId, role, iat, exp }             │
+│  Stateless — verified by JWT_SECRET              │
+│                                                  │
+│  Refresh Token (opaque, 30 days)                 │
+│  Stored in: refresh_tokens table                 │
+│  Rotated on use (old revoked, new issued)        │
+└─────────────────────────────────────────────────┘
+       │
+       ├─ Access token → Authorization: Bearer <token>
+       └─ Refresh token → POST /api/auth/refresh
+```
 
-2. REVIEWER calls GET /reviews/my-assignments
-   → Sees list of papers assigned to them
+### Logout
 
-3. REVIEWER calls POST /reviews/assignments/:assignmentId
-   Body: { strengths, weaknesses, score, recommendation }
-   → Creates Review record
-   → Updates ReviewerAssignment.status = COMPLETED
-   (both in a single DB transaction)
+```
+POST /api/auth/logout
+  → Revoke refresh token in DB (isRevoked = true)
+  → Add access token jti to in-memory blacklist
+  → authenticate middleware checks blacklist on every request
+```
 
-4. EDITOR calls GET /reviews/papers/:paperId
-   → Sees all reviews with full reviewer details
+### Password reset
 
-5. AUTHOR calls GET /reviews/papers/:paperId
-   → Sees review content, reviewer identity is hidden (double-blind)
+```
+POST /api/auth/forgot-password { email }
+  → Create PasswordResetToken (1-hour TTL, single-use)
+  → Send reset link via Resend
+  → Always returns 200 (prevents email enumeration)
 
-6. EDITOR calls POST /papers/:id/approve OR /papers/:id/reject
-   → Paper status transitions
+POST /api/auth/reset-password { token, password }
+  → Verify token not used/expired
+  → $transaction: update password + mark token used + revoke all refresh tokens
 ```
 
 ---
@@ -571,21 +365,261 @@ Rules:
 | Action | READER | AUTHOR | REVIEWER | EDITOR | ADMIN |
 |--------|:------:|:------:|:--------:|:------:|:-----:|
 | Register / Login | ✓ | ✓ | ✓ | ✓ | ✓ |
-| View approved papers | ✓ | ✓ | ✓ | ✓ | ✓ |
-| Create paper | | ✓ | | | |
-| Edit own draft | | ✓ | | | |
-| Submit own paper | | ✓ | | | |
-| View own papers | | ✓ | | | |
+| Browse articles, journals, books | ✓ | ✓ | ✓ | ✓ | ✓ |
+| View article metrics | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Download PDF | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Comment on approved papers | ✓ | ✓* | | ✓ | ✓ |
+| Create / edit / submit paper (legacy) | | ✓ | | | |
+| Submit manuscript (submissions) | | ✓ | | | |
+| Withdraw own submission | | ✓ | | | |
+| Save alerts | ✓ | ✓ | ✓ | ✓ | ✓ |
+| Purchase articles / pay APC | ✓ | ✓ | ✓ | ✓ | ✓ |
+| View reviewer dashboard | | | ✓ | | |
 | View assigned papers | | | ✓ | | |
-| Submit review | | | ✓ | | |
-| View own reviews | | | ✓ | | |
-| Approve paper | | | | ✓ | ✓ |
-| Reject paper | | | | ✓ | ✓ |
-| View all papers | | | | ✓ | ✓ |
-| View all reviews | | | | ✓ | ✓ |
-| Assign reviewers | | | | ✓ | ✓ |
-| Ban users | | | | | (no endpoint yet) |
-| Change user roles | | | | | (no endpoint yet) |
+| Submit peer review | | | ✓ | | |
+| List all submissions | | | | ✓ | ✓ |
+| Move submission to UNDER_REVIEW | | | | ✓ | ✓ |
+| Make submission decision | | | | ✓ | ✓ |
+| Assign / remove paper reviewers | | | | ✓ | ✓ |
+| Approve / reject papers (legacy) | | | | ✓ | ✓ |
+| Publish articles | | | | ✓ | ✓ |
+| List / search all users | | | | | ✓ |
+| Ban / unban users | | | | | ✓ |
+| Change user roles | | | | | ✓ |
+| View platform stats | | | | | ✓ |
+
+*AUTHOR can only comment on their own papers.
+
+---
+
+## Workflow State Machines
+
+### Legacy Paper Workflow
+
+```
+                   AUTHOR: POST /papers
+                            │
+                            ▼
+                         DRAFT ◄──── AUTHOR can edit (title, abstract, keywords, domain)
+                            │            AUTHOR can upload / delete file
+                            │
+                   AUTHOR: POST /papers/:id/submit
+                   (requires at least one uploaded file)
+                            │
+                            ▼
+                       SUBMITTED ◄──── EDITOR assigns reviewers
+                            │              REVIEWER submits reviews
+                            │
+              ┌─────────────┴─────────────┐
+              │  (requires ≥1 completed   │
+              │    review)                │
+              ▼                           ▼
+    EDITOR: approve                EDITOR: reject
+              │                           │
+              ▼                           ▼
+          APPROVED                   REJECTED
+    (public, viewCount               (rejectionReason stored,
+     increments on read)              email sent to author)
+```
+
+### Submission Workflow (new `Submission` model)
+
+```
+              AUTHOR: POST /api/submissions
+                           │
+                           ▼
+                        DRAFT ◄──── author can edit, upload files, add co-authors
+                           │
+              AUTHOR: POST /api/submissions/:id/submit
+              (requires ≥1 uploaded file)
+                           │
+                           ▼
+                      SUBMITTED ─────────────────────────────────┐
+                           │                                      │
+              EDITOR: POST /api/submissions/:id/under-review      │
+                           │                               AUTHOR: POST /api/submissions/:id/withdraw
+                           ▼                                      │
+                      UNDER_REVIEW                                ▼
+                           │                                 WITHDRAWN
+                           │                              (terminal — no further transitions)
+             ┌─────────────┼─────────────┐
+             │             │             │
+             ▼             ▼             ▼
+    decision=ACCEPTED  decision=REJECTED  decision=REVISION_REQUIRED
+             │             │             │
+             ▼             ▼             ▼
+         ACCEPTED      REJECTED    REVISION_REQUIRED
+             │         (terminal)       │
+             │                         │  AUTHOR uploads revised files
+             │                         └──────────────► SUBMITTED (re-submit)
+             │
+    AUTHOR: POST /api/checkout/apc/:id  (if open-access)
+             │
+             ▼
+         APC paid → production scheduled
+```
+
+Emails are sent at every transition automatically.
+
+### Review Assignment Flow
+
+```
+EDITOR: POST /editor/papers/:paperId/assign-reviewer { reviewerId }
+                              │
+                              ▼
+                  ReviewerAssignment created
+                     status = PENDING
+                              │
+                    Email sent to reviewer
+                              │
+              REVIEWER: POST /reviews/assignments/:assignmentId
+                   { strengths, weaknesses, score, recommendation }
+                              │
+                              ▼ (DB transaction)
+                   Review record created
+                   Assignment status = COMPLETED
+                              │
+                    Email sent to paper author
+```
+
+---
+
+## Notification System
+
+All emails are **fire-and-forget** (`void promise`) — they never block the HTTP response.
+Templates live in `src/utils/email.ts` and share a single branded HTML layout builder.
+
+### Email trigger map
+
+| Trigger | Function | Recipients |
+|---------|----------|-----------|
+| User registers | `sendWelcomeEmail` | New user |
+| Forgot password | `sendPasswordResetEmail` | Requester |
+| Paper submitted (legacy) | `sendPaperSubmittedEmail` | Author |
+| Paper approved (legacy) | `sendPaperApprovedEmail` | Author |
+| Paper rejected (legacy) | `sendPaperRejectedEmail` | Author |
+| Reviewer assigned (legacy) | `sendReviewerAssignedEmail` | Reviewer |
+| Review submitted (legacy) | `sendReviewSubmittedEmail` | Paper author |
+| New comment | `sendNewCommentEmail` | Paper author / parent commenter |
+| Submission submitted | `sendSubmissionReceivedEmail` | Author |
+| Submission → UNDER_REVIEW | `sendSubmissionUnderReviewEmail` | Author |
+| Revision requested | `sendSubmissionRevisionRequiredEmail` | Author (+ editor notes) |
+| Submission accepted | `sendSubmissionAcceptedEmail` | Author |
+| Submission rejected | `sendSubmissionRejectedEmail` | Author (+ reason) |
+| Submission withdrawn | `sendSubmissionWithdrawnEmail` | Author |
+| Article order created | `sendOrderConfirmationEmail` | Buyer |
+| APC invoice created | `sendApcConfirmationEmail` | Author |
+| Order completed | `sendOrderReceiptEmail` | Buyer |
+| Alert digest | `sendAlertDigestEmail` | Each user with matched alerts |
+| Contact form | (inline) | Support inbox + form submitter |
+
+---
+
+## Caching Strategy
+
+`src/utils/cache.ts` — a zero-dependency in-memory TTL cache backed by a `Map`.
+
+```typescript
+// Generic cache-aside pattern
+const data = await cached("key", TTL_MS, () => expensiveDbQuery());
+
+// Manual invalidation
+cache.del("site-config:all");       // exact key
+cache.invalidate("top:");           // all keys with prefix
+```
+
+### Cache entries
+
+| Key pattern | TTL | Bust on |
+|-------------|-----|---------|
+| `homepage:main` | 60 s | Article published |
+| `top:{rankBy}:{limit}:{discipline}` | 2 min | Article published |
+| `metrics:{doi}` | 30 s | View/download increment |
+| `site-config:all` | 10 min | `setSiteConfig()` |
+| `search-suggestions:{q}` | 60 s | — (natural expiry) |
+
+> For multi-instance deployments, replace `TtlCache` in `cache.ts` with a Redis/Upstash adapter — the `cached()` call signature is identical.
+
+---
+
+## Rate Limiting
+
+```
+Every request
+       │
+       ▼
+  globalLimiter (200/15 min) ──── 429 → { code: "RATE_LIMIT_EXCEEDED" }
+       │
+       ├── /api/auth/*     → authLimiter    (10/15 min)
+       ├── /api/search/*   → searchLimiter  (60/1 min)
+       ├── /api/contact    → contactLimiter (5/hour)
+       └── file uploads    → uploadLimiter  (20/15 min)
+```
+
+All limiters return:
+```json
+{ "code": "RATE_LIMIT_EXCEEDED", "message": "..." }
+```
+with `RateLimit-*` standard headers.
+
+---
+
+## File Storage
+
+Files (PDF, DOCX) are stored in **Supabase Storage**, not in the database.
+
+```
+AUTHOR: POST /api/submissions/:id/files  (multipart/form-data)
+        POST /papers/:id/upload
+                │
+                ▼
+    multer.memoryStorage() → req.file.buffer
+                │
+                ▼
+    uploadFile(buffer, storagePath, contentType)
+    in src/utils/storage.ts
+                │
+                ▼
+    supabase.storage.from(BUCKET).upload(path, buffer)
+                │
+                ▼
+    Public URL stored in papers.fileUrl or submission_files.fileUrl
+                │
+                ▼
+    Client downloads directly from Supabase CDN (server not involved)
+```
+
+File deletion calls `supabase.storage.from(BUCKET).remove([path])`.
+
+---
+
+## Alert Digest System
+
+`src/utils/alertDigest.ts` — called by `publishArticle()` whenever an article goes live.
+
+```
+publishArticle(articleId)
+       │
+       ├─ Update DB: isPublished = true
+       ├─ Bust cache (top: prefix + homepage:main)
+       └─ void dispatchAlertDigest([article])
+                       │
+                       ▼
+        Fetch all Alert records from DB
+                       │
+                       ▼
+        For each alert, test article against it:
+          KEYWORD   → title/keywords/discipline contains query
+          JOURNAL   → article.journalId === alert.journalId
+          DISCIPLINE → article.discipline == alert.discipline (case-insensitive)
+          AUTHOR    → keyword match on title (full author DB check TODO)
+                       │
+                       ▼
+        Group matched articles by userId (deduplicated)
+                       │
+                       ▼
+        Send ONE digest email per user (void — fire-and-forget)
+```
 
 ---
 
@@ -594,116 +628,92 @@ Rules:
 ```
 research-portal/
 ├── src/
-│   ├── app.ts                    Express app setup
-│   ├── server.ts                 Entry point (listen)
+│   ├── app.ts                       Express app setup + route mounting
+│   ├── server.ts                    Entry point (app.listen)
 │   │
 │   ├── config/
-│   │   ├── env.ts                Env var validation + export
-│   │   └── prisma.ts             Prisma singleton client
+│   │   ├── env.ts                   Env validation + typed export
+│   │   └── prisma.ts                Singleton PrismaClient (adapter auto-selected)
 │   │
 │   ├── middleware/
-│   │   ├── auth.middleware.ts    JWT verification → req.user
-│   │   ├── role.middleware.ts    Role guard factory
-│   │   └── error.middleware.ts   Global error handler + AppError class
+│   │   ├── auth.middleware.ts       JWT verification → req.user
+│   │   ├── role.middleware.ts       requireRole() factory
+│   │   ├── error.middleware.ts      Global error handler + AppError class
+│   │   ├── ratelimit.middleware.ts  5 rate limiter instances
+│   │   └── upload.middleware.ts     multer memory storage instance
 │   │
 │   ├── modules/
-│   │   ├── auth/
-│   │   │   ├── auth.routes.ts    Route definitions
-│   │   │   ├── auth.controller.ts  Zod parse → call service
-│   │   │   ├── auth.service.ts   Business logic + Prisma queries
-│   │   │   └── auth.schema.ts    Zod schemas for register/login
-│   │   │
-│   │   ├── papers/
-│   │   │   ├── papers.routes.ts
-│   │   │   ├── papers.controller.ts
-│   │   │   ├── papers.service.ts
-│   │   │   └── papers.schema.ts
-│   │   │
-│   │   ├── reviews/
-│   │   │   ├── reviews.routes.ts
-│   │   │   ├── reviews.controller.ts
-│   │   │   ├── reviews.service.ts
-│   │   │   └── reviews.schema.ts
-│   │   │
-│   │   ├── admin/               EMPTY — not implemented yet
-│   │   │   ├── admin.routes.ts
-│   │   │   ├── admin.controller.ts
-│   │   │   ├── admin.service.ts
-│   │   │   └── admin.schema.ts
-│   │   │
-│   │   └── editor/
-│   │       ├── editor.routes.ts      Route definitions (EDITOR, ADMIN only)
-│   │       ├── editor.controller.ts  Request handlers
-│   │       ├── editor.service.ts     Business logic + Prisma queries
-│   │       └── editor.schema.ts      Zod schemas for assign-reviewer + list filters
+│   │   ├── auth/                    Auth lifecycle
+│   │   ├── users/                   User profile, alerts, dashboard
+│   │   ├── articles/                Article CRUD, metrics, download, publish
+│   │   ├── journals/                Journal + issue + editorial board
+│   │   ├── collections/             Article collections
+│   │   ├── books/                   Books + chapters
+│   │   ├── news/                    News items
+│   │   ├── careers/                 Job listings
+│   │   ├── conferences/             Academic conferences
+│   │   ├── search/                  Full-text search + suggestions
+│   │   ├── homepage/                Aggregated homepage data
+│   │   ├── site-config/             Key-value config store
+│   │   ├── contact/                 Contact form + dual emails
+│   │   ├── submissions/             Manuscript submission workflow
+│   │   ├── checkout/                Article purchase + APC payment
+│   │   ├── papers/                  Legacy internal paper workflow
+│   │   ├── reviews/                 Reviewer dashboard + assignments
+│   │   ├── editor/                  Editor paper management
+│   │   └── admin/                   Admin user management
+│   │
+│   ├── utils/
+│   │   ├── apiResponse.ts           sendSuccess(), fieldErrors()
+│   │   ├── cache.ts                 In-process TTL cache + cached() helper
+│   │   ├── email.ts                 19 typed email functions + shared layout()
+│   │   ├── alertDigest.ts           Alert matching + per-user digest dispatch
+│   │   ├── storage.ts               Supabase Storage: uploadFile(), deleteFile()
+│   │   ├── jwt.ts                   signToken(), verifyToken()
+│   │   ├── hash.ts                  hashPassword(), comparePassword()
+│   │   └── tokenBlacklist.ts        In-memory Set for revoked access tokens
 │   │
 │   ├── types/
-│   │   └── express.d.ts         Augments Express Request with req.user
+│   │   └── express.d.ts             Augments req.user = { userId, role }
 │   │
-│   └── utils/
-│       ├── apiResponse.ts       sendSuccess(), sendError(), fieldErrors()
-│       ├── jwt.ts               signToken(), verifyToken()
-│       └── hash.ts              hashPassword(), comparePassword()
+│   └── tests/
+│       └── db.test.ts               57 integration tests across 15 groups
 │
 ├── prisma/
-│   └── schema.prisma            Database schema (source of truth)
+│   ├── schema.prisma                Database schema (24 models, 8 enums)
+│   ├── seed.ts                      Full sample data seed
+│   └── migrations/
+│       ├── 20260216052835_init/
+│       ├── 20260218061055_add_comments/
+│       ├── 20260411000000_lumex_expansion/
+│       └── 20260412000000_add_paper_fileurl/
 │
 ├── generated/
-│   └── prisma/                  Auto-generated Prisma client (do not edit)
+│   └── prisma/                      Auto-generated Prisma client (do not edit)
 │
+├── README.md
+├── ARCHITECTURE.md
 ├── package.json
 ├── tsconfig.json
-└── .env                         Not committed — copy from .env.example
+└── .env                             Not committed
 ```
 
 ---
 
 ## Environment Variables
 
-### Current (required now)
-
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
-| `DATABASE_URL` | YES | — | PostgreSQL connection string (Neon) |
-| `JWT_SECRET` | YES | — | Secret key for signing JWTs |
-| `PORT` | No | `5000` | Port the server listens on |
+| `DATABASE_URL` | YES | — | PostgreSQL connection string |
+| `JWT_SECRET` | YES | — | Access token signing secret |
+| `SUPABASE_URL` | YES | — | Supabase project URL |
+| `SUPABASE_SERVICE_KEY` | YES | — | Supabase service role key |
+| `SUPABASE_BUCKET` | YES | — | Storage bucket name |
+| `RESEND_API_KEY` | YES | — | Resend API key |
+| `EMAIL_FROM` | YES | — | Sender address e.g. `Lumex <noreply@lumex.io>` |
+| `APP_URL` | YES | — | Frontend base URL (used in email links) |
+| `PORT` | No | `5000` | Server listen port |
 | `NODE_ENV` | No | `development` | `development` or `production` |
-| `JWT_EXPIRES_IN` | No | `7d` | JWT expiry (e.g. `7d`, `24h`, `60m`) |
-
-### Planned — File Storage (add when provider is chosen)
-
-**If using Supabase Storage:**
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `SUPABASE_URL` | YES | Your Supabase project URL |
-| `SUPABASE_SERVICE_KEY` | YES | Service role key (server-side only, never expose to client) |
-| `SUPABASE_BUCKET` | YES | Name of the storage bucket for paper files |
-
-**If using AWS S3:**
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `AWS_ACCESS_KEY_ID` | YES | IAM user access key |
-| `AWS_SECRET_ACCESS_KEY` | YES | IAM user secret key |
-| `AWS_REGION` | YES | S3 bucket region (e.g. `us-east-1`) |
-| `AWS_S3_BUCKET` | YES | S3 bucket name |
-
----
-
-## What Is Not Yet Built
-
-| Feature | Status | Notes |
-|---------|--------|-------|
-| Reviewer assignment endpoint | Done | `POST /editor/papers/:paperId/assign-reviewer` — fully implemented |
-| Admin module | Empty files | User listing, ban/unban, role changes |
-| Editor module | Done | Paper listing, detail, assign/remove reviewers — fully implemented |
-| Comments system | Done | Full module implemented — list, create, delete with threaded replies |
-| File/PDF upload | Planned | Provider chosen: Supabase Storage or AWS S3. Needs: `multer`, SDK install, `fileUrl` schema field, migration, upload endpoint |
-| JWT revocation / logout | Not started | Tokens cannot be invalidated before expiry |
-| Rate limiting | Not started | No protection against brute force or abuse |
-| Email notifications | Not started | Authors not notified on approval/rejection |
-| AI features | Schema only | `aiSummary`, `embedding`, `reviewAISuggestion` columns exist but no logic |
-| Search | Basic only | Only domain filter; no full-text search on title/abstract |
-| Tests | None | No test files exist |
-| API docs | None | No Swagger/OpenAPI spec |
+| `JWT_EXPIRES_IN` | No | `15m` | Access token TTL |
+| `REFRESH_TOKEN_EXPIRES` | No | `30d` | Refresh token TTL |
+| `CORS_ORIGINS` | No | `*` | Comma-separated allowed origins |
