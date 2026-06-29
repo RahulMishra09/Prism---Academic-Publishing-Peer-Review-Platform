@@ -1,0 +1,946 @@
+// ============================================================
+// Prisma Schema — Research Portal (Lumex Publishing Platform)
+// ============================================================
+
+generator client {
+  provider   = "prisma-client-js"
+  output     = "../generated/prisma"
+  engineType = "library"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// ENUMS
+// ============================================================
+
+enum Role {
+  READER
+  AUTHOR
+  REVIEWER
+  EDITOR
+  ADMIN
+}
+
+enum PaperStatus {
+  DRAFT
+  SUBMITTED
+  APPROVED
+  REJECTED
+}
+
+enum AssignmentStatus {
+  PENDING
+  COMPLETED
+}
+
+enum AccessType {
+  OPEN_ACCESS
+  SUBSCRIPTION
+  FREE
+}
+
+enum ArticleType {
+  RESEARCH_ARTICLE
+  REVIEW
+  EDITORIAL
+  LETTER
+  CASE_STUDY
+  BOOK_REVIEW
+  CORRECTION
+}
+
+enum ConferenceStatus {
+  UPCOMING
+  ONGOING
+  PAST
+  CANCELLED
+}
+
+enum SubmissionStatus {
+  DRAFT
+  SUBMITTED
+  UNDER_REVIEW
+  REVISION_REQUIRED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum OrderStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+  PAST_DUE
+}
+
+enum SubscriptionPlan {
+  MONTHLY
+  YEARLY
+  INSTITUTIONAL
+}
+
+enum ReviewRecommendation {
+  ACCEPT
+  MINOR_REVISION
+  MAJOR_REVISION
+  REJECT
+}
+
+enum FigureType {
+  IMAGE
+  CHART
+  TABLE
+  DIAGRAM
+  OTHER
+}
+
+// ============================================================
+// USER MODEL
+// ============================================================
+
+model User {
+  id          String   @id @default(cuid())
+  name        String
+  email       String   @unique
+  password    String
+  role        Role     @default(READER)
+  isBanned    Boolean  @default(false)
+  isVerified  Boolean  @default(false)
+  firstName   String?
+  lastName    String?
+  orcid       String?
+  affiliation String?
+  avatarUrl   String?
+  bio         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations (existing)
+  papers              Paper[]              @relation("AuthorPapers")
+  reviewerAssignments ReviewerAssignment[]
+  reviews             Review[]
+  comments            Comment[]
+
+  // Relations (new)
+  submissions       Submission[]         @relation("AuthorSubmissions")
+  reviewAssignments SubmissionReviewer[] @relation("ReviewerAssignments")
+  submissionReviews SubmissionReview[]   @relation("ReviewerReviews")
+  alerts            Alert[]              @relation("UserAlerts")
+  orders            Order[]              @relation("UserOrders")
+  bookmarks         UserBookmark[]
+  savedArticles     UserSavedArticle[]
+  viewHistory       ViewHistory[]
+  subscriptions     Subscription[]
+  refreshTokens     RefreshToken[]
+
+  @@map("users")
+}
+
+// ============================================================
+// PAPER MODEL (existing — internal submission workflow)
+// ============================================================
+
+model Paper {
+  id                 String               @id @default(cuid())
+  title              String
+  abstract           String
+  domain             String
+  keywords           String[]
+  status             PaperStatus          @default(DRAFT)
+  rejectionReason    String?
+  fileUrl            String?
+  aiSummary          String?
+  embedding          Float[]
+  reviewAISuggestion String?
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  approvedAt         DateTime?
+  submittedBy        String
+  author             User                 @relation("AuthorPapers", fields: [submittedBy], references: [id])
+  assignments        ReviewerAssignment[]
+  reviews            Review[]
+  comments           Comment[]
+
+  @@index([status])
+  @@index([domain])
+  @@index([createdAt])
+  @@index([submittedBy])
+  @@map("papers")
+}
+
+// ============================================================
+// REVIEWER ASSIGNMENT MODEL
+// ============================================================
+
+model ReviewerAssignment {
+  id         String           @id @default(cuid())
+  status     AssignmentStatus @default(PENDING)
+  assignedAt DateTime         @default(now())
+  paperId    String
+  paper      Paper            @relation(fields: [paperId], references: [id])
+  reviewerId String
+  reviewer   User             @relation(fields: [reviewerId], references: [id])
+  review     Review?
+
+  @@unique([paperId, reviewerId])
+  @@index([paperId])
+  @@index([reviewerId])
+  @@map("reviewer_assignments")
+}
+
+// ============================================================
+// REVIEW MODEL
+// ============================================================
+
+model Review {
+  id             String             @id @default(cuid())
+  strengths      String
+  weaknesses     String
+  score          Int
+  recommendation String
+  createdAt      DateTime           @default(now())
+  paperId        String
+  paper          Paper              @relation(fields: [paperId], references: [id])
+  reviewerId     String
+  reviewer       User               @relation(fields: [reviewerId], references: [id])
+  assignmentId   String             @unique
+  assignment     ReviewerAssignment @relation(fields: [assignmentId], references: [id])
+
+  @@unique([paperId, reviewerId])
+  @@index([paperId])
+  @@map("reviews")
+}
+
+// ============================================================
+// COMMENT MODEL
+// ============================================================
+
+model Comment {
+  id        String    @id @default(cuid())
+  body      String    @db.VarChar(2000)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  paperId   String
+  paper     Paper     @relation(fields: [paperId], references: [id])
+  authorId  String
+  author    User      @relation(fields: [authorId], references: [id])
+  parentId  String?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies   Comment[] @relation("CommentReplies")
+
+  @@index([paperId])
+  @@index([authorId])
+  @@index([parentId])
+  @@map("comments")
+}
+
+// ============================================================
+// JOURNAL MODELS
+// ============================================================
+
+model Journal {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  description   String?
+  discipline    String
+  issn          String?  @unique
+  eIssn         String?
+  impactFactor  Float?
+  coverImageUrl String?
+  isOpenAccess  Boolean  @default(false)
+  publisherName String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  articles       Article[]
+  issues         JournalIssue[]
+  editorialBoard JournalEditorialBoard[]
+
+  @@index([discipline])
+  @@index([slug])
+  @@map("journals")
+}
+
+model JournalIssue {
+  id          String   @id @default(cuid())
+  volume      Int
+  issue       Int
+  year        Int
+  publishedAt DateTime
+
+  journalId String
+  journal   Journal @relation(fields: [journalId], references: [id])
+
+  articles Article[]
+
+  @@index([journalId])
+  @@map("journal_issues")
+}
+
+model JournalEditorialBoard {
+  id          String  @id @default(cuid())
+  name        String
+  title       String?
+  institution String?
+  order       Int     @default(0)
+
+  journalId String
+  journal   Journal @relation(fields: [journalId], references: [id])
+
+  @@index([journalId])
+  @@map("journal_editorial_board")
+}
+
+// ============================================================
+// ARTICLE MODELS
+// ============================================================
+
+model Article {
+  id            String      @id @default(cuid())
+  doi           String      @unique
+  title         String
+  abstract      String
+  keywords      String[]
+  discipline    String
+  articleType   ArticleType @default(RESEARCH_ARTICLE)
+  accessType    AccessType  @default(OPEN_ACCESS)
+  language      String      @default("en")
+  pdfUrl        String?
+  htmlUrl       String?
+  publishedAt   DateTime?
+  isPublished   Boolean     @default(false)
+  viewCount     Int         @default(0)
+  downloadCount Int         @default(0)
+  citationCount Int         @default(0)
+  isTrending    Boolean     @default(false)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  journalId String?
+  journal   Journal? @relation(fields: [journalId], references: [id])
+
+  issueId String?
+  issue   JournalIssue? @relation(fields: [issueId], references: [id])
+
+  authors       ArticleAuthor[]
+  references    ArticleReference[]
+  metrics       ArticleMetrics?
+  collections   CollectionArticle[]
+  figures       ArticleFigure[]
+  supplementary ArticleSupplementary[]
+  bookmarks     UserBookmark[]
+  savedBy       UserSavedArticle[]
+  viewedBy      ViewHistory[]
+
+  @@index([doi])
+  @@index([discipline])
+  @@index([journalId])
+  @@index([publishedAt])
+  @@index([isPublished])
+  @@index([isTrending])
+  @@map("articles")
+}
+
+model Affiliation {
+  id         String  @id @default(cuid())
+  name       String
+  department String?
+  country    String?
+
+  authors ArticleAuthor[]
+
+  @@map("affiliations")
+}
+
+model ArticleAuthor {
+  id              String  @id @default(cuid())
+  firstName       String
+  lastName        String
+  email           String?
+  orcid           String?
+  isCorresponding Boolean @default(false)
+  order           Int
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id])
+
+  affiliationId String?
+  affiliation   Affiliation? @relation(fields: [affiliationId], references: [id])
+
+  @@index([articleId])
+  @@map("article_authors")
+}
+
+model ArticleReference {
+  id    String  @id @default(cuid())
+  text  String
+  doi   String?
+  order Int
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id])
+
+  @@index([articleId])
+  @@map("article_references")
+}
+
+model ArticleMetrics {
+  id            String @id @default(cuid())
+  viewCount     Int    @default(0)
+  downloadCount Int    @default(0)
+  citationCount Int    @default(0)
+  shareCount    Int    @default(0)
+
+  articleId String  @unique
+  article   Article @relation(fields: [articleId], references: [id])
+
+  @@map("article_metrics")
+}
+
+model ArticleFigure {
+  id        String     @id @default(cuid())
+  url       String
+  caption   String?
+  type      FigureType @default(IMAGE)
+  order     Int        @default(0)
+  createdAt DateTime   @default(now())
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@index([articleId])
+  @@map("article_figures")
+}
+
+model ArticleSupplementary {
+  id          String   @id @default(cuid())
+  fileName    String
+  fileUrl     String
+  description String?
+  fileSize    Int?
+  mimeType    String?
+  createdAt   DateTime @default(now())
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@index([articleId])
+  @@map("article_supplementary")
+}
+
+// ============================================================
+// COLLECTION MODELS
+// ============================================================
+
+model Collection {
+  id            String   @id @default(cuid())
+  slug          String   @unique
+  title         String
+  description   String?
+  coverImageUrl String?
+  discipline    String?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  articles CollectionArticle[]
+
+  @@index([slug])
+  @@map("collections")
+}
+
+model CollectionArticle {
+  id      String   @id @default(cuid())
+  order   Int      @default(0)
+  addedAt DateTime @default(now())
+
+  collectionId String
+  collection   Collection @relation(fields: [collectionId], references: [id])
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id])
+
+  @@unique([collectionId, articleId])
+  @@index([collectionId])
+  @@map("collection_articles")
+}
+
+// ============================================================
+// BOOK MODELS
+// ============================================================
+
+model Book {
+  id            String    @id @default(cuid())
+  isbn          String    @unique
+  title         String
+  description   String?
+  publisher     String?
+  publishedAt   DateTime?
+  coverImageUrl String?
+  discipline    String?
+  doi           String?   @unique
+  edition       String?
+  language      String    @default("en")
+  isOpenAccess  Boolean   @default(false)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  chapters BookChapter[]
+  authors  BookAuthor[]
+
+  @@index([isbn])
+  @@map("books")
+}
+
+model BookAuthor {
+  id              String  @id @default(cuid())
+  firstName       String
+  lastName        String
+  email           String?
+  orcid           String?
+  isCorresponding Boolean @default(false)
+  order           Int     @default(0)
+
+  bookId String
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+
+  @@index([bookId])
+  @@map("book_authors")
+}
+
+model BookChapter {
+  id        String   @id @default(cuid())
+  doi       String   @unique
+  title     String
+  abstract  String?
+  order     Int
+  pdfUrl    String?
+  pageStart Int?
+  pageEnd   Int?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookId  String
+  book    Book                @relation(fields: [bookId], references: [id])
+  authors BookChapterAuthor[]
+
+  @@index([bookId])
+  @@index([doi])
+  @@map("book_chapters")
+}
+
+model BookChapterAuthor {
+  id        String  @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String?
+  order     Int     @default(0)
+
+  chapterId String
+  chapter   BookChapter @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+
+  @@index([chapterId])
+  @@map("book_chapter_authors")
+}
+
+// ============================================================
+// NEWS MODEL
+// ============================================================
+
+model News {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  summary     String
+  content     String
+  imageUrl    String?
+  category    String?
+  isPublished Boolean   @default(false)
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([slug])
+  @@index([isPublished])
+  @@map("news")
+}
+
+// ============================================================
+// CAREER MODEL
+// ============================================================
+
+model Career {
+  id           String    @id @default(cuid())
+  title        String
+  department   String?
+  location     String?
+  type         String
+  description  String
+  requirements String?
+  isActive     Boolean   @default(true)
+  closingDate  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([isActive])
+  @@map("careers")
+}
+
+// ============================================================
+// CONFERENCE MODEL
+// ============================================================
+
+model Conference {
+  id                 String           @id @default(cuid())
+  slug               String           @unique
+  title              String
+  description        String?
+  location           String?
+  isVirtual          Boolean          @default(false)
+  startDate          DateTime
+  endDate            DateTime
+  status             ConferenceStatus @default(UPCOMING)
+  discipline         String?
+  submissionDeadline DateTime?
+  website            String?
+  coverImageUrl      String?
+  createdAt          DateTime         @default(now())
+  updatedAt          DateTime         @updatedAt
+
+  @@index([slug])
+  @@index([status])
+  @@map("conferences")
+}
+
+// ============================================================
+// SITE CONFIG + HOMEPAGE MODELS
+// ============================================================
+
+model SiteConfig {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+
+  @@map("site_config")
+}
+
+model HomepageContent {
+  id      String @id @default(cuid())
+  section String @unique
+  content Json
+
+  updatedAt DateTime @updatedAt
+
+  @@map("homepage_content")
+}
+
+// ============================================================
+// AUTH TOKEN MODELS
+// ============================================================
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+  @@map("password_reset_tokens")
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+  isRevoked Boolean  @default(false)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@map("refresh_tokens")
+}
+
+// ============================================================
+// SUBMISSION MODELS
+// ============================================================
+
+model Submission {
+  id          String           @id @default(cuid())
+  title       String
+  abstract    String?
+  keywords    String[]
+  status      SubmissionStatus @default(DRAFT)
+  coverLetter String?
+  journalSlug String?
+  submittedAt DateTime?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  submittedBy String
+  author      User   @relation("AuthorSubmissions", fields: [submittedBy], references: [id])
+
+  files             SubmissionFile[]
+  coAuthors         SubmissionAuthor[]
+  reviewers         SubmissionReviewer[]
+  structuredReviews SubmissionReview[]
+
+  @@index([submittedBy])
+  @@index([status])
+  @@map("submissions")
+}
+
+model SubmissionReviewer {
+  id          String    @id @default(cuid())
+  status      String    @default("INVITED") // INVITED | ACCEPTED | DECLINED | COMPLETED
+  assignedAt  DateTime  @default(now())
+  respondedAt DateTime?
+  completedAt DateTime?
+  dueDate     DateTime?
+  notes       String?
+
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id])
+
+  reviewerId String
+  reviewer   User   @relation("ReviewerAssignments", fields: [reviewerId], references: [id])
+
+  @@unique([submissionId, reviewerId])
+  @@index([submissionId])
+  @@index([reviewerId])
+  @@map("submission_reviewers")
+}
+
+model SubmissionFile {
+  id         String   @id @default(cuid())
+  fileName   String
+  fileUrl    String
+  mimeType   String
+  fileSize   Int
+  fileType   String
+  uploadedAt DateTime @default(now())
+
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id])
+
+  @@index([submissionId])
+  @@map("submission_files")
+}
+
+model SubmissionAuthor {
+  id          String  @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  affiliation String?
+  order       Int
+
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id])
+
+  @@index([submissionId])
+  @@map("submission_authors")
+}
+
+// ============================================================
+// ALERT MODEL
+// ============================================================
+
+model Alert {
+  id         String   @id @default(cuid())
+  type       String
+  query      String?
+  journalId  String?
+  discipline String?
+  createdAt  DateTime @default(now())
+
+  userId String
+  user   User   @relation("UserAlerts", fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("alerts")
+}
+
+// ============================================================
+// ORDER MODEL
+// ============================================================
+
+model Order {
+  id         String      @id @default(cuid())
+  amount     Float
+  currency   String      @default("USD")
+  status     OrderStatus @default(PENDING)
+  itemType   String
+  itemRef    String
+  receiptUrl String?
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+
+  userId String
+  user   User   @relation("UserOrders", fields: [userId], references: [id])
+
+  @@index([userId])
+  @@map("orders")
+}
+
+// ============================================================
+// CONTACT MESSAGE MODEL
+// ============================================================
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String
+  subject   String
+  message   String
+  status    String   @default("OPEN") // OPEN | IN_PROGRESS | RESOLVED | CLOSED
+  ticketId  String   @unique @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@map("contact_messages")
+}
+
+// ============================================================
+// VIEW HISTORY MODEL
+// ============================================================
+
+model ViewHistory {
+  id       String   @id @default(cuid())
+  viewedAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@index([userId, viewedAt])
+  @@index([articleId])
+  @@map("view_history")
+}
+
+// ============================================================
+// EMAIL VERIFICATION TOKEN MODEL
+// ============================================================
+
+model VerificationToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  expiresAt DateTime
+  used      Boolean  @default(false)
+  userId    String
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([token])
+  @@map("verification_tokens")
+}
+
+// ============================================================
+// SAVED ARTICLES MODEL
+// ============================================================
+
+model UserSavedArticle {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+  @@index([userId])
+  @@map("user_saved_articles")
+}
+
+// ============================================================
+// BOOKMARK MODEL
+// ============================================================
+
+model UserBookmark {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, articleId])
+  @@index([userId])
+  @@map("user_bookmarks")
+}
+
+// ============================================================
+// SUBSCRIPTION MODEL
+// ============================================================
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  plan                 SubscriptionPlan
+  status               SubscriptionStatus @default(ACTIVE)
+  startDate            DateTime           @default(now())
+  endDate              DateTime
+  stripeSubscriptionId String?            @unique
+  stripeCustomerId     String?
+  cancelledAt          DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([status])
+  @@map("subscriptions")
+}
+
+// ============================================================
+// STRUCTURED SUBMISSION REVIEW MODEL
+// ============================================================
+
+model SubmissionReview {
+  id                String               @id @default(cuid())
+  recommendation    ReviewRecommendation
+  commentsForEditor String
+  commentsForAuthor String
+  scoreOriginality  Int? // 1-5
+  scoreMethodology  Int? // 1-5
+  scoreClarity      Int? // 1-5
+  scoreSignificance Int? // 1-5
+  isConfidential    Boolean              @default(false)
+  submittedAt       DateTime             @default(now())
+  updatedAt         DateTime             @updatedAt
+
+  submissionId String
+  submission   Submission @relation(fields: [submissionId], references: [id])
+
+  reviewerId String
+  reviewer   User   @relation("ReviewerReviews", fields: [reviewerId], references: [id])
+
+  @@unique([submissionId, reviewerId])
+  @@index([submissionId])
+  @@map("submission_reviews")
+}
