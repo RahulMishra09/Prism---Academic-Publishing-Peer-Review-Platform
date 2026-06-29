@@ -1,6 +1,7 @@
 import React from 'react';
 import * as ToastPrimitives from '@radix-ui/react-toast';
 import { clsx } from 'clsx';
+import { FaTimes } from 'react-icons/fa';
 
 export const ToastProvider = ToastPrimitives.Provider;
 
@@ -69,7 +70,7 @@ export const ToastClose = React.forwardRef<
         toast-close=""
         {...props}
     >
-        <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+        <FaTimes className="h-4 w-4" />
     </ToastPrimitives.Close>
 ));
 ToastClose.displayName = ToastPrimitives.Close.displayName;

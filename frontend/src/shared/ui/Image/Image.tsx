@@ -27,6 +27,7 @@ export const Image = React.forwardRef<HTMLImageElement, ImageProps>(
                     ref={ref}
                     src={finalSrc}
                     alt={alt}
+                    loading="lazy"
                     onLoad={handleLoad}
                     onError={handleError}
                     className={clsx(

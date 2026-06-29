@@ -11,12 +11,15 @@ export interface AuthorInfo {
     firstName: string;
     lastName: string;
     email: string;
+    phone?: string;
     institution: string;
     department: string;
     city: string;
     country: string;
     orcid?: string;
     isCorresponding: boolean;
+    /** True if this author was auto-parsed from a manuscript upload */
+    autoParsed?: boolean;
 }
 
 export interface SubmissionFile {
@@ -39,22 +42,26 @@ export interface SubmissionDraft {
     journalSlug: string;
     // Step 1
     manuscriptType: ManuscriptType | '';
-    // Step 2
-    authors: AuthorInfo[];
-    // Step 3
+    // Step 2 (Files)
     uploadedFiles: SubmissionFile[];
-    // Step 4
+    // Step 3 (General Info)
+    subjectArea: string;
+    classification: string;
+    keywords: string[];
+    // Step 4 (Review Preferences)
+    suggestedReviewers: SuggestedReviewer[];
+    opposedReviewers?: string;
+    // Step 5 (Comments)
+    coverLetter: string;
+    additionalComments: string;
+    // Step 6 (Manuscript Data)
+    authors: AuthorInfo[];
     title: string;
     abstract: string;
-    keywords: string[];
-    coverLetter: string;
     competingInterests: string;
     fundingStatement: string;
     dataAvailability: string;
     ethicsApproval?: string;
-    // Step 6 (Suggested Reviewers)
-    suggestedReviewers: SuggestedReviewer[];
-    opposedReviewers?: string;
-    // Step 5 (Agreements)
+    // Step 7 (Agreements)
     agreedToTerms: boolean;
 }

@@ -1,5 +1,6 @@
-import React from 'react';
+﻿import React from 'react';
 import { clsx } from 'clsx';
+import { FaChevronRight } from 'react-icons/fa';
 
 export const Breadcrumb = React.forwardRef<HTMLElement, React.HTMLAttributes<HTMLElement>>(
     ({ className, ...props }, ref) => (
@@ -15,7 +16,7 @@ export const BreadcrumbList = React.forwardRef<
     <ol
         ref={ref}
         className={clsx(
-            'flex flex-wrap items-center gap-1 text-xs text-lumex-muted list-none',
+            'flex flex-wrap items-center gap-1.5 break-words text-sm text-lumex-muted sm:gap-2.5 list-none',
             className
         )}
         {...props}
@@ -27,7 +28,7 @@ export const BreadcrumbItem = React.forwardRef<
     HTMLLIElement,
     React.LiHTMLAttributes<HTMLLIElement>
 >(({ className, ...props }, ref) => (
-    <li ref={ref} className={clsx('inline-flex items-center gap-1', className)} {...props} />
+    <li ref={ref} className={clsx('inline-flex items-center gap-1.5', className)} {...props} />
 ));
 BreadcrumbItem.displayName = 'BreadcrumbItem';
 
@@ -38,7 +39,7 @@ export const BreadcrumbLink = React.forwardRef<
     <a
         ref={ref}
         className={clsx(
-            'cursor-pointer transition-colors duration-150 hover:text-lumex-text',
+            'transition-colors hover:text-lumex-text hover:underline cursor-pointer',
             className
         )}
         {...props}
@@ -55,7 +56,7 @@ export const BreadcrumbPage = React.forwardRef<
         role="link"
         aria-disabled="true"
         aria-current="page"
-        className={clsx('font-medium text-lumex-text', className)}
+        className={clsx('font-normal text-lumex-text', className)}
         {...props}
     />
 ));
@@ -69,14 +70,10 @@ export const BreadcrumbSeparator = ({
     <li
         role="presentation"
         aria-hidden="true"
-        className={clsx('text-lumex-sub', className)}
+        className={clsx('[&>svg]:h-3 [&>svg]:w-3 opacity-50', className)}
         {...props}
     >
-        {children ?? (
-            <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-        )}
+        {children ?? <FaChevronRight />}
     </li>
 );
 BreadcrumbSeparator.displayName = 'BreadcrumbSeparator';

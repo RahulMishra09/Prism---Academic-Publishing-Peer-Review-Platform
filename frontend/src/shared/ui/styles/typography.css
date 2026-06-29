@@ -1,163 +1,74 @@
-/* ============================================================
-   Prism Typography
-   EB Garamond (editorial headings) +
-   Inter (UI / body) +
-   Crimson Text (long-form article reading)
-   ============================================================ */
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+/* Google Fonts: Plus Jakarta Sans (sans) + Fraunces (serif display) */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
 
 @layer base {
     body {
-        @apply font-sans antialiased;
-        color: var(--lumex-text);
+        @apply font-sans text-lumex-text antialiased;
         background: var(--lumex-bg);
         line-height: 1.6;
-        font-feature-settings: 'kern' 1, 'liga' 1;
     }
 
     ::selection {
         background: var(--lumex-accent-soft);
-        color: var(--lumex-accent-dark);
     }
 
-    /* --- Display / Hero headings --- */
     h1,
     .h1 {
-        font-family: 'EB Garamond', Georgia, serif;
-        font-weight: 700;
-        font-size: clamp(2rem, 4vw, 2.75rem);
-        line-height: 1.15;
-        letter-spacing: -0.02em;
-        color: var(--lumex-text);
-        margin-bottom: 1rem;
+        @apply font-serif font-semibold text-4xl leading-tight text-lumex-text mb-4;
+        letter-spacing: -0.025em;
     }
 
     h2,
     .h2 {
-        font-family: 'EB Garamond', Georgia, serif;
-        font-weight: 600;
-        font-size: clamp(1.5rem, 3vw, 2rem);
-        line-height: 1.25;
-        letter-spacing: -0.015em;
-        color: var(--lumex-text);
-        margin-bottom: 0.75rem;
+        @apply font-serif font-semibold text-3xl leading-snug text-lumex-text mb-3;
+        letter-spacing: -0.02em;
     }
 
     h3,
     .h3 {
-        font-family: 'EB Garamond', Georgia, serif;
-        font-weight: 600;
-        font-size: clamp(1.15rem, 2vw, 1.4rem);
-        line-height: 1.35;
-        letter-spacing: -0.01em;
-        color: var(--lumex-text);
-        margin-bottom: 0.75rem;
+        @apply font-serif font-medium text-xl leading-normal text-lumex-text mb-3;
     }
 
     h4,
     .h4 {
-        font-family: 'Inter', system-ui, sans-serif;
-        font-weight: 600;
-        font-size: 1.05rem;
-        line-height: 1.4;
-        color: var(--lumex-text);
-        margin-bottom: 0.5rem;
+        @apply font-sans font-semibold text-lg leading-relaxed text-lumex-text mb-2;
     }
 
     h5,
     .h5 {
-        font-family: 'Inter', system-ui, sans-serif;
-        font-weight: 500;
-        font-size: 0.95rem;
-        line-height: 1.5;
-        color: var(--lumex-text);
-        margin-bottom: 0.5rem;
+        @apply font-sans font-medium text-base leading-relaxed text-lumex-text mb-2;
     }
 
     h6,
     .h6 {
-        font-family: 'Inter', system-ui, sans-serif;
-        font-weight: 600;
-        font-size: 0.7rem;
-        line-height: 1.5;
-        color: var(--lumex-accent);
-        text-transform: uppercase;
+        @apply font-sans font-semibold text-sm leading-relaxed text-lumex-blue uppercase tracking-wider mb-2;
         letter-spacing: 0.1em;
-        margin-bottom: 0.5rem;
     }
 
     p {
-        font-size: 0.9375rem;
-        line-height: 1.7;
-        margin-bottom: 1rem;
+        @apply text-base leading-relaxed mb-4;
     }
 
     small {
-        font-size: 0.8125rem;
-        color: var(--lumex-text-muted);
+        @apply text-sm text-lumex-muted;
     }
 
     a {
         color: var(--lumex-accent);
         text-decoration: none;
-        transition: color var(--transition-fast);
     }
 
     a:hover {
-        color: var(--lumex-accent-dark);
         text-decoration: underline;
-        text-decoration-thickness: 1px;
-        text-underline-offset: 3px;
     }
 
-    /* --- Article / Long-form reading --- */
-    .article-body {
-        font-family: 'Crimson Text', Georgia, serif;
-        font-size: 1.125rem;
-        line-height: 1.85;
-        color: var(--prism-reading-text);
-    }
-
-    .article-body p {
-        font-size: 1.125rem;
-        line-height: 1.85;
-        margin-bottom: 1.25rem;
-    }
-
-    .article-body h2 {
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 1.5rem;
-        font-weight: 700;
-        margin-top: 2.5rem;
-        margin-bottom: 1rem;
-        padding-bottom: 0.5rem;
-        border-bottom: 1px solid var(--lumex-border);
-    }
-
-    .article-body h3 {
-        font-family: 'EB Garamond', Georgia, serif;
-        font-size: 1.2rem;
-        font-weight: 600;
-        margin-top: 2rem;
-        margin-bottom: 0.75rem;
-    }
-
-    /* --- Custom scrollbar --- */
+    /* Custom scrollbar */
     ::-webkit-scrollbar {
         width: 5px;
-        height: 5px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background: transparent;
     }
 
     ::-webkit-scrollbar-thumb {
-        background: var(--lumex-border-hover);
+        background: var(--lumex-border);
         border-radius: 3px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-        background: var(--lumex-text-sub);
     }
 }

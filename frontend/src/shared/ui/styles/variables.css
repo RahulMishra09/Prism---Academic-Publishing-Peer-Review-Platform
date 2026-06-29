@@ -1,156 +1,78 @@
-/* ============================================================
-   Prism Design Tokens
-   Updated palette: Deep Navy + Editorial Blue + Scholarly Violet
-   ============================================================ */
-
 :root {
-    /* --- Primary Accent (Authority Navy) --- */
-    --lumex-accent: #1e3a8a;
-    --lumex-accent-dark: #1e40af;
-    --lumex-accent-soft: rgba(30, 58, 138, 0.08);
+    /* Lumex Color Tokens — New Palette */
+    --lumex-accent: #3b5bdb;
+    --lumex-accent-dark: #2f4bc7;
+    --lumex-accent-soft: rgba(59, 91, 219, 0.07);
 
-    /* --- Prism-specific tokens (new) --- */
-    --prism-violet: #7c3aed;
-    --prism-violet-dark: #6d28d9;
-    --prism-violet-soft: rgba(124, 58, 237, 0.08);
+    --lumex-red: #e8181d;
+    --lumex-red-dark: #c0141a;
+    --lumex-oa-gold: #f5a500;
 
-    --prism-teal: #0d9488;
-    --prism-teal-soft: rgba(13, 148, 136, 0.09);
+    --lumex-text: #0f1523;
+    --lumex-text-muted: #5a6380;
+    --lumex-text-sub: #8a92aa;
 
-    /* Glassmorphism */
-    --prism-glass-bg: rgba(255, 255, 255, 0.8);
-    --prism-glass-bg-deep: rgba(248, 250, 252, 0.85);
-    --prism-glass-border: rgba(226, 232, 240, 0.6);
-    --prism-glass-blur: 12px;
+    --lumex-border: #dde1ee;
+    --lumex-border-hover: #b0b8d8;
 
-    /* Reading / Article surface */
-    --prism-reading-bg: #fefefe;
-    --prism-reading-text: #1e293b;
-    --prism-reading-muted: #64748b;
-
-    /* --- Status Colors --- */
-    --lumex-red: #dc2626;
-    --lumex-red-dark: #b91c1c;
-    --lumex-oa-gold: #d97706;
-
-    /* --- Text --- */
-    --lumex-text: #0f172a;
-    --lumex-text-muted: #475569;
-    --lumex-text-sub: #94a3b8;
-
-    /* --- Borders --- */
-    --lumex-border: #e2e8f0;
-    --lumex-border-hover: #cbd5e1;
-
-    /* --- Backgrounds --- */
-    --lumex-bg: #f8fafc;
-    --lumex-bg-deep: #f1f5f9;
+    --lumex-bg: #f0f2f7;
+    --lumex-bg-deep: #e8eaf2;
     --lumex-bg-white: #ffffff;
     --lumex-card: #ffffff;
-    --lumex-card-hover: #f8fafc;
+    --lumex-card-hover: #f8f9fa;
 
-    /* --- Tag & Chip Tokens --- */
-    --lumex-tag-bg: #f1f5f9;
-    --lumex-tag-text: #475569;
-
-    /* --- Access Badges --- */
-    --lumex-open-bg: rgba(13, 148, 136, 0.09);
-    --lumex-open-text: #0d9488;
-    --lumex-sub-bg: rgba(30, 58, 138, 0.08);
-    --lumex-sub-text: #1e3a8a;
-
-    /* --- Form Elements --- */
+    /* Form Elements */
     --input-border: var(--lumex-border);
     --input-bg: var(--lumex-bg-white);
     --input-focus-ring: var(--lumex-accent);
 
-    /* --- Layout --- */
+    /* Layout Spacing */
     --container-max-width: 1240px;
 
-    /* --- Shadows --- */
-    --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.06);
-    --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.08), 0 2px 4px -1px rgba(15, 23, 42, 0.04);
-    --shadow-dropdown: 0 10px 24px -4px rgba(15, 23, 42, 0.12), 0 4px 8px -2px rgba(15, 23, 42, 0.06);
-    --shadow-card-hover: 0 8px 32px -4px rgba(37, 99, 235, 0.12), 0 2px 8px rgba(15, 23, 42, 0.04);
-    --shadow-glass: 0 4px 24px -4px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-dropdown: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-card-hover: 0 6px 28px rgba(59, 91, 219, 0.08), 0 1px 4px rgba(0, 0, 0, 0.05);
 
-    /* --- Radii --- */
-    --radius-sm: 0.25rem;
-    --radius-md: 0.375rem;
-    --radius-lg: 0.625rem;
-    --radius-card: 0.75rem;
+    /* Radii */
+    --radius-sm: 0.125rem;
+    --radius-md: 0.25rem;
+    --radius-lg: 0.5rem;
+    --radius-card: 0.6875rem;
     --radius-full: 9999px;
-
-    /* --- Transitions --- */
-    --transition-fast: 150ms ease;
-    --transition-base: 200ms ease;
-    --transition-slow: 300ms ease;
 }
 
-/* ============================================================
-   Dark Mode Overrides
-   ============================================================ */
 .dark {
-    /* --- Primary Accent --- */
-    --lumex-accent: #3b82f6;
-    --lumex-accent-dark: #2563eb;
-    --lumex-accent-soft: rgba(59, 130, 246, 0.15);
+    /* Dark Theme Palette */
+    --lumex-accent: #5c7cfa;
+    --lumex-accent-dark: #4c6ef5;
+    --lumex-accent-soft: rgba(92, 124, 250, 0.15);
 
-    /* --- Prism tokens (dark) --- */
-    --prism-violet: #a78bfa;
-    --prism-violet-dark: #8b5cf6;
-    --prism-violet-soft: rgba(167, 139, 250, 0.15);
+    --lumex-red: #ff6b6b;
+    --lumex-red-dark: #fa5252;
+    --lumex-oa-gold: #ffd43b;
 
-    --prism-teal: #2dd4bf;
-    --prism-teal-soft: rgba(45, 212, 191, 0.12);
+    --lumex-text: #f0f2f7;
+    --lumex-text-muted: #aab2cd;
+    --lumex-text-sub: #7a829a;
 
-    --prism-glass-bg: rgba(15, 23, 42, 0.75);
-    --prism-glass-bg-deep: rgba(10, 16, 30, 0.85);
-    --prism-glass-border: rgba(255, 255, 255, 0.06);
+    --lumex-border: #2d344d;
+    --lumex-border-hover: #3d4663;
 
-    --prism-reading-bg: #111827;
-    --prism-reading-text: #e2e8f0;
-    --prism-reading-muted: #94a3b8;
-
-    /* --- Status --- */
-    --lumex-red: #f87171;
-    --lumex-red-dark: #ef4444;
-    --lumex-oa-gold: #fbbf24;
-
-    /* --- Text --- */
-    --lumex-text: #f1f5f9;
-    --lumex-text-muted: #94a3b8;
-    --lumex-text-sub: #64748b;
-
-    /* --- Borders --- */
-    --lumex-border: #1e293b;
-    --lumex-border-hover: #334155;
-
-    /* --- Backgrounds --- */
-    --lumex-bg: #0b1120;
-    --lumex-bg-deep: #060c18;
-    --lumex-bg-white: #0f172a;
-    --lumex-card: #111827;
+    --lumex-bg: #0b0f1a;
+    --lumex-bg-deep: #05070d;
+    --lumex-bg-white: #111827;
+    /* Dark surface */
+    --lumex-card: #161e2e;
     --lumex-card-hover: #1e293b;
 
-    /* --- Tag & Chip --- */
-    --lumex-tag-bg: #1e293b;
-    --lumex-tag-text: #94a3b8;
+    /* Form Overrides */
+    --input-bg: #111827;
 
-    /* --- Access Badges --- */
-    --lumex-open-bg: rgba(45, 212, 191, 0.12);
-    --lumex-open-text: #2dd4bf;
-    --lumex-sub-bg: rgba(59, 130, 246, 0.12);
-    --lumex-sub-text: #3b82f6;
-
-    /* --- Form Overrides --- */
-    --input-bg: #0f172a;
-    --input-border: #1e293b;
-
-    /* --- Shadows --- */
-    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-    --shadow-dropdown: 0 10px 24px -4px rgba(0, 0, 0, 0.6), 0 4px 8px -2px rgba(0, 0, 0, 0.4);
-    --shadow-card-hover: 0 8px 32px rgba(0, 0, 0, 0.5);
-    --shadow-glass: 0 4px 24px -4px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    /* Shadows Overrides */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-dropdown: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+    --shadow-card-hover: 0 8px 30px rgba(0, 0, 0, 0.5);
 }

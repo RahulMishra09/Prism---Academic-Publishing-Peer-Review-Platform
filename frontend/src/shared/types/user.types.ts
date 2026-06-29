@@ -1,3 +1,12 @@
+export type UserRole =
+    | 'reader'
+    | 'author'
+    | 'reviewer'
+    | 'editor'
+    | 'associate-editor'
+    | 'chief-editor'
+    | 'admin';
+
 export interface User {
     id: string;
     email: string;
@@ -6,7 +15,7 @@ export interface User {
     displayName: string;
     orcid?: string;
     affiliation?: string;
-    role: 'reader' | 'author' | 'reviewer' | 'editor' | 'admin';
+    role: UserRole;
     savedArticles: string[]; // DOIs
     alerts: AlertSetting[];
     orders: Order[];

@@ -23,4 +23,3 @@ export * from './Layout/Grid';
 export * from './Layout/Stack';
 export * from './Link/Link';
 export * from './Image/Image';
-export * from './AnimateIn/AnimateIn';
