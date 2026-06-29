@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lumex Research Portal — Project Report</title>
+<style>
+  @page { margin: 20mm 18mm; size: A4; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.55;
+    color: #1a1a2e;
+    background: #fff;
+    padding: 0;
+  }
+
+  /* Cover Page */
+  .cover {
+    page-break-after: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 90vh;
+    text-align: center;
+    padding: 60px 40px;
+  }
+  .cover h1 {
+    font-size: 38pt;
+    font-weight: 800;
+    color: #3b5bdb;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .cover .subtitle {
+    font-size: 16pt;
+    color: #5a6380;
+    margin-bottom: 40px;
+    font-weight: 400;
+  }
+  .cover .meta-table {
+    margin: 30px auto 0;
+    border-collapse: collapse;
+    font-size: 11pt;
+  }
+  .cover .meta-table td {
+    padding: 6px 18px;
+    text-align: left;
+  }
+  .cover .meta-table td:first-child {
+    font-weight: 700;
+    color: #3b5bdb;
+  }
+  .cover .badge {
+    display: inline-block;
+    background: #3b5bdb;
+    color: #fff;
+    padding: 8px 28px;
+    border-radius: 6px;
+    font-size: 11pt;
+    font-weight: 600;
+    margin-top: 30px;
+  }
+
+  /* TOC */
+  .toc { page-break-after: always; padding: 30px 0; }
+  .toc h2 { font-size: 20pt; color: #3b5bdb; margin-bottom: 20px; border-bottom: 2px solid #3b5bdb; padding-bottom: 8px; }
+  .toc ol { padding-left: 22px; }
+  .toc li { margin-bottom: 6px; font-size: 11.5pt; }
+  .toc a { color: #3b5bdb; text-decoration: none; }
+
+  /* Section headings */
+  h2 {
+    font-size: 18pt;
+    color: #3b5bdb;
+    margin: 30px 0 12px;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #e8eaf2;
+    page-break-after: avoid;
+  }
+  h3 {
+    font-size: 13pt;
+    color: #2f4bc7;
+    margin: 20px 0 8px;
+    page-break-after: avoid;
+  }
+  h4 {
+    font-size: 11.5pt;
+    color: #1a1a2e;
+    margin: 14px 0 6px;
+    page-break-after: avoid;
+  }
+
+  p { margin: 6px 0; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 16px;
+    font-size: 10pt;
+    page-break-inside: auto;
+  }
+  thead { background: #3b5bdb; color: #fff; }
+  th { padding: 7px 10px; text-align: left; font-weight: 600; }
+  td { padding: 6px 10px; border-bottom: 1px solid #dde1ee; }
+  tr:nth-child(even) { background: #f5f6fa; }
+  tbody tr:hover { background: #eef0f8; }
+
+  /* Code */
+  pre {
+    background: #f0f2f7;
+    border: 1px solid #dde1ee;
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-family: "Source Code Pro", "Fira Code", monospace;
+    font-size: 9pt;
+    line-height: 1.5;
+    overflow-x: auto;
+    margin: 8px 0 14px;
+    page-break-inside: avoid;
+  }
+  code {
+    font-family: "Source Code Pro", "Fira Code", monospace;
+    font-size: 9.5pt;
+    background: #f0f2f7;
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  /* Diagram boxes */
+  .diagram {
+    background: #f8f9fc;
+    border: 1px solid #dde1ee;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 10px 0 16px;
+    font-family: monospace;
+    font-size: 9pt;
+    line-height: 1.45;
+    white-space: pre;
+    overflow-x: auto;
+    page-break-inside: avoid;
+  }
+
+  /* Lists */
+  ul, ol { margin: 6px 0 10px 20px; }
+  li { margin-bottom: 3px; }
+
+  /* Badges / highlights */
+  .badge-green { background: #d4edda; color: #155724; padding: 2px 8px; border-radius: 3px; font-size: 9pt; font-weight: 600; }
+  .badge-yellow { background: #fff3cd; color: #856404; padding: 2px 8px; border-radius: 3px; font-size: 9pt; font-weight: 600; }
+  .badge-red { background: #f8d7da; color: #721c24; padding: 2px 8px; border-radius: 3px; font-size: 9pt; font-weight: 600; }
+  .badge-blue { background: #d0e2ff; color: #0a3d7a; padding: 2px 8px; border-radius: 3px; font-size: 9pt; font-weight: 600; }
+
+  /* Info boxes */
+  .info-box {
+    background: #eef2ff;
+    border-left: 4px solid #3b5bdb;
+    padding: 10px 14px;
+    margin: 10px 0 14px;
+    border-radius: 0 6px 6px 0;
+    font-size: 10.5pt;
+  }
+
+  /* Page breaks */
+  .page-break { page-break-before: always; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    font-size: 9pt;
+    color: #8a92aa;
+    margin-top: 40px;
+    padding-top: 12px;
+    border-top: 1px solid #dde1ee;
+  }
+
+  /* Stat cards */
+  .stats-row {
+    display: flex;
+    gap: 12px;
+    margin: 14px 0;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    flex: 1;
+    min-width: 120px;
+    background: #f8f9fc;
+    border: 1px solid #dde1ee;
+    border-radius: 8px;
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-card .number {
+    font-size: 22pt;
+    font-weight: 800;
+    color: #3b5bdb;
+  }
+  .stat-card .label {
+    font-size: 9pt;
+    color: #5a6380;
+    margin-top: 2px;
+  }
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER PAGE ==================== -->
+<div class="cover">
+  <h1>LUMEX</h1>
+  <div class="subtitle">Academic Research Publishing Platform</div>
+  <p style="font-size:13pt; color:#5a6380; max-width:500px; margin:0 auto 30px;">
+    A full-stack scholarly publishing system supporting article submission,
+    peer review, editorial workflows, payments, AI-powered tools, and open access publishing.
+  </p>
+  <table class="meta-table">
+    <tr><td>Version</td><td>1.0.0</td></tr>
+    <tr><td>Author</td><td>Rahul Mishra</td></tr>
+    <tr><td>Date</td><td>June 2026</td></tr>
+    <tr><td>Stack</td><td>React + Express + Prisma + PostgreSQL</td></tr>
+    <tr><td>Database</td><td>Neon PostgreSQL (Cloud)</td></tr>
+    <tr><td>File Storage</td><td>Supabase Storage</td></tr>
+    <tr><td>AI Engine</td><td>Groq (Llama 3.3 70B)</td></tr>
+  </table>
+  <div class="badge">Comprehensive Project Report</div>
+</div>
+
+<!-- ==================== TABLE OF CONTENTS ==================== -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <ol>
+    <li><a href="#overview">Executive Overview</a></li>
+    <li><a href="#architecture">System Architecture</a></li>
+    <li><a href="#tech-stack">Technology Stack</a></li>
+    <li><a href="#backend">Backend Architecture</a>
+      <ol>
+        <li>Module Structure</li>
+        <li>API Endpoints (180+)</li>
+        <li>Middleware Pipeline</li>
+        <li>Authentication &amp; Authorization</li>
+        <li>Database Schema (24 Models)</li>
+        <li>Workflow State Machines</li>
+        <li>Email &amp; Notification System</li>
+        <li>Caching &amp; Rate Limiting</li>
+        <li>File Storage (Supabase)</li>
+        <li>AI Module (Groq)</li>
+      </ol>
+    </li>
+    <li><a href="#frontend">Frontend Architecture</a>
+      <ol>
+        <li>Feature-Sliced Design</li>
+        <li>Routing (50+ Routes)</li>
+        <li>State Management (Zustand + TanStack Query)</li>
+        <li>API Layer &amp; Fallback Pattern</li>
+        <li>Component Hierarchy</li>
+        <li>Design System &amp; Theming</li>
+        <li>Role-Based Access Control</li>
+      </ol>
+    </li>
+    <li><a href="#database">Database Design</a></li>
+    <li><a href="#integration">Frontend-Backend Integration Status</a></li>
+    <li><a href="#testing">Testing &amp; Quality</a></li>
+    <li><a href="#deployment">Deployment &amp; Environment</a></li>
+    <li><a href="#roadmap">Roadmap &amp; Next Steps</a></li>
+  </ol>
+</div>
+
+<!-- ==================== 1. EXECUTIVE OVERVIEW ==================== -->
+<h2 id="overview">1. Executive Overview</h2>
+
+<p>
+  <strong>Lumex</strong> is a full-featured academic research publishing platform designed to handle the complete lifecycle
+  of scholarly communication &mdash; from manuscript submission and peer review through editorial decision-making,
+  publication, and reader access. The platform supports multiple user roles (Reader, Author, Reviewer, Editor, Admin),
+  implements dual publishing workflows (legacy paper system + modern submission pipeline), and integrates AI-powered
+  paper summarization.
+</p>
+
+<div class="stats-row">
+  <div class="stat-card"><div class="number">180+</div><div class="label">API Endpoints</div></div>
+  <div class="stat-card"><div class="number">24</div><div class="label">Database Models</div></div>
+  <div class="stat-card"><div class="number">24</div><div class="label">Backend Modules</div></div>
+  <div class="stat-card"><div class="number">50+</div><div class="label">Frontend Routes</div></div>
+  <div class="stat-card"><div class="number">19</div><div class="label">Email Templates</div></div>
+  <div class="stat-card"><div class="number">99.5%</div><div class="label">Test Pass Rate</div></div>
+</div>
+
+<h3>Key Capabilities</h3>
+<ul>
+  <li><strong>Multi-Role System:</strong> 5 roles (READER, AUTHOR, REVIEWER, EDITOR, ADMIN) with granular permissions</li>
+  <li><strong>Dual Submission Workflows:</strong> Legacy paper system + modern 8-state submission pipeline</li>
+  <li><strong>Peer Review:</strong> Editor assigns reviewers, structured review form, editorial decision system</li>
+  <li><strong>Publishing:</strong> Journals, books, chapters, collections, special issues, conferences</li>
+  <li><strong>AI Integration:</strong> PDF summarization and Q&amp;A using Groq (Llama 3.3 70B)</li>
+  <li><strong>Payment System:</strong> Article purchase and APC (Article Processing Charges) checkout</li>
+  <li><strong>Search:</strong> Full-text search with faceted filtering and suggestions</li>
+  <li><strong>Email Notifications:</strong> 19 automated email templates via Resend</li>
+  <li><strong>Alert System:</strong> Keyword/journal/discipline alerts with batch digest delivery</li>
+</ul>
+
+<!-- ==================== 2. SYSTEM ARCHITECTURE ==================== -->
+<h2 id="architecture" class="page-break">2. System Architecture</h2>
+
+<div class="diagram">
+&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+&#9474;                      CLIENT (React Frontend)                       &#9474;
+&#9474;   Vite + React 18 + TypeScript + TanStack Query + Zustand         &#9474;
+&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9516;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+                              &#9474;  HTTPS / REST API
+                              &#9660;
+&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+&#9474;                  EXPRESS.JS API SERVER (Port 4000)                  &#9474;
+&#9474;                                                                    &#9474;
+&#9474;  Middleware: Helmet &#8594; CORS &#8594; Morgan &#8594; JSON Parser &#8594; Rate Limiter   &#9474;
+&#9474;                                                                    &#9474;
+&#9474;  &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;  &#9474;
+&#9474;  &#9474;  24 Feature Modules (Route &#8594; Controller &#8594; Service &#8594; DB)    &#9474;  &#9474;
+&#9474;  &#9474;  auth &#183; users &#183; articles &#183; journals &#183; collections &#183; books    &#9474;  &#9474;
+&#9474;  &#9474;  news &#183; careers &#183; conferences &#183; search &#183; submissions       &#9474;  &#9474;
+&#9474;  &#9474;  checkout &#183; contact &#183; homepage &#183; papers &#183; reviews          &#9474;  &#9474;
+&#9474;  &#9474;  editor &#183; admin &#183; ai &#183; feeds &#183; site-config &#183; authors     &#9474;  &#9474;
+&#9474;  &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;  &#9474;
+&#9474;                                                                    &#9474;
+&#9474;  &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;   &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;  &#9474;
+&#9474;  &#9474;   In-Process Cache    &#9474;   &#9474;   Token Blacklist (in-memory)    &#9474;  &#9474;
+&#9474;  &#9474;   (TTL Cache Map)     &#9474;   &#9474;   Revoked access token JTIs      &#9474;  &#9474;
+&#9474;  &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;   &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;  &#9474;
+&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9516;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9516;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;
+           &#9474;                             &#9474;
+           &#9660;                             &#9660;
+&#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;  &#9484;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9488;
+&#9474;  PostgreSQL (Neon)    &#9474;  &#9474;             External Services            &#9474;
+&#9474;  24 tables            &#9474;  &#9474;                                             &#9474;
+&#9474;  Prisma v7 ORM        &#9474;  &#9474;  Supabase Storage  &#183;  Resend Email      &#9474;
+&#9474;  8 enums              &#9474;  &#9474;  Groq AI (Llama 3.3)                     &#9474;
+&#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;  &#9492;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9472;&#9496;</div>
+
+<!-- ==================== 3. TECH STACK ==================== -->
+<h2 id="tech-stack" class="page-break">3. Technology Stack</h2>
+
+<h3>3.1 Backend Stack</h3>
+<table>
+  <thead><tr><th>Layer</th><th>Technology</th><th>Version</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>Runtime</td><td>Node.js (ESM)</td><td>20+</td><td>Server runtime with ES module support</td></tr>
+    <tr><td>Language</td><td>TypeScript</td><td>5.9.3</td><td>Type-safe development, strict mode</td></tr>
+    <tr><td>Framework</td><td>Express</td><td>5.2.1</td><td>HTTP server, async error propagation</td></tr>
+    <tr><td>ORM</td><td>Prisma</td><td>7.4+</td><td>Type-safe database access, migrations</td></tr>
+    <tr><td>Database</td><td>PostgreSQL (Neon)</td><td>14+</td><td>Cloud-hosted relational database</td></tr>
+    <tr><td>DB Adapter</td><td>@prisma/adapter-neon / pg</td><td>7.x</td><td>Runtime adapter selection (Neon or local)</td></tr>
+    <tr><td>Auth</td><td>jsonwebtoken + bcrypt</td><td>9.0 / 6.0</td><td>JWT access/refresh tokens, password hashing</td></tr>
+    <tr><td>Validation</td><td>Zod</td><td>4.3.6</td><td>Request body/query schema validation</td></tr>
+    <tr><td>File Upload</td><td>multer</td><td>2.1.1</td><td>Multipart form-data, memory storage</td></tr>
+    <tr><td>File Storage</td><td>Supabase Storage</td><td>2.98+</td><td>PDF/DOCX file hosting with CDN</td></tr>
+    <tr><td>Email</td><td>Resend</td><td>6.9.3</td><td>Transactional emails, 19 templates</td></tr>
+    <tr><td>AI</td><td>Groq SDK</td><td>1.2.1</td><td>Paper summarization &amp; Q&amp;A (Llama 3.3 70B)</td></tr>
+    <tr><td>PDF Parsing</td><td>pdf-parse</td><td>1.1.1</td><td>Extract text from uploaded PDFs</td></tr>
+    <tr><td>Security</td><td>Helmet + CORS + rate-limit</td><td>8.x / 2.x / 8.x</td><td>HTTP headers, CORS, request throttling</td></tr>
+    <tr><td>Logging</td><td>Morgan</td><td>1.10.1</td><td>HTTP request logging</td></tr>
+  </tbody>
+</table>
+
+<h3>3.2 Frontend Stack</h3>
+<table>
+  <thead><tr><th>Layer</th><th>Technology</th><th>Version</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td>Build Tool</td><td>Vite</td><td>7.3.1</td><td>Fast HMR, code splitting, bundling</td></tr>
+    <tr><td>UI Library</td><td>React</td><td>18.3.0</td><td>Component-based UI with hooks</td></tr>
+    <tr><td>Language</td><td>TypeScript</td><td>5.9.3</td><td>Strict type safety</td></tr>
+    <tr><td>Routing</td><td>React Router</td><td>7.13.1</td><td>Data router with lazy loading</td></tr>
+    <tr><td>Server State</td><td>TanStack React Query</td><td>5.90.21</td><td>API data fetching, caching, sync</td></tr>
+    <tr><td>Client State</td><td>Zustand</td><td>5.0.11</td><td>Lightweight global state management</td></tr>
+    <tr><td>Styling</td><td>Tailwind CSS</td><td>3.4.0</td><td>Utility-first CSS framework</td></tr>
+    <tr><td>UI Primitives</td><td>Radix UI</td><td>Various</td><td>10 accessible headless components</td></tr>
+    <tr><td>Animation</td><td>Framer Motion</td><td>12.34.3</td><td>Page transitions, micro-interactions</td></tr>
+    <tr><td>Forms</td><td>React Hook Form + Zod</td><td>7.71 / 4.3</td><td>Form state management + validation</td></tr>
+    <tr><td>PDF Viewer</td><td>react-pdf + pdfjs-dist</td><td>10.4 / 5.4</td><td>In-browser PDF rendering</td></tr>
+    <tr><td>Math</td><td>KaTeX</td><td>0.16.33</td><td>LaTeX math notation rendering</td></tr>
+    <tr><td>Markdown</td><td>react-markdown + remark-gfm</td><td>10.1 / 4.0</td><td>Rich text rendering</td></tr>
+    <tr><td>SEO</td><td>React Helmet Async</td><td>2.0.5</td><td>Document head management</td></tr>
+    <tr><td>Testing</td><td>Vitest + Playwright</td><td>4.0 / 1.58</td><td>Unit + E2E testing</td></tr>
+    <tr><td>Code Quality</td><td>ESLint + Prettier + Husky</td><td>9.x / 3.8 / 9.1</td><td>Linting, formatting, pre-commit hooks</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== 4. BACKEND ARCHITECTURE ==================== -->
+<h2 id="backend" class="page-break">4. Backend Architecture</h2>
+
+<h3>4.1 Module Structure</h3>
+<p>Every backend module follows a strict 4-layer pattern:</p>
+<pre>
+modules/&lt;feature&gt;/
+  &#9500;&#9472;&#9472; &lt;feature&gt;.routes.ts       Route definitions + middleware chaining
+  &#9500;&#9472;&#9472; &lt;feature&gt;.controller.ts  Parse request &#8594; call service &#8594; sendSuccess()
+  &#9500;&#9472;&#9472; &lt;feature&gt;.service.ts     Business logic + Prisma + cache + email
+  &#9492;&#9472;&#9472; &lt;feature&gt;.schema.ts      Zod schemas for validation
+</pre>
+
+<h3>4.2 Backend Modules &amp; API Endpoints</h3>
+<table>
+  <thead><tr><th>Module</th><th>Base Path</th><th>Key Endpoints</th><th>Auth Required</th></tr></thead>
+  <tbody>
+    <tr><td><strong>auth</strong></td><td>/api/auth</td><td>register, login, logout, refresh, forgot-password, reset-password, verify-email, me</td><td>Partial</td></tr>
+    <tr><td><strong>users</strong></td><td>/api/users</td><td>me, dashboard, submissions, orders, alerts, saved-articles, reading-history</td><td>Yes</td></tr>
+    <tr><td><strong>articles</strong></td><td>/api/articles</td><td>list, top, :doi detail, metrics, cite, download, publish (admin)</td><td>Partial</td></tr>
+    <tr><td><strong>journals</strong></td><td>/api/journals</td><td>list, :slug detail, articles, issues, editorial-board, special-issues, admin CRUD</td><td>Partial</td></tr>
+    <tr><td><strong>collections</strong></td><td>/api/collections</td><td>list, :slug detail, articles, admin CRUD</td><td>Partial</td></tr>
+    <tr><td><strong>books</strong></td><td>/api/books</td><td>list, :isbn detail, chapters, admin CRUD</td><td>Partial</td></tr>
+    <tr><td><strong>news</strong></td><td>/api/news</td><td>list, :slug detail, admin CRUD</td><td>Partial</td></tr>
+    <tr><td><strong>careers</strong></td><td>/api/careers</td><td>list, :slug detail, admin CRUD</td><td>Partial</td></tr>
+    <tr><td><strong>conferences</strong></td><td>/api/conferences</td><td>list, :slug detail, admin CRUD</td><td>Partial</td></tr>
+    <tr><td><strong>search</strong></td><td>/api/search</td><td>full-text search, suggestions, related</td><td>No</td></tr>
+    <tr><td><strong>submissions</strong></td><td>/api/submissions</td><td>create, edit, submit, files, under-review, decision, withdraw, revise</td><td>Yes</td></tr>
+    <tr><td><strong>checkout</strong></td><td>/api/checkout</td><td>article purchase, APC payment, orders, verify</td><td>Yes</td></tr>
+    <tr><td><strong>contact</strong></td><td>/api/contact</td><td>submit form, admin list, status update</td><td>Partial</td></tr>
+    <tr><td><strong>homepage</strong></td><td>/api/homepage</td><td>aggregated homepage data (cached)</td><td>No</td></tr>
+    <tr><td><strong>site-config</strong></td><td>/api/site-config</td><td>get/set config key-value pairs</td><td>Partial</td></tr>
+    <tr><td><strong>papers</strong></td><td>/papers</td><td>Legacy: CRUD, submit, upload, approve/reject</td><td>Yes</td></tr>
+    <tr><td><strong>reviews</strong></td><td>/reviews</td><td>Legacy: reviewer dashboard, assignments, submit review</td><td>Yes</td></tr>
+    <tr><td><strong>editor</strong></td><td>/editor</td><td>Legacy: paper management, reviewer assignment</td><td>Yes</td></tr>
+    <tr><td><strong>admin</strong></td><td>/admin</td><td>users list, ban/unban, role change, platform stats, submission analytics</td><td>Yes (ADMIN)</td></tr>
+    <tr><td><strong>ai</strong></td><td>/api/ai</td><td>summarize PDF, ask question about paper</td><td>No</td></tr>
+    <tr><td><strong>feeds</strong></td><td>/api/feeds</td><td>RSS/Atom feeds (latest, by journal, by discipline)</td><td>No</td></tr>
+    <tr><td><strong>authors</strong></td><td>/api/authors</td><td>author profile by ID</td><td>No</td></tr>
+  </tbody>
+</table>
+
+<h3>4.3 Request Lifecycle &amp; Middleware Pipeline</h3>
+<div class="diagram">
+HTTP Request
+    &#9474;
+    &#9660;
+ 1. cors()                  &#8594; CORS headers
+ 2. helmet()                &#8594; Security headers (XSS, CSP, etc.)
+ 3. morgan("dev")           &#8594; Request logging
+ 4. express.json()          &#8594; Parse JSON body
+ 5. globalLimiter           &#8594; 200 req / 15 min / IP
+    &#9474;
+    &#9660;
+ Route-specific limiters    (authLimiter: 10/15min, searchLimiter: 60/1min, etc.)
+    &#9474;
+    &#9660;
+ authenticate               &#8594; Verify JWT, set req.user = { userId, role }
+    &#9474;
+    &#9660;
+ requireRole(...roles)      &#8594; Check role, 403 if unauthorized
+    &#9474;
+    &#9660;
+ Controller                 &#8594; Zod.safeParse(body), call service
+    &#9474;
+    &#9660;
+ Service                    &#8594; Business logic, Prisma queries, cache, email
+    &#9474;
+    &#9660;
+ sendSuccess(res, data)     &#8594; Standard JSON envelope response
+    &#9474;
+ Any Error &#8594; errorHandler  &#8594; AppError (statusCode + message) or 500</div>
+
+<h3>4.4 Authentication &amp; Authorization</h3>
+
+<h4>Token Strategy</h4>
+<table>
+  <thead><tr><th>Token</th><th>Type</th><th>Lifetime</th><th>Storage</th><th>Rotation</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Access Token</strong></td><td>JWT (signed)</td><td>15 minutes</td><td>Client memory / localStorage</td><td>No (stateless)</td></tr>
+    <tr><td><strong>Refresh Token</strong></td><td>Opaque string</td><td>30 days</td><td>Database (refresh_tokens table)</td><td>Yes (rotated on use)</td></tr>
+  </tbody>
+</table>
+
+<h4>Role Permissions Matrix</h4>
+<table>
+  <thead><tr><th>Action</th><th>READER</th><th>AUTHOR</th><th>REVIEWER</th><th>EDITOR</th><th>ADMIN</th></tr></thead>
+  <tbody>
+    <tr><td>Browse content</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+    <tr><td>Submit manuscript</td><td></td><td>&#10003;</td><td></td><td></td><td></td></tr>
+    <tr><td>Review papers</td><td></td><td></td><td>&#10003;</td><td></td><td></td></tr>
+    <tr><td>Editorial decisions</td><td></td><td></td><td></td><td>&#10003;</td><td>&#10003;</td></tr>
+    <tr><td>Assign reviewers</td><td></td><td></td><td></td><td>&#10003;</td><td>&#10003;</td></tr>
+    <tr><td>Publish articles</td><td></td><td></td><td></td><td>&#10003;</td><td>&#10003;</td></tr>
+    <tr><td>Manage users</td><td></td><td></td><td></td><td></td><td>&#10003;</td></tr>
+    <tr><td>Platform statistics</td><td></td><td></td><td></td><td></td><td>&#10003;</td></tr>
+    <tr><td>Ban/unban users</td><td></td><td></td><td></td><td></td><td>&#10003;</td></tr>
+    <tr><td>Purchase articles</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+    <tr><td>Set alerts</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td><td>&#10003;</td></tr>
+  </tbody>
+</table>
+
+<h3 class="page-break">4.5 Workflow State Machines</h3>
+
+<h4>Modern Submission Workflow (8 States)</h4>
+<div class="diagram">
+  Author: POST /api/submissions
+           &#9474;
+           &#9660;
+        [DRAFT] &#8592;&#8592;&#8592; Author edits, uploads files, adds co-authors
+           &#9474;
+  Author: POST /api/submissions/:id/submit  (requires &#8805;1 file)
+           &#9474;
+           &#9660;
+      [SUBMITTED] &#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#8594;&#9488;
+           &#9474;                                              &#9474;
+  Editor: under-review                            Author: withdraw
+           &#9474;                                              &#9474;
+           &#9660;                                              &#9660;
+     [UNDER_REVIEW]                                   [WITHDRAWN]
+       &#9474;   &#9474;   &#9474;                                  (terminal)
+       &#9660;   &#9660;   &#9660;
+  ACCEPTED  REJECTED  REVISION_REQUIRED
+    &#9474;     (terminal)        &#9474;
+    &#9474;                       &#9474; Author revises
+    &#9660;                       &#9492;&#8594;&#8594;&#8594; [SUBMITTED] (re-enters cycle)
+  APC Payment
+    &#9474;
+    &#9660;
+  Published</div>
+
+<h4>Email Notifications per Transition</h4>
+<p>Every state transition automatically triggers a fire-and-forget email to the relevant party (author, reviewer, or editor). The system sends <strong>19 different email types</strong> across all workflows.</p>
+
+<h3>4.6 Caching Strategy</h3>
+<table>
+  <thead><tr><th>Cache Key Pattern</th><th>TTL</th><th>Invalidated By</th></tr></thead>
+  <tbody>
+    <tr><td><code>homepage:main</code></td><td>60 seconds</td><td>Article published</td></tr>
+    <tr><td><code>top:{rankBy}:{limit}:{discipline}</code></td><td>2 minutes</td><td>Article published</td></tr>
+    <tr><td><code>metrics:{doi}</code></td><td>30 seconds</td><td>View/download increment</td></tr>
+    <tr><td><code>site-config:all</code></td><td>10 minutes</td><td>setSiteConfig()</td></tr>
+    <tr><td><code>search-suggestions:{q}</code></td><td>60 seconds</td><td>Natural expiry</td></tr>
+  </tbody>
+</table>
+
+<h3>4.7 Rate Limiting</h3>
+<table>
+  <thead><tr><th>Limiter</th><th>Window</th><th>Max Requests</th><th>Scope</th></tr></thead>
+  <tbody>
+    <tr><td>globalLimiter</td><td>15 min</td><td>200</td><td>All routes</td></tr>
+    <tr><td>authLimiter</td><td>15 min</td><td>10</td><td>/api/auth/*</td></tr>
+    <tr><td>searchLimiter</td><td>1 min</td><td>60</td><td>/api/search/*</td></tr>
+    <tr><td>contactLimiter</td><td>60 min</td><td>5</td><td>/api/contact</td></tr>
+    <tr><td>uploadLimiter</td><td>15 min</td><td>20</td><td>File upload routes</td></tr>
+  </tbody>
+</table>
+
+<h3>4.8 AI Module</h3>
+<div class="info-box">
+  <strong>Provider:</strong> Groq &mdash; Model: <code>llama-3.3-70b-versatile</code><br>
+  <strong>Features:</strong> PDF text extraction (pdf-parse v1.1.1) &rarr; Structured summarization &amp; Q&amp;A<br>
+  <strong>Endpoints:</strong> <code>POST /api/ai/summarize</code> (upload PDF &rarr; summary) &amp; <code>POST /api/ai/ask</code> (upload PDF + question &rarr; answer)
+</div>
+<p>The AI module extracts up to 12,000 characters from uploaded PDFs, sends the text to Groq with a structured prompt, and returns a JSON response with title, abstract, key findings, methodology, and conclusions.</p>
+
+<!-- ==================== 5. FRONTEND ARCHITECTURE ==================== -->
+<h2 id="frontend" class="page-break">5. Frontend Architecture</h2>
+
+<h3>5.1 Feature-Sliced Design (FSD)</h3>
+<p>The frontend follows the <strong>Feature-Sliced Design</strong> architectural pattern, organizing code into strict layers with a one-way dependency flow:</p>
+
+<div class="diagram">
+  Pages           &#8592; Top-level route components (27 page directories)
+    &#9474;
+    &#9660;
+  Widgets         &#8592; Complex UI composition blocks (23 widgets)
+    &#9474;
+    &#9660;
+  Features        &#8592; Business logic &amp; user interactions (11 feature groups)
+    &#9474;
+    &#9660;
+  Entities        &#8592; Domain objects &amp; data (10 entity types)
+    &#9474;
+    &#9660;
+  Shared          &#8592; Reusable UI, API, hooks, types, utils (26+ components)</div>
+
+<p><strong>Rule:</strong> Each layer may only import from layers below it. Pages import Widgets, Widgets import Features, etc.</p>
+
+<h3>5.2 Routing (50+ Routes)</h3>
+
+<h4>Public Routes</h4>
+<table>
+  <thead><tr><th>Route</th><th>Page Component</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>/</code></td><td>HomePage</td><td>Hero, featured content, metrics, news</td></tr>
+    <tr><td><code>/search</code></td><td>SearchResultsPage</td><td>Full-text search with faceted filters</td></tr>
+    <tr><td><code>/article/:slug</code></td><td>ArticlePage</td><td>Article metadata and abstract</td></tr>
+    <tr><td><code>/article/:slug/read</code></td><td>ArticleReadingPage</td><td>Full-text PDF/DOCX reader</td></tr>
+    <tr><td><code>/journals</code></td><td>JournalListPage</td><td>Browse all journals</td></tr>
+    <tr><td><code>/journal/:slug</code></td><td>JournalHomePage</td><td>Journal landing with nested routes</td></tr>
+    <tr><td><code>/books</code></td><td>BookListPage</td><td>Browse all books</td></tr>
+    <tr><td><code>/book/:isbn</code></td><td>BookPage</td><td>Book detail with chapters</td></tr>
+    <tr><td><code>/collections</code></td><td>CollectionsPage</td><td>Research collections</td></tr>
+    <tr><td><code>/news</code></td><td>NewsPage</td><td>Publishing news and announcements</td></tr>
+    <tr><td><code>/conference/:slug</code></td><td>ConferencePage</td><td>Conference details</td></tr>
+    <tr><td><code>/contact</code></td><td>ContactPage</td><td>Contact form</td></tr>
+    <tr><td><code>/disciplines</code></td><td>DisciplinesPage</td><td>Browse by academic discipline</td></tr>
+    <tr><td><code>/author/:authorId</code></td><td>AuthorPage</td><td>Author profile and publications</td></tr>
+  </tbody>
+</table>
+
+<h4>Protected Routes (Requires Authentication)</h4>
+<table>
+  <thead><tr><th>Route</th><th>Required Role</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>/account</code></td><td>Any authenticated</td><td>User dashboard, profile, orders</td></tr>
+    <tr><td><code>/journal/:slug/submit</code></td><td>Author+</td><td>Manuscript submission wizard</td></tr>
+    <tr><td><code>/checkout/:doi</code></td><td>Any authenticated</td><td>Article purchase checkout</td></tr>
+    <tr><td><code>/checkout-apc/:id</code></td><td>Author+</td><td>APC payment for publishing</td></tr>
+    <tr><td><code>/reviewer</code></td><td>Reviewer, Admin</td><td>Reviewer dashboard</td></tr>
+    <tr><td><code>/reviewer/review/:id</code></td><td>Reviewer, Admin</td><td>Submit peer review</td></tr>
+    <tr><td><code>/editor</code></td><td>Editor+</td><td>Editor dashboard</td></tr>
+    <tr><td><code>/editor/decision/:id</code></td><td>Editor+</td><td>Accept/reject/revise decision</td></tr>
+    <tr><td><code>/editor/journals</code></td><td>Chief-Editor, Admin</td><td>Journal management panel</td></tr>
+  </tbody>
+</table>
+
+<h3>5.3 State Management</h3>
+
+<h4>Zustand Stores (Client State)</h4>
+<table>
+  <thead><tr><th>Store</th><th>Purpose</th><th>Persisted</th></tr></thead>
+  <tbody>
+    <tr><td><code>useAuthStore</code></td><td>User session, tokens, institutional access</td><td>Yes (localStorage)</td></tr>
+    <tr><td><code>useSearchStore</code></td><td>Search query, filters, pagination, sorting</td><td>No</td></tr>
+    <tr><td><code>useUIStore</code></td><td>Global modal open/close state</td><td>No</td></tr>
+    <tr><td><code>useJournalAdminStore</code></td><td>Journal CRUD, special issues management</td><td>Yes</td></tr>
+    <tr><td><code>useSubmissionStore</code></td><td>Multi-step submission form state</td><td>No</td></tr>
+    <tr><td><code>useThemeStore</code></td><td>Dark/light mode toggle</td><td>Yes</td></tr>
+  </tbody>
+</table>
+
+<h4>TanStack Query (Server State)</h4>
+<div class="info-box">
+  <strong>Default stale time:</strong> 5 minutes &mdash; <strong>Retry:</strong> 1 attempt &mdash; <strong>Refetch on focus:</strong> Disabled<br>
+  Entity-level query hooks: articles, journals, books, collections, conferences, users, search
+</div>
+
+<h3>5.4 API Layer &amp; Fallback Pattern</h3>
+<p>The frontend uses a unique <strong>fetchWithFallback</strong> pattern for development flexibility:</p>
+<pre>
+async function fetchWithFallback&lt;T&gt;(
+  endpoint: string,          // e.g. "/articles"
+  fallbackJsonPath: string,  // e.g. "/mock-data/articles.json"
+  options?: RequestInit
+): Promise&lt;T&gt;
+
+// 1. Tries real API call:  GET /api/articles
+// 2. If fails (network error, 4xx, 5xx):
+//    Falls back to:        GET /mock-data/articles.json
+// 3. Returns typed data either way
+</pre>
+<p>This allows the frontend to function even without the backend running, using static JSON files in <code>/public/mock-data/</code>.</p>
+
+<h3 class="page-break">5.5 Component Hierarchy</h3>
+
+<table>
+  <thead><tr><th>Layer</th><th>Count</th><th>Examples</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Shared UI</strong></td><td>26+</td><td>Button, Input, Modal, Toast, Spinner, Skeleton, Tabs, Accordion, Pagination, Badge</td></tr>
+    <tr><td><strong>Entities</strong></td><td>10 groups</td><td>ArticleCard, JournalCard, BookCard, ChapterCard, CitationDisplay, AuthorList</td></tr>
+    <tr><td><strong>Features</strong></td><td>11 groups</td><td>SearchBar, SubmissionWizard steps, ReviewForm, DecisionForm, CitationTools, FigureViewer</td></tr>
+    <tr><td><strong>Widgets</strong></td><td>23</td><td>GlobalHeader, GlobalFooter, MegaMenu, HomeHero, TrendingResearch, MetricsPanel, SearchFilterPanel</td></tr>
+    <tr><td><strong>Pages</strong></td><td>27 dirs</td><td>HomePage, SearchResultsPage, ArticlePage, JournalHomePage, AccountDashboard, EditorDashboard</td></tr>
+  </tbody>
+</table>
+
+<h3>5.6 Design System</h3>
+
+<h4>Color Palette (CSS Custom Properties)</h4>
+<table>
+  <thead><tr><th>Token</th><th>Value</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td><code>--lumex-accent</code></td><td>#3b5bdb</td><td>Primary brand color, links, buttons</td></tr>
+    <tr><td><code>--lumex-accent-dark</code></td><td>#2f4bc7</td><td>Hover states</td></tr>
+    <tr><td><code>--lumex-red</code></td><td>#e8181d</td><td>Errors, destructive actions</td></tr>
+    <tr><td><code>--lumex-oa-gold</code></td><td>#f5a500</td><td>Open Access badges</td></tr>
+    <tr><td><code>--lumex-text</code></td><td>#0f1523</td><td>Primary text</td></tr>
+    <tr><td><code>--lumex-text-muted</code></td><td>#5a6380</td><td>Secondary text</td></tr>
+    <tr><td><code>--lumex-bg</code></td><td>#f0f2f7</td><td>Page background</td></tr>
+    <tr><td><code>--lumex-card</code></td><td>#ffffff</td><td>Card surfaces</td></tr>
+  </tbody>
+</table>
+
+<h4>Typography</h4>
+<table>
+  <thead><tr><th>Font</th><th>Usage</th></tr></thead>
+  <tbody>
+    <tr><td>Plus Jakarta Sans</td><td>Primary sans-serif (headings, body)</td></tr>
+    <tr><td>Fraunces</td><td>Serif accent (article titles, quotes)</td></tr>
+    <tr><td>Source Code Pro</td><td>Monospace (code blocks, DOIs)</td></tr>
+  </tbody>
+</table>
+
+<h4>Dark Mode</h4>
+<p>Implemented via Tailwind's <code>darkMode: 'class'</code> strategy. The <code>useThemeStore</code> toggles a class on <code>document.documentElement</code>, and CSS variables swap accordingly.</p>
+
+<h3>5.7 Code Splitting Strategy</h3>
+<table>
+  <thead><tr><th>Chunk</th><th>Contents</th></tr></thead>
+  <tbody>
+    <tr><td>react-vendor</td><td>react, react-dom, react-router-dom</td></tr>
+    <tr><td>ui-vendor</td><td>Radix UI components (dialog, tabs, accordion, etc.)</td></tr>
+    <tr><td>query-vendor</td><td>@tanstack/react-query</td></tr>
+    <tr><td>pdf-vendor</td><td>pdfjs-dist, react-pdf</td></tr>
+    <tr><td>math-vendor</td><td>katex, react-katex</td></tr>
+    <tr><td>framer-vendor</td><td>framer-motion</td></tr>
+  </tbody>
+</table>
+<p>All page routes use <code>React.lazy()</code> with <code>Suspense</code> for automatic code splitting.</p>
+
+<!-- ==================== 6. DATABASE DESIGN ==================== -->
+<h2 id="database" class="page-break">6. Database Design</h2>
+
+<h3>6.1 Schema Overview (24 Models, 8 Enums)</h3>
+
+<h4>Users &amp; Authentication</h4>
+<table>
+  <thead><tr><th>Model</th><th>Key Fields</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>users</code></td><td>id, name, email, password, role, isBanned</td><td>User accounts with role-based access</td></tr>
+    <tr><td><code>refresh_tokens</code></td><td>id, token, expiresAt, isRevoked, userId</td><td>Rotatable refresh tokens</td></tr>
+    <tr><td><code>password_reset_tokens</code></td><td>id, token, expiresAt, used, userId</td><td>One-time password reset links</td></tr>
+  </tbody>
+</table>
+
+<h4>Publishing Content</h4>
+<table>
+  <thead><tr><th>Model</th><th>Key Fields</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>journals</code></td><td>slug, title, discipline, issn, impactFactor, isOpenAccess</td><td>Academic journals</td></tr>
+    <tr><td><code>journal_issues</code></td><td>journalId, volume, issue, year</td><td>Journal volumes/issues</td></tr>
+    <tr><td><code>articles</code></td><td>doi, title, abstract, keywords, pdfUrl, viewCount, citationCount</td><td>Published articles</td></tr>
+    <tr><td><code>article_authors</code></td><td>articleId, firstName, lastName, orcid, isCorresponding</td><td>Article author list</td></tr>
+    <tr><td><code>article_references</code></td><td>articleId, text, doi, order</td><td>Article bibliography</td></tr>
+    <tr><td><code>article_metrics</code></td><td>articleId, viewCount, downloadCount, citationCount</td><td>Article-level analytics</td></tr>
+    <tr><td><code>collections</code></td><td>slug, title, discipline, isActive</td><td>Curated article collections</td></tr>
+    <tr><td><code>books</code></td><td>isbn, title, discipline, isOpenAccess</td><td>Academic books</td></tr>
+    <tr><td><code>book_chapters</code></td><td>bookId, doi, title, abstract, pdfUrl</td><td>Book chapters</td></tr>
+  </tbody>
+</table>
+
+<h4>Submission Workflow</h4>
+<table>
+  <thead><tr><th>Model</th><th>Key Fields</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>submissions</code></td><td>title, abstract, status, journalSlug, coverLetter</td><td>Manuscript submissions (8 statuses)</td></tr>
+    <tr><td><code>submission_files</code></td><td>submissionId, fileName, fileUrl, mimeType</td><td>Uploaded manuscripts</td></tr>
+    <tr><td><code>submission_authors</code></td><td>submissionId, firstName, lastName, email</td><td>Co-author information</td></tr>
+  </tbody>
+</table>
+
+<h4>Platform Content</h4>
+<table>
+  <thead><tr><th>Model</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>news</code></td><td>Publishing news and announcements</td></tr>
+    <tr><td><code>careers</code></td><td>Job listings (department, type, closing date)</td></tr>
+    <tr><td><code>conferences</code></td><td>Academic conferences (status, dates, discipline)</td></tr>
+    <tr><td><code>site_config</code></td><td>Key-value platform configuration</td></tr>
+    <tr><td><code>homepage_content</code></td><td>Homepage section data (JSON)</td></tr>
+    <tr><td><code>contact_messages</code></td><td>Contact form submissions with ticket IDs</td></tr>
+  </tbody>
+</table>
+
+<h4>User Activity</h4>
+<table>
+  <thead><tr><th>Model</th><th>Purpose</th></tr></thead>
+  <tbody>
+    <tr><td><code>alerts</code></td><td>User alert subscriptions (keyword, journal, discipline)</td></tr>
+    <tr><td><code>orders</code></td><td>Purchase records (article access, APC payments)</td></tr>
+  </tbody>
+</table>
+
+<h3>6.2 Key Enums</h3>
+<table>
+  <thead><tr><th>Enum</th><th>Values</th></tr></thead>
+  <tbody>
+    <tr><td>Role</td><td>READER, AUTHOR, REVIEWER, EDITOR, ADMIN</td></tr>
+    <tr><td>SubmissionStatus</td><td>DRAFT, SUBMITTED, UNDER_REVIEW, REVISION_REQUIRED, ACCEPTED, REJECTED, WITHDRAWN</td></tr>
+    <tr><td>PaperStatus</td><td>DRAFT, SUBMITTED, APPROVED, REJECTED</td></tr>
+    <tr><td>AccessType</td><td>OPEN_ACCESS, SUBSCRIPTION, FREE</td></tr>
+    <tr><td>ArticleType</td><td>RESEARCH_ARTICLE, REVIEW, EDITORIAL, LETTER, CASE_STUDY, BOOK_REVIEW, CORRECTION</td></tr>
+    <tr><td>ConferenceStatus</td><td>UPCOMING, ONGOING, PAST, CANCELLED</td></tr>
+    <tr><td>OrderStatus</td><td>PENDING, COMPLETED, FAILED, REFUNDED</td></tr>
+    <tr><td>AssignmentStatus</td><td>PENDING, COMPLETED</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== 7. INTEGRATION STATUS ==================== -->
+<h2 id="integration" class="page-break">7. Frontend-Backend Integration Status</h2>
+
+<h3>7.1 Connected Endpoints <span class="badge-green">Working</span></h3>
+<table>
+  <thead><tr><th>Feature</th><th>Frontend</th><th>Backend</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Auth (login, register, logout, me)</td><td>useAuthStore</td><td>/api/auth/*</td><td><span class="badge-green">Connected</span></td></tr>
+    <tr><td>Articles (list, detail, top)</td><td>articleQueries</td><td>/api/articles/*</td><td><span class="badge-green">Connected</span></td></tr>
+    <tr><td>Journals (list, detail, articles)</td><td>journalQueries</td><td>/api/journals/*</td><td><span class="badge-green">Connected</span></td></tr>
+    <tr><td>Books (list, detail, chapters)</td><td>bookQueries</td><td>/api/books/*</td><td><span class="badge-green">Connected</span></td></tr>
+    <tr><td>Collections (list, detail)</td><td>collectionQueries</td><td>/api/collections/*</td><td><span class="badge-green">Connected</span></td></tr>
+    <tr><td>Search (full-text, suggestions)</td><td>searchQueries</td><td>/api/search/*</td><td><span class="badge-green">Connected</span></td></tr>
+    <tr><td>News (list, detail)</td><td>newsQueries</td><td>/api/news/*</td><td><span class="badge-green">Connected</span></td></tr>
+    <tr><td>Homepage data</td><td>homepageQueries</td><td>/api/homepage</td><td><span class="badge-green">Connected</span></td></tr>
+    <tr><td>Site configuration</td><td>useSiteConfig</td><td>/api/site-config</td><td><span class="badge-green">Connected</span></td></tr>
+  </tbody>
+</table>
+
+<h3>7.2 Partially Connected <span class="badge-yellow">Fallback Active</span></h3>
+<table>
+  <thead><tr><th>Feature</th><th>Issue</th></tr></thead>
+  <tbody>
+    <tr><td>User Dashboard</td><td>Falls back to <code>user.json</code> mock data for dashboard content</td></tr>
+    <tr><td>Submissions</td><td>Backend exists but some query hooks use mock data</td></tr>
+    <tr><td>Checkout / Orders</td><td>Backend stubbed; frontend has pages but no real payment flow</td></tr>
+    <tr><td>Conferences</td><td>Backend endpoint exists; frontend uses mock JSON exclusively</td></tr>
+    <tr><td>Special Issues</td><td>Falls back to <code>special-issues.json</code> on API failure</td></tr>
+  </tbody>
+</table>
+
+<h3>7.3 Not Connected <span class="badge-red">Backend Only</span></h3>
+<table>
+  <thead><tr><th>Backend Module</th><th>Endpoints</th><th>Frontend Status</th></tr></thead>
+  <tbody>
+    <tr><td>AI (summarize, Q&amp;A)</td><td>/api/ai/*</td><td>No UI page exists</td></tr>
+    <tr><td>Careers</td><td>/api/careers/*</td><td>No page component, no route</td></tr>
+    <tr><td>RSS Feeds</td><td>/api/feeds/*</td><td>No feed links in UI</td></tr>
+    <tr><td>Admin (full)</td><td>/admin/*</td><td>No admin dashboard page</td></tr>
+    <tr><td>Contact (admin view)</td><td>/api/contact/admin</td><td>No admin inbox UI</td></tr>
+    <tr><td>Legacy paper workflow</td><td>/papers/*, /reviews/*, /editor/*</td><td>Not connected via /api prefix</td></tr>
+  </tbody>
+</table>
+
+<div class="info-box">
+  <strong>Integration Summary:</strong> Approximately 50-60% of the frontend is connected to real backend APIs.
+  The remaining pages use mock JSON data through the <code>fetchWithFallback</code> pattern. A 7-phase migration
+  plan has been created in <code>Workflow/taskfile.md</code> with 134 tasks to achieve 100% integration.
+</div>
+
+<!-- ==================== 8. TESTING ==================== -->
+<h2 id="testing" class="page-break">8. Testing &amp; Quality Assurance</h2>
+
+<h3>8.1 Backend Tests</h3>
+<table>
+  <thead><tr><th>Test Suite</th><th>Passed</th><th>Failed</th><th>Coverage</th></tr></thead>
+  <tbody>
+    <tr><td>Basic API tests (test-api.sh)</td><td>61</td><td>0</td><td>Auth, CRUD, search, pagination</td></tr>
+    <tr><td>Advanced API tests (test-api-advanced.sh)</td><td>125</td><td>1</td><td>Workflows, edge cases, validation</td></tr>
+    <tr><td>Database integration (db.test.ts)</td><td>57 tests / 15 groups</td><td>0</td><td>All Prisma models and relations</td></tr>
+    <tr><td><strong>Total</strong></td><td><strong>243</strong></td><td><strong>1</strong></td><td><strong>99.6% pass rate</strong></td></tr>
+  </tbody>
+</table>
+
+<h3>8.2 Frontend Tests</h3>
+<table>
+  <thead><tr><th>Framework</th><th>Type</th><th>Status</th></tr></thead>
+  <tbody>
+    <tr><td>Vitest</td><td>Unit tests</td><td>Configured, minimal coverage (2 test files)</td></tr>
+    <tr><td>Playwright</td><td>E2E tests</td><td>Configured, 3 specs (home, a11y, mobile)</td></tr>
+    <tr><td>axe-core</td><td>Accessibility</td><td>Integrated with Playwright</td></tr>
+  </tbody>
+</table>
+
+<h3>8.3 Code Quality Tooling</h3>
+<table>
+  <thead><tr><th>Tool</th><th>Purpose</th><th>Enforcement</th></tr></thead>
+  <tbody>
+    <tr><td>TypeScript (strict)</td><td>Type safety</td><td>Build-time error checking</td></tr>
+    <tr><td>ESLint</td><td>Code linting</td><td>Pre-commit hook via Husky</td></tr>
+    <tr><td>Prettier</td><td>Code formatting</td><td>Pre-commit hook via lint-staged</td></tr>
+    <tr><td>Zod</td><td>Runtime validation</td><td>Every request body &amp; query validated</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== 9. DEPLOYMENT ==================== -->
+<h2 id="deployment">9. Deployment &amp; Environment</h2>
+
+<h3>9.1 Environment Variables</h3>
+<table>
+  <thead><tr><th>Variable</th><th>Required</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>DATABASE_URL</td><td>Yes</td><td>Neon PostgreSQL connection string</td></tr>
+    <tr><td>JWT_SECRET</td><td>Yes</td><td>Access token signing secret</td></tr>
+    <tr><td>SUPABASE_URL</td><td>Yes</td><td>Supabase project URL</td></tr>
+    <tr><td>SUPABASE_SERVICE_KEY</td><td>Yes</td><td>Supabase service role key (file storage)</td></tr>
+    <tr><td>SUPABASE_BUCKET</td><td>Yes</td><td>Storage bucket name</td></tr>
+    <tr><td>RESEND_API_KEY</td><td>Yes</td><td>Resend transactional email key</td></tr>
+    <tr><td>EMAIL_FROM</td><td>Yes</td><td>Sender email address</td></tr>
+    <tr><td>APP_URL</td><td>Yes</td><td>Frontend base URL for email links</td></tr>
+    <tr><td>GROQ_API_KEY</td><td>No</td><td>Groq AI API key (for AI features)</td></tr>
+    <tr><td>PORT</td><td>No</td><td>Server port (default: 5000, use 4000 on macOS)</td></tr>
+    <tr><td>NODE_ENV</td><td>No</td><td>development or production</td></tr>
+    <tr><td>CORS_ORIGINS</td><td>No</td><td>Comma-separated allowed origins</td></tr>
+  </tbody>
+</table>
+
+<h3>9.2 Development Commands</h3>
+<table>
+  <thead><tr><th>Command</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td><code>npm run dev</code> (backend)</td><td>Start backend with tsx watch (hot reload)</td></tr>
+    <tr><td><code>npm run dev</code> (frontend)</td><td>Start Vite dev server with HMR</td></tr>
+    <tr><td><code>npx prisma generate</code></td><td>Generate Prisma client from schema</td></tr>
+    <tr><td><code>npx prisma db push</code></td><td>Push schema to database</td></tr>
+    <tr><td><code>npx prisma db seed</code></td><td>Seed database with sample data</td></tr>
+    <tr><td><code>npx prisma studio</code></td><td>Open Prisma database GUI</td></tr>
+    <tr><td><code>npm run build</code></td><td>TypeScript compile + Vite production build</td></tr>
+    <tr><td><code>npm test</code></td><td>Run test suite</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== 10. ROADMAP ==================== -->
+<h2 id="roadmap" class="page-break">10. Roadmap &amp; Next Steps</h2>
+
+<p>A detailed 7-phase integration plan exists in <code>Workflow/taskfile.md</code> (134 tasks). Summary:</p>
+
+<table>
+  <thead><tr><th>Phase</th><th>Focus</th><th>Tasks</th><th>Priority</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Phase 1</strong></td><td>Foundation &amp; Auth Wiring &mdash; remove mock fallbacks, complete auth flow</td><td>21</td><td><span class="badge-red">Critical</span></td></tr>
+    <tr><td><strong>Phase 2</strong></td><td>User Profile &amp; Dashboard &mdash; replace user.json with real APIs</td><td>18</td><td><span class="badge-red">Critical</span></td></tr>
+    <tr><td><strong>Phase 3</strong></td><td>Submission &amp; Peer Review &mdash; complete author/reviewer/editor workflows</td><td>23</td><td><span class="badge-yellow">High</span></td></tr>
+    <tr><td><strong>Phase 4</strong></td><td>Admin Panel &mdash; user management, content CRUD, analytics</td><td>22</td><td><span class="badge-yellow">High</span></td></tr>
+    <tr><td><strong>Phase 5</strong></td><td>Payment &amp; Checkout &mdash; Stripe/Razorpay integration, APC flow</td><td>12</td><td><span class="badge-blue">Medium</span></td></tr>
+    <tr><td><strong>Phase 6</strong></td><td>AI Features &amp; Advanced &mdash; summarizer UI, careers page, RSS, contact</td><td>18</td><td><span class="badge-blue">Medium</span></td></tr>
+    <tr><td><strong>Phase 7</strong></td><td>Polish &amp; Production &mdash; remove all mocks, caching, security, deploy</td><td>20</td><td><span class="badge-green">Final</span></td></tr>
+  </tbody>
+</table>
+
+<h3>Key Milestones</h3>
+<ol>
+  <li><strong>Milestone 1 (Phase 1-2):</strong> All public pages serve real data; user accounts fully functional</li>
+  <li><strong>Milestone 2 (Phase 3):</strong> End-to-end submission &rarr; review &rarr; editorial decision workflow</li>
+  <li><strong>Milestone 3 (Phase 4):</strong> Admin can manage users, content, and platform settings</li>
+  <li><strong>Milestone 4 (Phase 5-6):</strong> Payments live; AI features accessible; all backend modules exposed</li>
+  <li><strong>Milestone 5 (Phase 7):</strong> Production deployment with zero mock data dependencies</li>
+</ol>
+
+<h3>Immediate Prerequisites</h3>
+<ul>
+  <li>Obtain and configure <strong>Supabase Service Role Key</strong> (needed for file uploads)</li>
+  <li>Obtain and configure <strong>Resend API Key</strong> (needed for email notifications)</li>
+  <li>Set up Vite dev server proxy to backend (<code>PORT=4000</code>)</li>
+</ul>
+
+<br>
+<div class="footer">
+  <strong>Lumex Research Portal</strong> &mdash; Project Report &mdash; June 2026<br>
+  Generated for Rahul Mishra &bull; Version 1.0.0
+</div>
+
+</body>
+</html>
