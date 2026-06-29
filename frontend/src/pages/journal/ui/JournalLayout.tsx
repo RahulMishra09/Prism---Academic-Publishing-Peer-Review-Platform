@@ -1,4 +1,5 @@
 ﻿import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Outlet, useParams, Navigate } from 'react-router-dom';
 import { TwoColumnLayout } from '../../../app/layouts';
 import { Container, Skeleton } from '../../../shared/ui';
@@ -71,6 +72,9 @@ export const JournalLayout: React.FC = () => {
 
     return (
         <>
+            <Helmet>
+                <link rel="alternate" type="application/rss+xml" title={`${journal.title} — RSS Feed`} href={`/api/feeds/journal/${slug}`} />
+            </Helmet>
             <JournalHero journal={journal} baseUrl={`/journal/${slug}`} />
             <Container className="py-8">
                 <TwoColumnLayout

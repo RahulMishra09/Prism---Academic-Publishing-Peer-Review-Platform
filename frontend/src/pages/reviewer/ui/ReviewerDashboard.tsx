@@ -1,158 +1,132 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Button, Spinner } from '@shared/ui';
-import { getMyAssignments, getMyReviews } from '../../../features/reviewer/api/reviewsApi';
-import type { ReviewAssignment, ReviewRecord } from '../../../features/reviewer/api/reviewsApi';
+import React, { useState } from 'react';
+import { Container, Button } from '@shared/ui';
+import { useQuery } from '@tanstack/react-query';
+import { fetchClient } from '../../../shared/api/base';
+import { useUserDashboard } from '../../../features/user';
 
-type Tab = 'pending' | 'completed';
+interface ReviewAssignment {
+    id: string;
+    submissionId: string;
+    title: string;
+    journal: string;
+    status: string;
+    deadline?: string;
+    invitedOn?: string;
+    completedOn?: string;
+    decision?: string;
+}
 
-const TabButton = ({
-    active,
-    onClick,
-    children,
-}: {
-    active: boolean;
-    onClick: () => void;
-    children: React.ReactNode;
-}) => (
-    <button
-        onClick={onClick}
-        className={[
-            'relative whitespace-nowrap px-3 py-3 text-[0.82rem] font-semibold transition-colors',
-            'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:rounded-t-full after:transition-all',
-            active
-                ? 'text-lumex-blue after:bg-lumex-blue'
-                : 'text-lumex-muted after:bg-transparent hover:text-lumex-text',
-        ].join(' ')}
-    >
-        {children}
-    </button>
-);
-
-const RECOMMENDATION_LABELS: Record<string, string> = {
-    ACCEPT: 'Accept',
-    MINOR_REVISION: 'Minor Revision',
-    MAJOR_REVISION: 'Major Revision',
-    REJECT: 'Reject',
-};
+interface ReviewerDashboardData {
+    invitations: ReviewAssignment[];
+    active: ReviewAssignment[];
+    completed: ReviewAssignment[];
+}
 
 export const ReviewerDashboard: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<Tab>('pending');
-    const [assignments, setAssignments] = useState<ReviewAssignment[]>([]);
-    const [reviews, setReviews] = useState<ReviewRecord[]>([]);
-    const [isLoading, setIsLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+    const [activeTab, setActiveTab] = useState<'invitations' | 'pending' | 'completed'>('invitations');
 
-    useEffect(() => {
-        void (async () => {
-            setIsLoading(true);
-            setError(null);
+    // Try real backend first, fall back to dashboard mock data
+    const { data: reviewerData, isLoading: reviewerLoading } = useQuery({
+        queryKey: ['reviewer', 'dashboard'],
+        queryFn: async () => {
             try {
-                const [assignmentsData, reviewsData] = await Promise.all([
-                    getMyAssignments(),
-                    getMyReviews(),
-                ]);
-                setAssignments(assignmentsData);
-                setReviews(reviewsData);
-            } catch (err) {
-                setError(err instanceof Error ? err.message : 'Failed to load reviewer data');
-            } finally {
-                setIsLoading(false);
+                const res = await fetchClient<{ data: ReviewerDashboardData }>('/submissions/reviewer/dashboard');
+                return res.data;
+            } catch {
+                return null;
             }
-        })();
-    }, []);
+        },
+    });
 
-    if (isLoading) {
-        return (
-            <div className="flex min-h-[60vh] items-center justify-center">
-                <Spinner size="lg" />
+    const { data: dashboardData, isLoading: dashLoading } = useUserDashboard();
+
+    const isLoading = reviewerLoading || dashLoading;
+
+    if (isLoading) return (
+        <div className="bg-lumex-bg min-h-screen py-12">
+            <div className="max-w-5xl mx-auto px-4 space-y-6">
+                <div className="h-8 w-64 bg-lumex-bg-deep rounded animate-pulse" />
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {[1,2,3].map(i => <div key={i} className="h-24 bg-lumex-card border border-lumex-border rounded-xl animate-pulse" />)}
+                </div>
+                <div className="bg-lumex-card border border-lumex-border rounded-xl p-6 space-y-4">
+                    <div className="h-5 w-40 bg-lumex-bg-deep rounded animate-pulse" />
+                    {[1,2,3].map(i => <div key={i} className="h-20 w-full bg-lumex-bg-deep rounded animate-pulse" />)}
+                </div>
             </div>
-        );
-    }
+        </div>
+    );
 
-    if (error) {
-        return (
-            <div className="p-12 text-center font-semibold text-lumex-red">
-                {error}
-            </div>
-        );
-    }
-
-    const pendingAssignments = assignments.filter(a => a.status === 'PENDING' || a.status === 'ACCEPTED');
+    // Use real reviewer data if available, otherwise fall back to dashboard mock
+    const invitations = reviewerData?.invitations ?? [];
+    const pendingReviews = reviewerData?.active ?? dashboardData?.reviews.pending ?? [];
+    const completedReviews = reviewerData?.completed ?? dashboardData?.reviews.completed ?? [];
 
     return (
-        <Container className="min-h-screen py-10">
-            <div className="mb-8">
-                <p className="mb-1 text-[0.68rem] font-bold uppercase tracking-[0.12em] text-lumex-blue">
-                    Reviewer
-                </p>
-                <h1 className="font-serif text-3xl font-bold tracking-tight text-lumex-text">
-                    Reviewer Workspace
-                </h1>
+        <Container className="py-12 min-h-screen">
+            <h1 className="text-3xl font-serif font-bold text-lumex-text mb-8">Reviewer Workspace</h1>
+
+            <div className="flex gap-4 border-b border-lumex-border mb-8">
+                <button
+                    onClick={() => setActiveTab('invitations')}
+                    className={`pb-3 px-2 font-bold transition-colors ${activeTab === 'invitations' ? 'text-lumex-blue border-b-2 border-lumex-blue' : 'text-lumex-sub hover:text-lumex-text'}`}
+                >
+                    Invitations ({invitations.length})
+                </button>
+                <button
+                    onClick={() => setActiveTab('pending')}
+                    className={`pb-3 px-2 font-bold transition-colors ${activeTab === 'pending' ? 'text-lumex-blue border-b-2 border-lumex-blue' : 'text-lumex-sub hover:text-lumex-text'}`}
+                >
+                    Active Reviews ({pendingReviews.length})
+                </button>
+                <button
+                    onClick={() => setActiveTab('completed')}
+                    className={`pb-3 px-2 font-bold transition-colors ${activeTab === 'completed' ? 'text-lumex-blue border-b-2 border-lumex-blue' : 'text-lumex-sub hover:text-lumex-text'}`}
+                >
+                    History ({completedReviews.length})
+                </button>
             </div>
 
-            {/* Tabs */}
-            <div className="mb-8 border-b border-lumex-border">
-                <nav className="flex gap-1">
-                    <TabButton active={activeTab === 'pending'} onClick={() => setActiveTab('pending')}>
-                        Active Reviews{' '}
-                        <span className="ml-1.5 rounded-md bg-lumex-bg-deep px-1.5 py-0.5 text-xs font-normal text-lumex-muted">
-                            {pendingAssignments.length}
-                        </span>
-                    </TabButton>
-                    <TabButton active={activeTab === 'completed'} onClick={() => setActiveTab('completed')}>
-                        History{' '}
-                        <span className="ml-1.5 rounded-md bg-lumex-bg-deep px-1.5 py-0.5 text-xs font-normal text-lumex-muted">
-                            {reviews.length}
-                        </span>
-                    </TabButton>
-                </nav>
-            </div>
-
-            {/* Active Reviews Tab */}
-            {activeTab === 'pending' && (
-                <div className="space-y-5">
-                    {pendingAssignments.length === 0 ? (
-                        <div className="rounded-xl border border-lumex-border bg-lumex-bg p-12 text-center">
-                            <p className="text-lumex-muted italic">No active review assignments at this time.</p>
-                        </div>
+            {activeTab === 'invitations' && (
+                <div className="space-y-6">
+                    {invitations.length === 0 ? (
+                        <p className="text-lumex-sub italic">No new invitations today.</p>
                     ) : (
-                        pendingAssignments.map(assignment => (
-                            <div
-                                key={assignment.id}
-                                className="flex flex-col gap-6 rounded-xl border border-lumex-border bg-lumex-bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between"
-                            >
+                        invitations.map(invitation => (
+                            <div key={invitation.id} className="p-6 border-l-4 border-lumex-blue bg-lumex-blue/5 rounded-r-lg shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                                 <div className="flex-1">
-                                    <div className="mb-2 flex items-center gap-3">
-                                        <span className="rounded bg-lumex-blue/10 px-2 py-0.5 text-xs font-bold uppercase text-lumex-blue">
-                                            {assignment.status}
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <span className="bg-lumex-blue text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                                            New Invitation
                                         </span>
-                                        {assignment.dueDate && (
-                                            <span className="text-sm text-lumex-muted">
-                                                Due: {new Date(assignment.dueDate).toLocaleDateString()}
-                                            </span>
-                                        )}
+                                        <span className="text-sm text-lumex-sub font-medium italic">Sent: {invitation.invitedOn ? new Date(invitation.invitedOn).toLocaleDateString() : 'N/A'}</span>
                                     </div>
-                                    <h3 className="mb-1 text-lg font-bold leading-snug text-lumex-text">
-                                        {assignment.paper.title}
-                                    </h3>
-                                    <p className="mb-2 line-clamp-2 text-sm text-lumex-muted">
-                                        {assignment.paper.abstract}
-                                    </p>
-                                    <div className="flex flex-wrap gap-2">
-                                        {assignment.paper.keywords.slice(0, 4).map(kw => (
-                                            <span key={kw} className="rounded bg-lumex-bg-deep px-2 py-0.5 text-[0.68rem] font-semibold text-lumex-muted">
-                                                {kw}
-                                            </span>
-                                        ))}
-                                    </div>
+                                    <h3 className="font-bold text-lumex-text text-lg leading-snug mb-1">{invitation.title}</h3>
+                                    <p className="text-sm text-lumex-muted mb-3">{invitation.journal}</p>
+                                    {invitation.deadline && (
+                                        <div className="flex items-center gap-1.5 text-xs font-bold text-lumex-muted">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polyline points="12 6 12 12 16 14" /></svg>
+                                            Response Due: {new Date(invitation.deadline).toLocaleDateString()}
+                                        </div>
+                                    )}
                                 </div>
-                                <div className="flex w-full shrink-0 flex-col gap-2 md:w-48">
-                                    <Button variant="primary" className="w-full justify-center">
-                                        Submit Review
-                                    </Button>
-                                    <span className="text-center text-xs text-lumex-sub">
-                                        Assigned: {new Date(assignment.assignedAt).toLocaleDateString()}
-                                    </span>
+                                <div className="shrink-0 w-full md:w-auto flex flex-col gap-2">
+                                    <Button variant="primary" className="w-full justify-center"
+                                        onClick={() => {
+                                            void fetchClient(`/submissions/${invitation.submissionId}/review-status`, {
+                                                method: 'POST',
+                                                body: JSON.stringify({ status: 'ACCEPTED' }),
+                                            });
+                                        }}
+                                    >Accept Invitation</Button>
+                                    <Button variant="outline" className="w-full justify-center text-red-500 hover:bg-red-500/10 hover:border-red-500/30"
+                                        onClick={() => {
+                                            void fetchClient(`/submissions/${invitation.submissionId}/review-status`, {
+                                                method: 'POST',
+                                                body: JSON.stringify({ status: 'DECLINED' }),
+                                            });
+                                        }}
+                                    >Decline</Button>
                                 </div>
                             </div>
                         ))
@@ -160,33 +134,56 @@ export const ReviewerDashboard: React.FC = () => {
                 </div>
             )}
 
-            {/* History Tab */}
-            {activeTab === 'completed' && (
-                <div className="space-y-4">
-                    {reviews.length === 0 ? (
-                        <div className="rounded-xl border border-lumex-border bg-lumex-bg p-12 text-center">
-                            <p className="text-lumex-muted italic">No completed reviews yet.</p>
-                        </div>
+            {activeTab === 'pending' && (
+                <div className="space-y-6">
+                    {pendingReviews.length === 0 ? (
+                        <p className="text-lumex-sub italic">No pending reviews at this time.</p>
                     ) : (
-                        reviews.map(review => (
-                            <div
-                                key={review.id}
-                                className="flex flex-col gap-4 rounded-xl border border-lumex-border bg-lumex-bg p-5 md:flex-row md:items-center md:justify-between"
-                            >
+                        pendingReviews.map(review => (
+                            <div key={review.id} className="p-6 border border-lumex-border rounded-lg bg-lumex-card shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                                 <div className="flex-1">
-                                    <h3 className="mb-1 font-semibold leading-snug text-lumex-text">
-                                        {review.paper.title}
-                                    </h3>
-                                    <p className="text-sm text-lumex-muted">{review.paper.domain}</p>
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <span className="bg-red-500/15 text-red-500 text-xs font-bold px-2 py-0.5 rounded uppercase">
+                                            {review.status}
+                                        </span>
+                                        <span className="text-sm text-lumex-sub font-medium">Due: {review.deadline ? new Date(review.deadline).toLocaleDateString() : 'N/A'}</span>
+                                    </div>
+                                    <h3 className="font-bold text-lumex-text text-lg leading-snug">{review.title}</h3>
+                                    <div className="text-sm text-lumex-muted mt-2 flex gap-4">
+                                        <span>Journal: {review.journal}</span>
+                                        <span>ID: {review.id}</span>
+                                    </div>
                                 </div>
-                                <div className="shrink-0 text-right text-sm">
-                                    <p className="mb-0.5 font-bold text-lumex-text">
-                                        {RECOMMENDATION_LABELS[review.recommendation] ?? review.recommendation}
-                                    </p>
-                                    <p className="text-lumex-muted">Score: {review.score}/10</p>
-                                    <p className="mt-1 text-xs text-lumex-sub">
-                                        {new Date(review.createdAt).toLocaleDateString()}
-                                    </p>
+                                <div className="shrink-0 w-full md:w-auto flex flex-col gap-2">
+                                    <Button variant="primary" className="w-full justify-center"
+                                        onClick={() => { window.location.href = `/reviewer/${review.submissionId || review.id}/review`; }}
+                                    >Submit Review</Button>
+                                    <Button variant="outline" className="w-full justify-center">View Manuscript</Button>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                </div>
+            )}
+
+            {activeTab === 'completed' && (
+                <div className="space-y-6">
+                    {completedReviews.length === 0 ? (
+                        <p className="text-lumex-sub italic">No completed reviews yet.</p>
+                    ) : (
+                        completedReviews.map(review => (
+                            <div key={review.id} className="p-6 border border-lumex-border rounded-lg bg-lumex-bg-deep flex flex-col md:flex-row justify-between items-start md:items-center gap-6 text-lumex-sub">
+                                <div className="flex-1">
+                                    <h3 className="font-bold text-lumex-text text-lg leading-snug">{review.title}</h3>
+                                    <div className="text-sm mt-2 flex gap-4">
+                                        <span>Journal: {review.journal}</span>
+                                        <span>ID: {review.id}</span>
+                                    </div>
+                                </div>
+                                <div className="shrink-0 text-sm text-right">
+                                    <p className="font-bold text-lumex-text mb-1">Recommendation:</p>
+                                    <p className="italic text-lumex-muted">{review.decision}</p>
+                                    <p className="mt-2 text-xs text-lumex-sub">Completed: {review.completedOn ? new Date(review.completedOn).toLocaleDateString() : 'N/A'}</p>
                                 </div>
                             </div>
                         ))

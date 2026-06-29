@@ -10,19 +10,13 @@ import type { Book, BookChapter } from '../../../entities/book/model/types';
 import { fetchWithFallback } from '../../../shared/api/fetchWithFallback';
 
 const fetchBook = async (isbn: string): Promise<{ book: Book; chapters: BookChapter[] }> => {
-    const bookRes = await fetchWithFallback<{ books?: Book[]; data?: Book[] }>(
-        `/books/${isbn}`,
-        '/mock-data/books.json'
-    );
-    const bookList = ('books' in bookRes ? bookRes.books : bookRes.data) || [];
-    const book = bookList.find((b: Book) => b.isbn === isbn) || bookList[0];
+    const bookRes = await fetch('/mock-data/books.json').then(r => r.json());
+    const bookList = Array.isArray(bookRes) ? bookRes : (('books' in bookRes ? bookRes.books : bookRes.data) || []);
+    const book = bookList.find((b: Book) => b.isbn === isbn);
 
     if (!book) throw new Error('Book not found');
 
-    const chaptersRes = await fetchWithFallback<{ chapters?: BookChapter[]; data?: BookChapter[] }>(
-        `/books/${isbn}/chapters`,
-        '/mock-data/chapters.json'
-    );
+    const chaptersRes = await fetch('/mock-data/chapters.json').then(r => r.json());
     const allChapters = ('chapters' in chaptersRes ? chaptersRes.chapters : chaptersRes.data) || [];
     const chapters = allChapters.filter((c: BookChapter) => c.bookDoi === book.doi);
 
@@ -62,7 +56,7 @@ export const BookPage: React.FC = () => {
         return (
             <Container className="py-16 text-center">
                 <h1 className="text-3xl font-serif text-lumex-blue mb-4">Book Not Found</h1>
-                <p className="text-lumex-muted mb-8">
+                <p className="text-gray-600 mb-8">
                     The book with ISBN <code>{isbn}</code> could not be found.
                 </p>
                 <Link to="/search" className="text-lumex-blue hover:underline font-bold">
@@ -91,7 +85,7 @@ export const BookPage: React.FC = () => {
             />
 
             {/* Tab Bar */}
-            <div className="border-b border-lumex-border bg-white sticky top-0 z-30 shadow-sm">
+            <div className="border-b border-lumex-border bg-lumex-bg sticky top-0 z-30 shadow-sm">
                 <Container>
                     <nav className="flex gap-0 overflow-x-auto">
                         {tabs.map(tab => (
@@ -100,12 +94,12 @@ export const BookPage: React.FC = () => {
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`px-5 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === tab.id
                                         ? 'border-lumex-blue text-lumex-blue'
-                                        : 'border-transparent text-lumex-muted hover:text-lumex-text hover:border-lumex-border'
+                                        : 'border-transparent text-lumex-muted hover:text-lumex-text hover:border-gray-500'
                                     }`}
                             >
                                 {tab.label}
-                                {tab.count !== undefined && tab.count > 0 && (
-                                    <span className="ml-2 px-1.5 py-0.5 bg-lumex-bg-deep text-lumex-muted rounded text-xs font-normal">
+                                {tab.count !== undefined && (
+                                    <span className="ml-2 px-1.5 py-0.5 bg-lumex-bg-light text-lumex-muted rounded text-xs font-normal">
                                         {tab.count}
                                     </span>
                                 )}
@@ -122,11 +116,10 @@ export const BookPage: React.FC = () => {
                         {activeTab === 'overview' && (
                             <div className="prose prose-lumex max-w-none">
                                 <h2 className="text-2xl font-serif font-bold text-lumex-blue mb-4">
-                                    About this book
+                                    Description
                                 </h2>
-                                <p className="text-lumex-muted italic">
-                                    Book description and abstract content will appear here once
-                                    available from the backend.
+                                <p className="text-lumex-text leading-relaxed">
+                                    {book.description || 'Description not available.'}
                                 </p>
                             </div>
                         )}
@@ -147,30 +140,30 @@ export const BookPage: React.FC = () => {
                                 </h2>
 
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                                    <div className="bg-white border border-lumex-border rounded-lg p-5">
+                                    <div className="bg-lumex-card border border-lumex-border rounded-lg p-5">
                                         <h3 className="font-bold text-lumex-text mb-3 text-sm uppercase tracking-wider">
                                             Bibliographic Information
                                         </h3>
                                         <dl className="space-y-2 text-sm">
                                             <div className="flex justify-between">
-                                                <dt className="text-lumex-muted">DOI</dt>
+                                                <dt className="text-gray-500">DOI</dt>
                                                 <dd className="font-mono text-xs">{book.doi}</dd>
                                             </div>
                                             <div className="flex justify-between">
-                                                <dt className="text-lumex-muted">ISBN (eBook)</dt>
+                                                <dt className="text-gray-500">ISBN (eBook)</dt>
                                                 <dd className="font-mono text-xs">{book.isbn}</dd>
                                             </div>
                                             <div className="flex justify-between">
-                                                <dt className="text-lumex-muted">Publisher</dt>
+                                                <dt className="text-gray-500">Publisher</dt>
                                                 <dd>{book.publisher}</dd>
                                             </div>
                                             <div className="flex justify-between">
-                                                <dt className="text-lumex-muted">Copyright</dt>
+                                                <dt className="text-gray-500">Copyright</dt>
                                                 <dd>{book.publishYear}</dd>
                                             </div>
                                             {book.edition && (
                                                 <div className="flex justify-between">
-                                                    <dt className="text-lumex-muted">Edition</dt>
+                                                    <dt className="text-gray-500">Edition</dt>
                                                     <dd>{book.edition}</dd>
                                                 </div>
                                             )}

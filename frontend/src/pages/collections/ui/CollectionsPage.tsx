@@ -18,11 +18,20 @@ export const CollectionsPage: React.FC = () => {
     const { data: collections = [], isLoading } = useQuery({
         queryKey: ['collections'],
         queryFn: async () => {
-            const res = await fetchWithFallback<{ collections: Collection[] }>(
+            const res = await fetchWithFallback<any>(
                 '/collections',
                 '/mock-data/collections.json'
             );
-            return res.collections || [];
+            const raw = res.data || res.collections || [];
+            return raw.map((c: any) => ({
+                id: c.id,
+                title: c.title,
+                description: c.description,
+                slug: c.slug,
+                imageUrl: c.coverImageUrl || c.imageUrl,
+                articleCount: c._count?.articles ?? c.articleCount ?? 0,
+                updatedAt: c.updatedAt || c.createdAt || new Date().toISOString()
+            }));
         },
     });
 
@@ -56,13 +65,22 @@ export const CollectionsPage: React.FC = () => {
                                 to={`/collection/${collection.slug}`}
                                 className="group bg-lumex-card border border-lumex-border rounded-xl overflow-hidden hover:border-lumex-blue hover:shadow-lg transition-all flex flex-col h-full"
                             >
-                                <div className="h-48 overflow-hidden relative">
+                                <div className="h-48 overflow-hidden relative bg-gradient-to-br from-lumex-blue/20 via-lumex-blue/10 to-lumex-bg-deep">
+                                    {/* Fallback content always present behind the image */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <span className="text-5xl font-serif font-bold text-lumex-blue/20 select-none">
+                                            {collection.title.split(' ').slice(0, 2).map(w => w[0]).join('')}
+                                        </span>
+                                    </div>
                                     <img
                                         src={collection.imageUrl}
                                         alt={collection.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 relative z-[1]"
+                                        onError={(e) => {
+                                            (e.currentTarget as HTMLImageElement).style.display = 'none';
+                                        }}
                                     />
-                                    <div className="absolute top-4 right-4 bg-lumex-card/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-lumex-blue ring-1 ring-lumex-border/50">
+                                    <div className="absolute top-4 right-4 z-[2] bg-lumex-card/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-bold text-lumex-blue ring-1 ring-lumex-border/50">
                                         {collection.articleCount} Articles
                                     </div>
                                 </div>

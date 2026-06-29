@@ -15,7 +15,6 @@ import {
     useRecentlyViewed,
     useSavedArticles,
 } from '../../../features/article';
-import { ArticleComments } from '../../../features/article/ui/ArticleComments';
 import { ArticleSidebar } from '../../../widgets/article-sidebar';
 import type { ArticleFigure } from '../../../entities/article/model/types';
 
@@ -69,7 +68,7 @@ export const ArticlePage: React.FC = () => {
         return (
             <Container className="py-16 text-center">
                 <h1 className="text-3xl font-serif text-lumex-blue mb-4">Article Not Found</h1>
-                <p className="text-lumex-muted mb-8">
+                <p className="text-gray-600 mb-8">
                     The article with DOI <code>{doi}</code> could not be found.
                 </p>
                 <Link to="/search" className="text-lumex-blue hover:underline font-bold">
@@ -93,13 +92,17 @@ export const ArticlePage: React.FC = () => {
         { id: 'references', label: 'References', count: article.references?.length },
     ];
 
-    const abstractText = article.abstract?.map(s => s.text).join(' ') || '';
+    const abstractText = article.abstract
+        ? (Array.isArray(article.abstract)
+            ? article.abstract.map(s => s.text).join(' ')
+            : String(article.abstract))
+        : '';
 
     return (
         <>
             <Helmet>
                 <title>{article.title}</title>
-                <meta name="description" content={abstractText ? `${abstractText.substring(0, 160)}...` : `Read the full research article: ${article.title}. Published by Prism.`} />
+                <meta name="description" content={abstractText ? `${abstractText.substring(0, 160)}...` : `Read the full research article on ${article.title}. Published by Lumex.`} />
                 <meta property="og:title" content={article.title} />
                 <meta property="og:description" content={abstractText.substring(0, 160)} />
             </Helmet>
@@ -128,24 +131,21 @@ export const ArticlePage: React.FC = () => {
             />
 
             {/* Tab Navigation */}
-            <div className="sticky top-0 z-30 border-b border-lumex-border bg-lumex-bg-white/95 shadow-sm backdrop-blur-sm transition-colors duration-200">
+            <div className="border-b border-lumex-border bg-lumex-card sticky top-0 z-30 shadow-sm transition-colors duration-200">
                 <Container>
-                    <nav className="flex overflow-x-auto" aria-label="Article sections">
+                    <nav className="flex gap-0 overflow-x-auto">
                         {tabs.map(tab => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
-                                className={[
-                                    'relative whitespace-nowrap px-5 py-3.5 text-[0.82rem] font-semibold transition-colors',
-                                    'after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:rounded-t-full after:transition-all after:duration-150',
-                                    activeTab === tab.id
-                                        ? 'text-lumex-blue after:bg-lumex-blue'
-                                        : 'text-lumex-muted after:bg-transparent hover:text-lumex-text',
-                                ].join(' ')}
+                                className={`px-5 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === tab.id
+                                    ? 'border-lumex-blue text-lumex-blue'
+                                    : 'border-transparent text-lumex-muted hover:text-lumex-text hover:border-lumex-border'
+                                    }`}
                             >
                                 {tab.label}
                                 {tab.count !== undefined && tab.count > 0 && (
-                                    <span className="ml-2 rounded-md bg-lumex-bg-deep px-1.5 py-0.5 text-xs font-normal text-lumex-muted">
+                                    <span className="ml-2 px-1.5 py-0.5 bg-lumex-bg-deep text-lumex-muted rounded text-xs font-normal">
                                         {tab.count}
                                     </span>
                                 )}
@@ -166,17 +166,12 @@ export const ArticlePage: React.FC = () => {
                                 <AccessGate article={article} />
 
                                 {/* Abstract */}
-                                <div className="mb-10 pb-10 border-b border-lumex-border">
+                                <div className="mb-10 pb-10 border-b border-gray-200">
                                     <AbstractSection article={article} />
                                 </div>
 
                                 {/* Full Body (HTML sections) */}
                                 <ArticleBody article={article} />
-
-                                {/* Discussion / Comments */}
-                                <div className="mt-10 border-t border-lumex-border pt-10">
-                                    <ArticleComments paperId={article.id} />
-                                </div>
                             </>
                         )}
 
@@ -187,30 +182,30 @@ export const ArticlePage: React.FC = () => {
                                     Figures & Tables
                                 </h2>
                                 {allFigures.length === 0 ? (
-                                    <p className="italic text-lumex-muted">
+                                    <p className="text-gray-500 italic">
                                         No figures or tables available for this article.
                                     </p>
                                 ) : (
-                                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                         {allFigures.map(fig => (
                                             <button
                                                 key={fig.id}
                                                 onClick={() => openFigureViewer(fig)}
-                                                className="group overflow-hidden rounded-xl border border-lumex-border text-left transition-all hover:border-lumex-border-hover hover:shadow-md"
+                                                className="group text-left border border-lumex-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                                             >
-                                                <div className="aspect-video overflow-hidden bg-lumex-bg-deep">
+                                                <div className="aspect-video bg-gray-100 overflow-hidden">
                                                     <img
                                                         src={fig.url}
                                                         alt={fig.alt}
-                                                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                                                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                                     />
                                                 </div>
-                                                <div className="p-3.5">
-                                                    <p className="mb-1 text-xs font-bold text-lumex-blue">
+                                                <div className="p-3">
+                                                    <p className="text-xs font-bold text-lumex-blue mb-1">
                                                         {fig.type === 'table' ? 'Table' : 'Fig.'}{' '}
                                                         {fig.number}
                                                     </p>
-                                                    <p className="line-clamp-2 text-xs text-lumex-muted">
+                                                    <p className="text-xs text-gray-600 line-clamp-2">
                                                         {fig.caption}
                                                     </p>
                                                 </div>

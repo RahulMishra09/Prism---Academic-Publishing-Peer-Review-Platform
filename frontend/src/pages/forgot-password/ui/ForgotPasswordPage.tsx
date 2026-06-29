@@ -1,10 +1,8 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { fetchClient } from '../../../shared/api/base';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-interface ForgotPasswordPageProps { }
-
-export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = () => {
+export const ForgotPasswordPage: React.FC = () => {
     const [email, setEmail] = React.useState('');
     const [submitted, setSubmitted] = React.useState(false);
     const [error, setError] = React.useState('');
@@ -19,9 +17,17 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = () => {
         }
         setError('');
         setIsLoading(true);
-        await new Promise(r => setTimeout(r, 800));
-        setIsLoading(false);
-        setSubmitted(true);
+        try {
+            await fetchClient('/auth/forgot-password', {
+                method: 'POST',
+                body: JSON.stringify({ email }),
+            });
+        } catch {
+            // Always show success to prevent email enumeration
+        } finally {
+            setIsLoading(false);
+            setSubmitted(true);
+        }
     };
 
     return (
@@ -30,7 +36,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = () => {
                 <div className="bg-white border border-lumex-border rounded-xl p-8 shadow-sm">
                     {submitted ? (
                         <div className="text-center">
-                            <div className="w-16 h-16 bg-lumex-open-bg rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     width="28"
@@ -48,7 +54,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = () => {
                             <h2 className="text-xl font-bold text-lumex-text mb-2">
                                 Check your email
                             </h2>
-                            <p className="text-lumex-muted text-sm mb-6">
+                            <p className="text-gray-500 text-sm mb-6">
                                 If an account exists for <strong>{email}</strong>, we've sent a
                                 password reset link.
                             </p>
@@ -85,7 +91,7 @@ export const ForgotPasswordPage: React.FC<ForgotPasswordPageProps> = () => {
                                         className={`w-full px-4 py-2.5 border rounded text-sm focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue transition ${error ? 'border-red-400 bg-red-50' : 'border-lumex-border'}`}
                                         placeholder="you@example.com"
                                     />
-                                    {error && <p className="mt-1 text-xs text-lumex-red">{error}</p>}
+                                    {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
                                 </div>
                                 <button
                                     type="submit"

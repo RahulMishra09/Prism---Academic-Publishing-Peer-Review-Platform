@@ -1,121 +1,107 @@
 import React from 'react';
-import { Container, Skeleton } from '../../../shared/ui';
 import { useQuery } from '@tanstack/react-query';
-import { fetchWithFallback } from '../../../shared/api/fetchWithFallback';
+import { Link } from 'react-router-dom';
+import { Container } from '../../../shared/ui';
+import { fetchClient } from '../../../shared/api/base';
 
-interface Job {
+interface Career {
     id: string;
     title: string;
-    department: string;
-    location: string;
-    type: string;
-    description: string;
+    department?: string;
+    location?: string;
+    type?: string;
+    description?: string;
+    slug?: string;
+    createdAt?: string;
 }
 
+const MOCK_CAREERS: Career[] = [
+    { id: '1', title: 'Senior Frontend Engineer', department: 'Engineering', location: 'Remote', type: 'Full-time', description: 'Help build the next generation of academic publishing tools.', slug: 'senior-frontend-engineer' },
+    { id: '2', title: 'Editorial Operations Manager', department: 'Editorial', location: 'New York, NY', type: 'Full-time', description: 'Lead editorial workflow optimization and manage peer review processes.', slug: 'editorial-ops-manager' },
+    { id: '3', title: 'Data Scientist — Research Metrics', department: 'Data', location: 'Remote', type: 'Full-time', description: 'Develop citation analytics and impact measurement systems for academic research.', slug: 'data-scientist-metrics' },
+    { id: '4', title: 'Product Designer', department: 'Design', location: 'London, UK', type: 'Full-time', description: 'Design intuitive interfaces for researchers, editors, and reviewers.', slug: 'product-designer' },
+];
+
 export const CareersPage: React.FC = () => {
-    const { data: jobs = [], isLoading } = useQuery({
+    const { data: careers, isLoading } = useQuery({
         queryKey: ['careers'],
         queryFn: async () => {
-            const res = await fetchWithFallback<{ jobs: Job[] }>(
-                '/careers',
-                '/mock-data/careers.json'
-            );
-            return res.jobs || [];
+            try {
+                const res = await fetchClient<{ data: Career[] }>('/careers');
+                return res.data;
+            } catch {
+                return MOCK_CAREERS;
+            }
         },
     });
 
-    const departments = Array.from(new Set(jobs.map(j => j.department)));
+    const listings = careers || MOCK_CAREERS;
 
     return (
-        <div className="bg-lumex-bg min-h-[70vh]">
-            {/* Hero Section */}
-            <div className="bg-lumex-bg-deep py-16 border-b border-lumex-border">
-                <Container>
-                    <div className="max-w-3xl">
-                        <h1 className="text-4xl font-serif font-bold text-lumex-text mb-6">
-                            Join Our Mission
+        <div className="py-12 bg-lumex-bg min-h-[70vh]">
+            <Container>
+                <div className="max-w-4xl mx-auto">
+                    <header className="mb-12 text-center">
+                        <h1 className="text-4xl font-serif font-bold text-lumex-text mb-4">
+                            Careers at Lumex
                         </h1>
-                        <p className="text-xl text-lumex-muted leading-relaxed mb-8">
-                            At Lumex, we are dedicated to advancing discovery and making scientific knowledge accessible. We're looking for passionate individuals to help us build the future of research publishing.
+                        <p className="text-lg text-lumex-muted leading-relaxed max-w-2xl mx-auto">
+                            Join our mission to advance scientific discovery. We're building the future of academic publishing.
                         </p>
-                        <a
-                            href="#open-positions"
-                            className="inline-block px-6 py-3 bg-lumex-blue text-white font-bold rounded hover:bg-lumex-blue-dark transition-colors"
-                        >
-                            View Open Positions
-                        </a>
-                    </div>
-                </Container>
-            </div>
+                    </header>
 
-            {/* Job Listings */}
-            <div id="open-positions" className="py-16">
-                <Container>
-                    <div className="max-w-4xl mx-auto">
-                        <h2 className="text-3xl font-bold text-lumex-text mb-10">
-                            Current Openings
-                        </h2>
-
-                        {isLoading && (
-                            <div className="space-y-6">
-                                {['skel-1', 'skel-2', 'skel-3'].map((id) => (
-                                    <Skeleton key={id} className="h-40 w-full rounded-xl" />
-                                ))}
-                            </div>
-                        )}
-                        {!isLoading && jobs.length === 0 && (
-                            <div className="text-center py-12 bg-lumex-bg-deep rounded-xl border border-lumex-border">
-                                <p className="text-lumex-muted text-lg">
-                                    There are currently no open positions. Please check back later!
-                                </p>
-                            </div>
-                        )}
-                        {!isLoading && jobs.length > 0 && (
-                            <div className="space-y-12">
-                                {departments.map(dept => (
-                                    <div key={dept}>
-                                        <h3 className="text-xl font-bold text-lumex-text mb-6 pb-2 border-b-2 border-lumex-border inline-block">
-                                            {dept}
-                                        </h3>
-                                        <div className="space-y-4">
-                                            {jobs.filter(j => j.department === dept).map(job => (
-                                                <div
-                                                    key={job.id}
-                                                    className="bg-lumex-card border border-lumex-border rounded-xl p-6 hover:shadow-md transition-shadow group flex flex-col sm:flex-row sm:items-center justify-between gap-6"
-                                                >
-                                                    <div className="flex-1">
-                                                        <h4 className="text-lg font-bold text-lumex-blue mb-2 group-hover:underline cursor-pointer">
-                                                            {job.title}
-                                                        </h4>
-                                                        <div className="flex flex-wrap items-center gap-4 text-sm text-lumex-muted mb-3">
-                                                            <span className="flex items-center gap-1.5">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></svg>
-                                                                {job.location}
-                                                            </span>
-                                                            <span className="flex items-center gap-1.5">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></svg>
-                                                                {job.type}
-                                                            </span>
-                                                        </div>
-                                                        <p className="text-sm text-lumex-sub">
-                                                            {job.description}
-                                                        </p>
-                                                    </div>
-                                                    <div>
-                                                        <button className="px-5 py-2 whitespace-nowrap border border-lumex-blue text-lumex-blue font-bold rounded hover:bg-lumex-blue hover:text-white transition-colors">
-                                                            Apply Now
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            ))}
+                    {isLoading ? (
+                        <div className="flex justify-center py-16">
+                            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-lumex-blue" />
+                        </div>
+                    ) : listings.length === 0 ? (
+                        <div className="text-center py-16 bg-lumex-card border border-lumex-border rounded-xl">
+                            <h2 className="text-xl font-bold text-lumex-text mb-2">No open positions</h2>
+                            <p className="text-lumex-muted">Check back soon — we're always growing.</p>
+                        </div>
+                    ) : (
+                        <div className="space-y-4">
+                            {listings.map((job) => (
+                                <div
+                                    key={job.id}
+                                    className="bg-lumex-card border border-lumex-border rounded-xl p-6 shadow-sm hover:shadow-md hover:border-lumex-blue/30 transition-all"
+                                >
+                                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                                        <div className="flex-1">
+                                            <h2 className="text-lg font-bold text-lumex-text mb-1">{job.title}</h2>
+                                            <div className="flex flex-wrap items-center gap-3 text-sm text-lumex-muted mb-3">
+                                                {job.department && (
+                                                    <span className="flex items-center gap-1">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-lumex-blue" />
+                                                        {job.department}
+                                                    </span>
+                                                )}
+                                                {job.location && <span>{job.location}</span>}
+                                                {job.type && (
+                                                    <span className="text-xs font-bold bg-lumex-bg-deep px-2 py-0.5 rounded-full">
+                                                        {job.type}
+                                                    </span>
+                                                )}
+                                            </div>
+                                            {job.description && (
+                                                <p className="text-sm text-lumex-text-secondary leading-relaxed">
+                                                    {job.description}
+                                                </p>
+                                            )}
                                         </div>
+                                        <Link
+                                            to={`/careers/${job.id}`}
+                                            className="shrink-0 px-5 py-2.5 bg-lumex-blue text-white text-sm font-bold rounded hover:bg-lumex-blue-dark transition-colors"
+                                        >
+                                            View Details
+                                        </Link>
                                     </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </Container>
-            </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </Container>
         </div>
     );
 };

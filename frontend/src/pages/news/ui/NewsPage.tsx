@@ -17,11 +17,11 @@ export const NewsPage: React.FC = () => {
     const { data: news = [], isLoading } = useQuery({
         queryKey: ['news'],
         queryFn: async () => {
-            const res = await fetchWithFallback<{ news: NewsItem[] }>(
+            const res = await fetchWithFallback<{ news?: NewsItem[]; data?: NewsItem[] }>(
                 '/news',
                 '/mock-data/news.json'
             );
-            return res.news || [];
+            return res.data || res.news || [];
         },
     });
 

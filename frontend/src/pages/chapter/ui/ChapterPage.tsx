@@ -20,10 +20,7 @@ import { fetchWithFallback } from '../../../shared/api/fetchWithFallback';
 
 const fetchChapter = async (doi: string): Promise<{ chapter: BookChapter; article: Article }> => {
     const encodeDoi = encodeURIComponent(doi);
-    const chapterRes = await fetchWithFallback<{ chapters?: BookChapter[]; data?: BookChapter[] }>(
-        `/chapters/${encodeDoi}`,
-        '/mock-data/chapters.json'
-    );
+    const chapterRes = await fetch('/mock-data/chapters.json').then(r => r.json());
     const chapterList = ('chapters' in chapterRes ? chapterRes.chapters : chapterRes.data) || [];
     const chapter = chapterList.find((c: BookChapter) => c.doi === doi) || chapterList[0];
     if (!chapter) throw new Error('Chapter not found');
@@ -81,7 +78,7 @@ export const ChapterPage: React.FC = () => {
         return (
             <Container className="py-16 text-center">
                 <h1 className="text-3xl font-serif text-lumex-blue mb-4">Chapter Not Found</h1>
-                <p className="text-lumex-muted mb-8">
+                <p className="text-gray-600 mb-8">
                     DOI: <code>{doi}</code>
                 </p>
                 <Link to="/" className="text-lumex-blue hover:underline font-bold">
@@ -109,7 +106,7 @@ export const ChapterPage: React.FC = () => {
             />
 
             {/* Tab Bar */}
-            <div className="border-b border-lumex-border bg-white sticky top-0 z-30 shadow-sm">
+            <div className="border-b border-lumex-border bg-lumex-bg sticky top-0 z-30 shadow-sm">
                 <Container>
                     <nav className="flex gap-0 overflow-x-auto">
                         {tabs.map(tab => (
@@ -118,12 +115,12 @@ export const ChapterPage: React.FC = () => {
                                 onClick={() => setActiveTab(tab.id)}
                                 className={`px-5 py-4 text-sm font-bold whitespace-nowrap border-b-2 transition-colors ${activeTab === tab.id
                                         ? 'border-lumex-blue text-lumex-blue'
-                                        : 'border-transparent text-lumex-muted hover:text-lumex-text hover:border-lumex-border'
+                                        : 'border-transparent text-lumex-muted hover:text-lumex-text hover:border-gray-500'
                                     }`}
                             >
                                 {tab.label}
                                 {tab.count !== undefined && tab.count > 0 && (
-                                    <span className="ml-2 px-1.5 py-0.5 bg-lumex-bg-deep text-lumex-muted rounded text-xs font-normal">
+                                    <span className="ml-2 px-1.5 py-0.5 bg-lumex-bg-light text-lumex-muted rounded text-xs font-normal">
                                         {tab.count}
                                     </span>
                                 )}
@@ -139,7 +136,7 @@ export const ChapterPage: React.FC = () => {
                         {activeTab === 'chapter' && (
                             <>
                                 <AccessGate article={article} />
-                                <div className="mb-10 pb-10 border-b border-lumex-border">
+                                <div className="mb-10 pb-10 border-b border-gray-200">
                                     <AbstractSection article={article} />
                                 </div>
                                 <ArticleBody article={article} />
@@ -148,7 +145,7 @@ export const ChapterPage: React.FC = () => {
                         {activeTab === 'figures' && (
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {allFigures.length === 0 ? (
-                                    <p className="col-span-3 text-lumex-sub italic text-center py-12">
+                                    <p className="col-span-3 text-gray-400 italic text-center py-12">
                                         No figures available.
                                     </p>
                                 ) : (
@@ -158,7 +155,7 @@ export const ChapterPage: React.FC = () => {
                                             onClick={() => setViewerFigure(fig)}
                                             className="text-left border border-lumex-border rounded-lg overflow-hidden hover:shadow-md transition-shadow"
                                         >
-                                            <div className="aspect-video bg-lumex-bg-deep">
+                                            <div className="aspect-video bg-gray-100">
                                                 <img
                                                     src={fig.url}
                                                     alt={fig.alt}
@@ -169,7 +166,7 @@ export const ChapterPage: React.FC = () => {
                                                 <p className="text-xs font-bold text-lumex-blue mb-1">
                                                     Fig. {fig.number}
                                                 </p>
-                                                <p className="text-xs text-lumex-muted line-clamp-2">
+                                                <p className="text-xs text-gray-600 line-clamp-2">
                                                     {fig.caption}
                                                 </p>
                                             </div>

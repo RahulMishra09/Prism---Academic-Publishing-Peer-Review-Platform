@@ -20,11 +20,16 @@ export const NewsDetailPage: React.FC = () => {
     const { data: newsItem, isLoading } = useQuery({
         queryKey: ['news', slug],
         queryFn: async () => {
-            const res = await fetchWithFallback<{ news: NewsItem[] }>(
-                '/news',
+            // Try fetching single news item; fall back to list + find
+            const res = await fetchWithFallback<{ news?: NewsItem[]; data?: NewsItem | NewsItem[] }>(
+                `/news/${slug}`,
                 '/mock-data/news.json'
             );
-            return res.news.find(item => item.slug === slug);
+            // Backend single: { data: NewsItem }
+            if (res.data && !Array.isArray(res.data)) return res.data;
+            // Fallback list
+            const list = (Array.isArray(res.data) ? res.data : res.news) || [];
+            return list.find(item => item.slug === slug);
         },
     });
 

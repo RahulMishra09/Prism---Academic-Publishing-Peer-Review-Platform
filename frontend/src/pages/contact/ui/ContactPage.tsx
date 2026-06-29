@@ -1,16 +1,40 @@
 import React from 'react';
 import { Container } from '../../../shared/ui';
+import { fetchClient, ApiError } from '../../../shared/api/base';
 
 export const ContactPage: React.FC = () => {
     const [status, setStatus] = React.useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+    const [errorMsg, setErrorMsg] = React.useState('');
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setStatus('submitting');
+        setErrorMsg('');
 
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setStatus('success');
+        const form = e.currentTarget;
+        const formData = new FormData(form);
+
+        try {
+            await fetchClient('/contact', {
+                method: 'POST',
+                body: JSON.stringify({
+                    firstName: formData.get('firstName'),
+                    lastName: formData.get('lastName'),
+                    email: formData.get('email'),
+                    subject: formData.get('subject'),
+                    message: formData.get('message'),
+                }),
+            });
+            setStatus('success');
+            form.reset();
+        } catch (err) {
+            setStatus('error');
+            setErrorMsg(
+                err instanceof ApiError ? err.message
+                : err instanceof Error ? err.message
+                : 'Failed to send message. Please try again.'
+            );
+        }
     };
 
     return (
@@ -41,7 +65,7 @@ export const ContactPage: React.FC = () => {
                                 </div>
                                 <div>
                                     <h3 className="font-semibold text-white/70 mb-1 uppercase tracking-wider text-xs">Headquarters</h3>
-                                    <p>123 Science Way<br />Suite 100<br />New York, NY 10001</p>
+                                    <p>Manipal University Jaipur<br />Jaipur-Ajmer Express Highway<br />Dehmi Kalan, Near GVK Toll Plaza<br />Jaipur, Rajasthan 303007</p>
                                 </div>
                             </div>
                         </div>
@@ -49,7 +73,7 @@ export const ContactPage: React.FC = () => {
                         <div className="md:w-2/3 p-8">
                             {status === 'success' ? (
                                 <div className="h-full flex flex-col items-center justify-center text-center py-12">
-                                    <div className="w-16 h-16 bg-lumex-open-bg rounded-full flex items-center justify-center mb-6">
+                                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-6">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
                                     </div>
                                     <h2 className="text-2xl font-bold text-lumex-text mb-2">Message Sent!</h2>
@@ -66,31 +90,36 @@ export const ContactPage: React.FC = () => {
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <div>
                                             <label htmlFor="firstName" className="block text-sm font-semibold text-lumex-text mb-1.5">First Name</label>
-                                            <input required type="text" id="firstName" className="w-full px-4 py-2 bg-lumex-bg-white border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue" />
+                                            <input required type="text" id="firstName" name="firstName" className="w-full px-4 py-2 bg-lumex-bg-white border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue" />
                                         </div>
                                         <div>
                                             <label htmlFor="lastName" className="block text-sm font-semibold text-lumex-text mb-1.5">Last Name</label>
-                                            <input required type="text" id="lastName" className="w-full px-4 py-2 bg-lumex-bg-white border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue" />
+                                            <input required type="text" id="lastName" name="lastName" className="w-full px-4 py-2 bg-lumex-bg-white border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue" />
                                         </div>
                                     </div>
                                     <div>
                                         <label htmlFor="email" className="block text-sm font-semibold text-lumex-text mb-1.5">Email Address</label>
-                                        <input required type="email" id="email" className="w-full px-4 py-2 bg-lumex-bg-white border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue" />
+                                        <input required type="email" id="email" name="email" className="w-full px-4 py-2 bg-lumex-bg-white border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue" />
                                     </div>
                                     <div>
                                         <label htmlFor="subject" className="block text-sm font-semibold text-lumex-text mb-1.5">Subject</label>
-                                        <select required id="subject" className="w-full px-4 py-2 border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue bg-lumex-bg-white">
+                                        <select required id="subject" name="subject" className="w-full px-4 py-2 border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue bg-lumex-bg-white">
                                             <option value="">Select a topic</option>
-                                            <option value="support">Technical Support</option>
-                                            <option value="submission">Manuscript Submission</option>
-                                            <option value="billing">Billing / Subscription</option>
-                                            <option value="other">Other Inquiry</option>
+                                            <option value="Technical Support">Technical Support</option>
+                                            <option value="Manuscript Submission">Manuscript Submission</option>
+                                            <option value="Billing / Subscription">Billing / Subscription</option>
+                                            <option value="Other Inquiry">Other Inquiry</option>
                                         </select>
                                     </div>
                                     <div>
                                         <label htmlFor="message" className="block text-sm font-semibold text-lumex-text mb-1.5">Message</label>
-                                        <textarea required id="message" rows={5} className="w-full px-4 py-2 bg-lumex-bg-white border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue resize-none" />
+                                        <textarea required id="message" name="message" rows={5} minLength={10} className="w-full px-4 py-2 bg-lumex-bg-white border border-lumex-border rounded text-lumex-text focus:outline-none focus:ring-2 focus:ring-lumex-blue/30 focus:border-lumex-blue resize-none" />
                                     </div>
+                                    {status === 'error' && errorMsg && (
+                                        <p className="text-sm text-red-500 bg-red-50 border border-red-100 rounded px-3 py-2">
+                                            {errorMsg}
+                                        </p>
+                                    )}
                                     <button
                                         type="submit"
                                         disabled={status === 'submitting'}
